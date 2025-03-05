@@ -4,7 +4,7 @@ import musica from './components/musica.vue';
 </script>
 
 <template>
-  <musica class="a021"></musica>
+  <!--<musica class="a021"></musica>-->
  <RouterView />
   
 </template>
