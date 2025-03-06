@@ -106,6 +106,7 @@ socket.on('acabar', (index, puntuacion) => {
 
 function siguientePregunta(info) {
   socket.emit('cambio_pregunta', store.loginInfo.username, store.SalaActual, info.canasta);
+  console.log(store.loginInfo.username, store.SalaActual)
 }
 
 function desconectar() {
@@ -119,7 +120,7 @@ function empezar() {
   visibleTempo.value = true;
   if (visibleSalas.value == true) {
     visibleSalas.value = false;
-    socket=socketManager.getSocket();
+     
   }
 
 
@@ -235,8 +236,7 @@ function usarpoder() {
 
 socket.on('pregunta', (pregunta) => {
   data.preguntas = pregunta;
-
-
+  console.log(data.preguntas)
   if (visibleJuego.value == false) {
     visibleJuego.value = true;
     visibleSalas.value = false;
@@ -248,8 +248,12 @@ socket.on('pregunta', (pregunta) => {
 const visibleBoton = ref(false);
 
 function mostrarBoton() {
-  visibleBoton.value = !visibleBoton.value;
+  visibleBoton.value = true;
 }
+function cerrarBoton() {
+  visibleBoton.value = false;
+}
+
 
 function lanzarConfeti() {
   const end = Date.now() + (15 * 1000);
@@ -300,7 +304,7 @@ function mostrarRanking() {
   <main class="fondo_sp">
     <div v-if="visibleSalas" class="main-multijugador">
       <div class="body_multijugador">
-        <SalasPrivadas :socket="socket" @boton="mostrarBoton" />
+        <SalasPrivadas :socket="socket" @boton="mostrarBoton" @cerrar="cerrarBoton" />
         <div class="boton-container">
           <q-btn v-if="visibleBoton" @click="empezar"class="boton-volver" glossy label="Empezar"></q-btn>
         </div>

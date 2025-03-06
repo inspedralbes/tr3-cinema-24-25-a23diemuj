@@ -84,6 +84,25 @@
         </q-card-actions>
       </q-card>
     </q-dialog>
+
+    <!-- Errores-->
+
+    <q-dialog v-model="errors.act" :backdrop-filter="backdropFilter">
+      <q-card>
+        <q-card-section class="row items-center q-pb-none text-h6">
+          Aviso
+        </q-card-section>
+
+        <q-card-section>
+          {{ errors.msj }}
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn flat label="Cerrar" color="primary" v-close-popup />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+
   </div>
 </template>
 
@@ -109,6 +128,7 @@ export default {
       usuarios: [], 
       enSala: false,
       dialog: false,
+      errors:{ msj:"", act:false},
       dialogName: false,
       mostarName: false,
       backdropFilter: "hue-rotate(210deg)"
@@ -117,16 +137,16 @@ export default {
   methods: {
     crearSala() {
       this.socket.emit("create-room");
-      this.$emit('boton');
+      
     },
 
   unirSala() {
       if (this.name.trim()) {
-        
-          this.socket.emit("prueba", this.claveSala.trim());
+        const caja = useCounterStore();
 
-      
-    
+         caja.loginInfo.username = this.name;
+          this.socket.emit("join-room", this.claveSala.trim(),this.name.trim());
+
   } else {
     this.dialogName = true; // Muestra el diálogo
   }
@@ -143,7 +163,8 @@ export default {
    
     salirSala() {
       this.socket.emit("leave-room", this.claveActual);
-      this.$emit('boton');
+      this.$emit('cerrar');
+      
     },
     updateRoomView(clave) {
       this.enSala = true;
@@ -172,6 +193,7 @@ export default {
       console.log("ComprobarASSala");
     });
     this.socket.on("room-created", (claveSala) => {
+      this.$emit('boton');
       this.updateRoomView(claveSala);
     });
 
@@ -191,7 +213,9 @@ export default {
     });
 
     this.socket.on("error", (message) => {
-      alert(message);
+
+      this.errors.msj=message;
+      this.errors.act=true;
     });
   },
 };

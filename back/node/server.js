@@ -93,8 +93,8 @@ async function rellenarPreguntas(){
 
 io.on('connection', async (socket) => {
  
- socket.user = { username: socket.handshake.auth.username };
-
+    socket.user = { username: socket.handshake.auth.username };
+  
     console.log(socket.user);
 
     function comprobarCero(datas,sala){
@@ -104,6 +104,13 @@ io.on('connection', async (socket) => {
         }
 
     }
+    function comprobarNombre(username,sala) {
+        
+        const index = salas[sala].findIndex(user => user.username === username);
+       
+        return index
+      }
+
     function obtenerIndex(username,sala) {
        
         const index = salas[sala].findIndex(user => user.username === username);
@@ -381,10 +388,12 @@ io.on('connection', async (socket) => {
        
         let aux=salas[sala][index].index;
     
-       salas[sala][index].puntacion=salas[sala][index].puntacion+tiro;
+        salas[sala][index].puntacion=salas[sala][index].puntacion+tiro;
 
         salas[sala][index].index++;
         aux=salas[sala][index].index;
+        console.log(salas)
+        console.log(aux)
         socket.emit('pregunta',Preguntas[aux])
         if (aux>18){
             rellenarPreguntas();
@@ -455,18 +464,27 @@ io.on('connection', async (socket) => {
  
     });
 
-    socket.on('join-room', (claveSala) => {
+    socket.on('join-room', (claveSala,name) => {
         const room = io.sockets.adapter.rooms.get(claveSala);
         if (!salas[claveSala]) {
             salas[claveSala] = [];  // Inicializamos la sala como un array vacío
         }
-        console.log("diegooo")
+        
+        if(comprobarNombre(name,claveSala)>=0){
+            socket.emit('error', 'El nombre que has puesto ya está en uso, prueba con otro');
+            return
+        }
+        
+
+
         if (room) {
+            socket.user.username=name;
             socket.join(claveSala);
             console.log(`Usuario ${socket.user.username} (ID=${socket.user.id}) se unió a la sala: ${claveSala}`);
             socket.emit('room-joined', claveSala);
+            asignarValores();
             console.log(socket.user)
-            console.log("diegooo")
+            
             salas[claveSala].push(socket.user);
             conexiones[socket.id]=socket
 
