@@ -69,18 +69,23 @@ if (useApp.loginInfo.loggedIn) {
 </script>
 <template>
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
   <main id="main_menu">
     <div id="div_menu" v-if="visibleOpciones">
-      <q-btn class="botones_menu" glossy label="Historia" @click="verificarHistoria"></q-btn>
-      <br>
-      <q-btn class="botones_menu" glossy label="Arcade" @click="verificarArcade"></q-btn>
-      <br>
-      <q-btn class="botones_menu" glossy label="Multijugador" @click="verificarMultijugador"></q-btn>
-      <br>
-      <RouterLink to="/" @click="ocultarTot">
-        <q-btn class="botones_menu" glossy label="Volver"></q-btn>
-      </RouterLink>
+      <q-btn class="botones_menu" glossy label="" @click="verificarHistoria"><span style="font-size: 62px;" class="material-icons">person</span>  </q-btn>
+       
+      <q-btn class="botones_menu" glossy label="" @click="verificarArcade"><span style="font-size: 90px;" class="material-icons">groups</span>  </q-btn>
+     
+
+      <q-btn class="botones_menu" glossy label=""><span style="font-size: 60px;" class="material-icons">brush</span>    </q-btn>    
+
+      <q-btn class="botones_menu" glossy label="" @click="verificarMultijugador"> <span style="font-size: 60px;" class="material-icons">settings</span>    </q-btn>
+      
+      <q-btn class="botones_menu" glossy label="" @click="verificarMultijugador"><span style="font-size: 60px;" class="material-icons"> favorite </span> </q-btn>
+
+      <q-btn class="botones_menu" glossy label=""><span style="font-size: 60px;" class="material-icons"> keyboard_return </span>   </q-btn>    
+   
     </div>
 
 
@@ -89,12 +94,13 @@ if (useApp.loginInfo.loggedIn) {
 
 <style scoped>
 #main_menu {
-  display: grid;
-  grid-template-rows: 1fr 1fr 1fr;
-  grid-template-columns: 1fr 1fr 1fr;
+  display: flex;
+  justify-content: center; /* Centra horizontalmente */
+  align-items: center; /* Centra verticalmente */
   height: 100vh;
   font-family: 'Press Start 2P', cursive;
 }
+ 
 
 .menu_avatar {
   text-align: center;
@@ -109,21 +115,31 @@ if (useApp.loginInfo.loggedIn) {
   height: 400px;
   width: 300px;
   font-family: 'Press Start 2P', cursive;
-  padding-top: 50px;
+  
 }
 
 #div_menu {
   text-align: center;
+  width: 200px;
   grid-column: 2;
   grid-row: 2;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2 columnas del mismo tamaño */
+  gap: 20px; /* Elimina cualquier separación entre botones */
+  justify-content: center;
+  align-items: center;
+   
 }
 
 .botones_menu {
-  margin: 10px;
-  width: 350px;
+   
+  height: 100px;  
+  padding: 0;
+  width: 150px;
+  display: inline;
   font-size: 26px;
   border: 1px solid black;
-  background-color: #ff4500;
+  background-color: #000000;
   color: #ffffff;
   border: none;
   cursor: pointer;
@@ -133,7 +149,7 @@ if (useApp.loginInfo.loggedIn) {
 
 .botones_menu:hover {
   background-color: #ffffff;
-  color: #ff4500;
+  color: #000000;
   transform: scale(1.05);
 }
 

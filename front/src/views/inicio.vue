@@ -5,12 +5,14 @@
 <template>
         <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
   <main id="main_inicio">
  <div id="div_inicio">
    <img src="/bioma/logo.png" width="350px" height="320px" alt="Logo"><br>
-   <RouterLink to="/jugar"> <q-btn color="deep-orange" size="40px"> <q-icon name="eva-arrow-right-outline" size="400%"/></q-btn></RouterLink>
+   <RouterLink to="/jugar"> <q-btn class="botones_menu" glossy size="40px"><span style="font-size: 150px;" class="material-icons">videogame_asset</span> </q-btn></RouterLink>
  </div>
-   
+ 
   </main>
 
   
@@ -33,6 +35,31 @@
   
 
 }
+
+.botones_menu {
+
+   height: 150px;  
+
+   padding: 0;
+   width: 300px;
+   display: inline;
+   font-size: 26px;
+   border: 1px solid black;
+   background-color: #000000;
+   color: #ffffff;
+   border: none;
+   cursor: pointer;
+   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.9);
+   transition: transform 0.3s, background-color 0.3s;
+ }
+
+.botones_menu:hover {
+  background-color: #ffffff;
+  color: #000000;
+  transform: scale(1.05);
+}
+
+
 
 
 
