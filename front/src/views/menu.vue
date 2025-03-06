@@ -28,67 +28,31 @@ const router = useRouter();
 
 const visibleLog = ref(false);
 const useApp = useCounterStore();
-const visibleOpciones = ref(true);
-const mostrarDialogoArcade = ref(false);
-const mostrarDialogoMultijugador = ref(false);
+const visibleOpciones = ref(true); 
 
 function ocultarTot() {
   visibleOpciones.value = false;
 }
 
 function verificarHistoria() {
-  if (!useApp.loginInfo.loggedIn) {
-    mostrarDialogoMultijugador.value = true;
-  } else {
+  
     router.push('/jugar/historia');
-  }
+  
 }
 
 function verificarMultijugador() {
-  if (!useApp.loginInfo.loggedIn) {
-    mostrarDialogoMultijugador.value = true;
-  } else {
+
     router.push('/jugar/multijugador');
-  }
+   
 }
 
 function verificarArcade() {
-  if (!useApp.loginInfo.loggedIn) {
-    mostrarDialogoArcade.value = true;
-  } else {
+  
     router.push('/jugar/arcade');
-  }
+  
 }
 
 const route = useRoute();
-
-async function salir() {
-  $q.loading.show({
-    spinner: QSpinnerFacebook,
-    spinnerColor: 'white',
-    spinnerSize: 140,
-    backgroundColor: 'black',
-    message: 'Cerrando sesión...',
-    messageColor: 'white',
-  });
-
-  try {
-    await new Promise(resolve => setTimeout(resolve, 2000));
-
-    useApp.setLoginInfo({
-      loggedIn: false,
-      username: '',
-      email: '',
-      avatar: '',
-      nivel: '',
-      token: '',
-    });
-
-    visibleLog.value = false;
-  } finally {
-    $q.loading.hide();
-  }
-}
 
 watch(route, (newRoute) => {
   if (newRoute.path === '/jugar') {
@@ -119,90 +83,7 @@ if (useApp.loginInfo.loggedIn) {
       </RouterLink>
     </div>
 
-    <div class="user_menu" v-if="visibleOpciones">
-      <q-btn-dropdown class="glossy" color="black" icon="eva-person-add-outline" menu-anchor="top right"
-        menu-self="bottom right" size="25px">
-        <div class="div_user">
-          <div>
-            <div style="font-size: 40px; text-align: center">Cuenta</div>
-          </div>
 
-          <!-- Loggeado -->
-          <div class="menu_avatar" v-if="visibleLog">
-            <q-avatar size="90px">
-              <img :src="`/avatar/boy${useApp.loginInfo.avatar}.png`" />
-            </q-avatar>
-
-            <div style="font-size: 30px">{{ useApp.loginInfo.username }}</div>
-
-            <RouterLink to="/user/perfil">
-              <q-btn class="botones_desple" color="black" label="Perfil" push size="30px" v-close-popup
-                style="font-size: 16px;"></q-btn>
-            </RouterLink>
-            <br />
-            <RouterLink to="/jugar">
-              <q-btn class="botones_desple" color="red" label="Log out" push size="30px" v-close-popup
-                @click="salir" style="font-size: 16px;"></q-btn>
-            </RouterLink>
-          </div>
-
-          <!-- No Loggeado -->
-          <div class="menu_avatar" v-else>
-            <q-avatar size="90px">
-              <img src="/avatar/boy1.png" />
-            </q-avatar>
-
-            <!-- Texto de "Invitado" con fuente más pequeña -->
-            <div style="font-size: 20px">Invitado</div> <!-- Fuente más pequeña para "Invitado" -->
-
-            <RouterLink to="/user/login">
-              <q-btn class="botones_desple" color="black" label="Login" push size="30px" v-close-popup
-                style="font-size: 16px;"></q-btn>
-            </RouterLink>
-            <br />
-            <RouterLink to="/user/register">
-              <q-btn class="botones_desple" color="grey" label="Registrarse" push size="30px" v-close-popup
-                style="font-size: 16px;"></q-btn>
-            </RouterLink>
-          </div>
-        </div>
-      </q-btn-dropdown>
-    </div>
-
-    <q-dialog v-model="mostrarDialogoArcade" transition-show="rotate" transition-hide="rotate">
-      <q-card>
-        <q-card-section>
-          <div class="text-h6">Aviso</div>
-        </q-card-section>
-
-        <q-card-section class="q-pt-none">
-          <p>Si no te registras no se guardará tu puntuación en el ranking global.</p>
-        </q-card-section>
-
-        <q-card-actions align="right">
-          <q-btn flat label="Cancelar" color="primary" v-close-popup></q-btn>
-          <q-btn flat label="Jugar de todos modos" color="primary" @click="() => { router.push('/jugar/arcade'); }"
-            v-close-popup></q-btn>
-        </q-card-actions>
-      </q-card>
-    </q-dialog>
-
-    <q-dialog v-model="mostrarDialogoMultijugador" transition-show="rotate" transition-hide="rotate">
-      <q-card>
-        <q-card-section>
-          <div class="text-h6">Aviso</div>
-        </q-card-section>
-
-        <q-card-section class="q-pt-none">
-          <p>Registrate para jugar este modo.</p>
-        </q-card-section>
-
-        <q-card-actions align="right">
-          <q-btn flat label="Volver al Menú" color="primary" @click="() => { router.push('/jugar'); }"
-            v-close-popup></q-btn>
-        </q-card-actions>
-      </q-card>
-    </q-dialog>
   </main>
 </template>
 

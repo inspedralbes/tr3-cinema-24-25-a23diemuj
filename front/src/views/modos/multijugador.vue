@@ -18,7 +18,7 @@ const audio = new Audio(audioPodio);
 console.log("Token enviado al servidor:", token);
 socketManager.RemSocket();
 const visibleFinal = ref(false);
-const socket = socketManager.getSocket(token);
+let socket = socketManager.makeSocket(token);
 const visiblePoder = ref(false);
 const visibleRanking = ref(false);
 const visibleTempo = ref(false);
@@ -119,7 +119,7 @@ function empezar() {
   visibleTempo.value = true;
   if (visibleSalas.value == true) {
     visibleSalas.value = false;
-
+    socket=socketManager.getSocket();
   }
 
 

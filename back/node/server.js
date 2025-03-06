@@ -92,31 +92,10 @@ async function rellenarPreguntas(){
  }
 
 io.on('connection', async (socket) => {
-    console.log(`Usuario conectado: ${socket.id}`);
-    const token = socket.handshake.auth.token;
+ 
+ socket.user = { username: socket.handshake.auth.username };
 
-    if (!token) {
-        console.log('Token no proporcionado. Desconectando socket.');
-        socket.disconnect();
-        return;
-    }
-
-    try {
-       const response = await axios.get("http://localhost:8000/api/user", {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        });
-        socket.user = response.data;
-        
-        console.log('Usuario autenticado:', socket.user);  
-    } catch (error) {
-        console.error('Token inválido:', error.response?.data || error.message);
-        socket.disconnect();
-        return;
-    }
-
-
+    console.log(socket.user);
 
     function comprobarCero(datas,sala){
 
@@ -446,30 +425,48 @@ io.on('connection', async (socket) => {
             room: claveSala,
             users: [...io.sockets.adapter.rooms.get(claveSala)].map(id => ({
                 id,
-                username: io.sockets.sockets.get(id)?.user?.username || 'Invitado',
+                username: io.sockets.sockets.get(id)?.user?.username || 'Anfitrión',
             })),
         });
 
     });
 
    
-
+    socket.on('comprobarSala', (claveSala) => {
+        const room = io.sockets.adapter.rooms.get(claveSala);
+        
+        if (room) {
+            socket.emit('ComprobarSala');
+        } else {
+            socket.emit('error', 'Sala no encontrada');
+        }
  
-
+    });
     
+
+    socket.on('prueba', (claveSala) => {
+        const room = io.sockets.adapter.rooms.get(claveSala);
+        
+        if (room ==0) {
+            socket.emit('ComprobarSala');
+        } else {
+            socket.emit('error', 'sexooo');
+        }
+ 
+    });
 
     socket.on('join-room', (claveSala) => {
         const room = io.sockets.adapter.rooms.get(claveSala);
         if (!salas[claveSala]) {
             salas[claveSala] = [];  // Inicializamos la sala como un array vacío
         }
-         
+        console.log("diegooo")
         if (room) {
             socket.join(claveSala);
             console.log(`Usuario ${socket.user.username} (ID=${socket.user.id}) se unió a la sala: ${claveSala}`);
-
             socket.emit('room-joined', claveSala);
-            asignarValores();
+            console.log(socket.user)
+            console.log("diegooo")
             salas[claveSala].push(socket.user);
             conexiones[socket.id]=socket
 

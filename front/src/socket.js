@@ -1,8 +1,8 @@
-import { io } from 'socket.io-client';
+import { io } from 'socket.io-client'; 
 
 let socketInstance;
 
-const getSocket = (token) => {
+const makeSocket = (token) => {
   // Si no existe la instancia, la creamos
   if (!socketInstance) {
     console.log("Token enviado al servidor:", token);
@@ -11,13 +11,21 @@ const getSocket = (token) => {
       transports: ["websocket"],
       withCredentials: true,
       auth: {
-        token: token,
+        username: token,
       },
     });
+
+    
   }
+
+ 
   return socketInstance;
 };
 
+
+const getSocket = () => {
+  return socketInstance;
+};
 
 const RemSocket=()=>{
 
@@ -27,4 +35,5 @@ const RemSocket=()=>{
   }
 }
 
-export default { getSocket, RemSocket } ;
+export default { getSocket, RemSocket,makeSocket } ;
+

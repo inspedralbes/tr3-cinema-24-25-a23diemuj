@@ -5,10 +5,24 @@
     <div class="menu-mult">
       <h1 class="salas-titulo"><br>SALAS PRIVADAS</h1>
 
+
+
+
       <div v-if="!enSala" class="boton-grid">
-        <q-btn @click="unirSala" class="boton-sp" glossy label="Unir Sala"></q-btn>
-        <input type="text" v-model="claveSala" class="input-sala" placeholder="Clave de la sala" />
-        <br><q-btn @click="crearSala" class="boton-sp" glossy label="Crear Sala"></q-btn>
+
+      <div v-if="!mostarName">
+        <q-btn @click="crearSala" class="boton-sp" glossy label="Crear Sala"></q-btn>
+        <br> <br> <br>
+        <input type="text" v-model="claveSala" class="input-sala" placeholder="Clave sala"/><br> <br>
+        <q-btn @click="comprobarSala" class="boton-sp" glossy label="Unirse"></q-btn>
+      </div>
+        <div v-else>
+          <input type="text" v-model="name" class="input-sala" placeholder="Username" /><br><br>
+        <q-btn @click="unirSala" class="boton-sp" glossy label="Unirse "></q-btn>
+      </div>
+
+       
+
       </div>
 
       <div id="room-info" v-else>
@@ -52,13 +66,31 @@
         </q-card-actions>
       </q-card>
     </q-dialog>
+
+
+  <!-- Diálogo para alerta -->
+    <q-dialog v-model="dialogName" :backdrop-filter="backdropFilter">
+      <q-card>
+        <q-card-section class="row items-center q-pb-none text-h6">
+          Aviso
+        </q-card-section>
+
+        <q-card-section>
+          Introduce un nombre para unirte.
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn flat label="Cerrar" color="primary" v-close-popup />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
   </div>
 </template>
 
 <script>
 import { useCounterStore } from '@/stores/counter';
 import { ref } from "vue";
-import getSocket from '@/socket';
+import socketManager from '@/socket';
 
 export default {
   props: {
@@ -70,11 +102,15 @@ export default {
   data() {
     return {
       socket: this.socket,
-      claveSala: "", 
+      claveSala: "",
+      nSocket:"",
+      name: "",
       claveActual: "", 
       usuarios: [], 
       enSala: false,
       dialog: false,
+      dialogName: false,
+      mostarName: false,
       backdropFilter: "hue-rotate(210deg)"
     };
   },
@@ -84,13 +120,27 @@ export default {
       this.$emit('boton');
     },
 
-    unirSala() {
+  unirSala() {
+      if (this.name.trim()) {
+        
+          this.socket.emit("prueba", this.claveSala.trim());
+
+      
+    
+  } else {
+    this.dialogName = true; // Muestra el diálogo
+  }
+    },
+    comprobarSala(){
       if (this.claveSala.trim()) {
-        this.socket.emit("join-room", this.claveSala.trim());
+        this.socket.emit("comprobarSala", this.claveSala.trim());
+        console.log(this.socket);
+        console.log("comprobarSala");
       } else {
         this.dialog = true; // Muestra el diálogo
       }
     },
+   
     salirSala() {
       this.socket.emit("leave-room", this.claveActual);
       this.$emit('boton');
@@ -117,7 +167,10 @@ export default {
     this.socket.on("connect_error", (err) => {
       console.error("Error al conectar:", err.message);
     });
-
+    this.socket.on("ComprobarSala", () => { 
+      this.mostarName=true;
+      console.log("ComprobarASSala");
+    });
     this.socket.on("room-created", (claveSala) => {
       this.updateRoomView(claveSala);
     });
