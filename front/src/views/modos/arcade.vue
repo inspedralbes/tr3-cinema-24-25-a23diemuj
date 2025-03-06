@@ -11,9 +11,9 @@ const visibleJuego = ref(false);
 const index = ref(0);
 const puntuacion = ref(0);
 const cargando = ref(true);
-const mostrarTempo = ref(true); 
-
-
+const mostrarTempo = ref(false); 
+const name = ref("");
+const visibleName = ref(true);
 onMounted(() => {
       const useApp = useCounterStore();
       if (useApp.ActivarMusica==true) {
@@ -27,6 +27,12 @@ async function rellenarPreguntas() {
   data.pregunta = await getPreguntas(0);
   visibleJuego.value = true;
   cargando.value = false;
+}
+
+function jugar() {
+  useCounterStore().loginInfo.username=name.value;
+  visibleName.value=false;
+  mostrarTempo.value=true;
 }
 
 function siguientePregunta(info) {
@@ -53,6 +59,21 @@ function ocultarTemporizador() {
 <template>
         
   <main class="main">
+ 
+   
+    <div v-if="visibleName" class="menu-mult"> 
+      <div class="boton-grid">
+        <div >
+          <input type="text" v-model="name" class="input-sala" placeholder="Username" /><br><br>
+        <q-btn @click="jugar" class="boton-sp" glossy label="Jugar "></q-btn>
+      </div>
+    </div>
+      
+    </div>
+ 
+
+
+
     <Temporizador v-if="mostrarTempo" @complete="ocultarTemporizador" />
 
     <Partida v-if="!cargando && visibleJuego && !mostrarTempo" :data="data.pregunta[index]" @siguiente="siguientePregunta" />
@@ -69,7 +90,61 @@ function ocultarTemporizador() {
   background-attachment: fixed;
   height: 100vh;
   position: relative;
+  padding-top: 20px;
   
 
 }
+
+
+ 
+  
+.menu-mult {
+  text-align: center;
+ margin-top: 20%;
+  font-size: 20px;
+} 
+.boton-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px;
+  justify-items: center;
+  align-items: center;
+  margin-top: 200px;
+  font-family: 'Press Start 2P', cursive;
+} 
+.input-sala {
+  width: 300px;
+  max-width: 90%;
+  padding: 10px;
+  font-size: 16px;
+  text-align: center;
+  font-family: 'Press Start 2P', cursive;
+} 
+.boton-sp {
+  width: 300px;
+  max-width: 90%;
+  font-size: 20px;
+  background-color: #ff4500;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  padding: 20px 20px;
+  font-family: 'Press Start 2P', cursive;
+  cursor: pointer;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.boton-sp:hover {
+  background-color: #ffffff;
+  color: #ff4500;
+  transform: scale(1.1);
+}
+
+.boton-sp:active {
+  transform: scale(1);
+}
+
+
+ 
 </style>

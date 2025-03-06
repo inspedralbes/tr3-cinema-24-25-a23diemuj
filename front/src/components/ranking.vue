@@ -66,7 +66,7 @@
       console.log('Información del usuario:', userInfo);
       console.log('Puntuación actual:', this.puntuacion);
 
-      if (userInfo.loggedIn && userInfo.id_user) {
+      
         try {
           const existingRank = this.rankings.find(rank => rank.id_user === userInfo.id_user);
 
@@ -81,7 +81,7 @@
             }
           } else {
             await axios.post('http://127.0.0.1:8000/api/ranking', {
-              id_users: userInfo.id_user,
+              username: userInfo.username,
               puntuacion: this.puntuacion,
             });
             console.log('Puntuación guardada con éxito');
@@ -91,7 +91,7 @@
         } catch (error) {
           console.error('Error al guardar la puntuación:', error);
         }
-      }
+       
     },
 
       async fetchRanking() {

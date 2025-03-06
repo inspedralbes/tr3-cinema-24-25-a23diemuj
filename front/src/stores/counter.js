@@ -16,34 +16,16 @@ export const useCounterStore = defineStore('counter', () => {
   
 
   const loginInfo = reactive({
-    loggedIn: false,
+    loggedIn: true,
     username: '',
-    email:'',
-    avatar: '',
-    nivel:'',
-    token:'',
-    id_user: null,
+  
   });
 
  
 
 
-  const setLoginInfo = ({loggedIn,username,email,avatar,nivel,token,id_user }) => {
-    loginInfo.loggedIn = loggedIn;
-    loginInfo.username = username;
-    loginInfo.avatar = avatar;
-    loginInfo.nivel= nivel;
-    loginInfo.token = token;
-    loginInfo.email = email;
-    loginInfo.id_user = id_user;
-  };
-
-   
-
   const SalaActual= ref("");
   
-
-
 
 
   const getLoginInfo = computed(() => loginInfo);
@@ -51,10 +33,8 @@ export const useCounterStore = defineStore('counter', () => {
 
 
   return { 
-    getLoginInfo, loginInfo,setLoginInfo,ActivarMusica,SalaActual, ApagarMusica, EncenderMusica
+    getLoginInfo, loginInfo,ActivarMusica,SalaActual, ApagarMusica, EncenderMusica
 
 
   }
-}, {
-  persist: true   
 })

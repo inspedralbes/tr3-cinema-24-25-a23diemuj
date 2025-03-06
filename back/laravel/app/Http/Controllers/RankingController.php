@@ -10,12 +10,12 @@ class RankingController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'id_users' => 'required|exists:users,id',
-            'puntuacion' => 'required|numeric',
+            'username' => 'required',
+            'puntuacion' => 'required',
         ]);
 
         $ranking = new Ranking();
-        $ranking->id_users = $validated['id_users'];
+        $ranking->username = $validated['username'];
         $ranking->puntuacion = $validated['puntuacion'];
         $ranking->save();
 
@@ -23,21 +23,20 @@ class RankingController extends Controller
     }
 
     public function getRanking()
-    {
-        $rankings = Ranking::with('user:id,username')
-            ->orderBy('puntuacion', 'desc')  
-            ->take(5)
-            ->get();
+{
+    $rankings = Ranking::orderBy('puntuacion', 'desc')  
+        ->take(5)
+        ->get();
 
-        $result = $rankings->map(function ($ranking) {
-            return [
-                'id' => $ranking->id,
-                'username' => $ranking->user ? $ranking->user->username : 'Usuario no encontrado',
-                'puntuacion' => $ranking->puntuacion,
-                'created_at' => $ranking->created_at,
-            ];
-        });
+    $result = $rankings->map(function ($ranking) {
+        return [
+            'id' => $ranking->id,
+            'username' => $ranking->username, // Ahora obtenemos directamente el 'username' de la tabla ranking
+            'puntuacion' => $ranking->puntuacion,
+            'created_at' => $ranking->created_at,
+        ];
+    });
 
-        return response()->json($result);
-    }
+    return response()->json($result);
+}
 }
