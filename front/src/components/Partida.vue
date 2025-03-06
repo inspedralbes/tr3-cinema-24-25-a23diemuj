@@ -36,8 +36,7 @@ function apagarAnimaciones(interrumptor){
   animaciones.fallo2=false;
   animaciones.fallo3=false;
   animaciones.fallo4=false;
-  animaciones.fallo5=false;
-  animaciones.tiro_en_llamas=false;
+  animaciones.fallo5=false; 
 
   if(interrumptor==3){
 
@@ -110,7 +109,7 @@ let apagar=0;
       if(puntosSeguidos>=5){
         apagar=5
         info.racha=true; 
-        animaciones.tiro_en_llamas=true;
+        animaciones.encestar=true;
         tiroHecho.value=true;
         
       }
@@ -261,8 +260,8 @@ function responder(num){
   'animacion_fallo5': animaciones.fallo5,
   'animacion_temblor1':animaciones.temblor1,
   'animacion_temblor2': animaciones.temblor2,
-  'animacion_fuego':animaciones.llamas,
-  'animacion_encestar_llamas': animaciones.tiro_en_llamas
+  'animacion_fuego':animaciones.llamas 
+   
 
   }" 
   src="../assets/bioma/balon.png" alt="" srcset="">
@@ -340,29 +339,7 @@ function responder(num){
                 filter:brightness(1.4);
             }
         }
-
-@keyframes tiro_en_llamas {
-
-  0% {
-        transform: translateY(0);
-        box-shadow: 0 0 40px 20px yellow, 0 0 60px 30px red, 0 0 80px 40px #ff4500;
-                background-color:rgb(255, 196, 0);
-                filter:brightness(1.4);
-         
-    } 50%{
-
-       transform: translateY(-300px)  scale(0.8) rotate(-90deg);
-        
-      
-    }
-    100% {
-        transform: translateY(-200px) scale(0.4) rotate(-180deg); /* Sube 200px hacia arriba */
-         
-        box-shadow: 0 30px 30px 20px yellow, 0 40px 50px 30px red, 0 50px  70px 40px #ff4500;
-                background-color:rgb(255, 196, 0);
-                filter:brightness(1.4);
-    }
-        }
+ 
 
  @keyframes 
  encestar {

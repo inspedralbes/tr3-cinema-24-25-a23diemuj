@@ -73,16 +73,16 @@ if (useApp.loginInfo.loggedIn) {
 
   <main id="main_menu">
     <div id="div_menu" v-if="visibleOpciones">
-      <q-btn class="botones_menu" glossy label="" @click="verificarHistoria"><span style="font-size: 62px;" class="material-icons">person</span>  </q-btn>
+      <q-btn class="botones_menu" glossy label="" @click="verificarArcade"><span style="font-size: 62px;" class="material-icons">person</span>  </q-btn>
        
-      <q-btn class="botones_menu" glossy label="" @click="verificarArcade"><span style="font-size: 90px;" class="material-icons">groups</span>  </q-btn>
+      <q-btn class="botones_menu" glossy label=""@click="verificarMultijugador" ><span style="font-size: 90px;" class="material-icons">groups</span>  </q-btn>
      
 
       <q-btn class="botones_menu" glossy label=""><span style="font-size: 60px;" class="material-icons">brush</span>    </q-btn>    
 
-      <q-btn class="botones_menu" glossy label="" @click="verificarMultijugador"> <span style="font-size: 60px;" class="material-icons">settings</span>    </q-btn>
+      <q-btn class="botones_menu" glossy label="" > <span style="font-size: 60px;" class="material-icons">settings</span>    </q-btn>
       
-      <q-btn class="botones_menu" glossy label="" @click="verificarMultijugador"><span style="font-size: 60px;" class="material-icons"> favorite </span> </q-btn>
+      <q-btn class="botones_menu" glossy label=""><span style="font-size: 60px;" class="material-icons"> favorite </span> </q-btn>
 
       <q-btn class="botones_menu" glossy label=""><span style="font-size: 60px;" class="material-icons"> keyboard_return </span>   </q-btn>    
    
