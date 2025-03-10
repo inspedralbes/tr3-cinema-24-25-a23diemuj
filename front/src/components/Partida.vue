@@ -258,9 +258,6 @@ function responder(num){
   'animacion_fallo3': animaciones.fallo3,
   'animacion_fallo4': animaciones.fallo4,
   'animacion_fallo5': animaciones.fallo5,
-  'animacion_temblor1':animaciones.temblor1,
-  'animacion_temblor2': animaciones.temblor2,
-  'animacion_fuego':animaciones.llamas 
    
 
   }" 
