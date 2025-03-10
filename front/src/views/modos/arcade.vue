@@ -1,12 +1,13 @@
 <script setup>
 import { ref, reactive, onUnmounted,onMounted } from 'vue';
 import Ranking from '../../components/ranking.vue';
-import Partida from '../../components/Partida.vue';
+import Partida from '../../components/Partida_basket.vue';
 import Temporizador from '../../components/temporizador.vue';
 import { getPreguntas } from '@/comunication_manager';
 import { useCounterStore } from '@/stores/counter';
 
 const data = reactive({ pregunta: "" });
+
 const visibleJuego = ref(false);
 const index = ref(0);
 const puntuacion = ref(0);
@@ -23,10 +24,16 @@ onMounted(() => {
     });
 
 async function rellenarPreguntas() {
-  cargando.value = true;
+
+  if(name.value=="sexoooooo"){
+  
   data.pregunta = await getPreguntas(0);
+ 
+  }
+  cargando.value = true; 
   visibleJuego.value = true;
   cargando.value = false;
+ 
 }
 
 function jugar() {
@@ -35,7 +42,9 @@ function jugar() {
   mostrarTempo.value=true;
 }
 
-function siguientePregunta(info) {
+function siguientePregunta(info2) {
+
+
   if (info.fallo) {
     visibleJuego.value = false;
   } else {
@@ -49,10 +58,9 @@ function siguientePregunta(info) {
 }
 
 function ocultarTemporizador() {
-
-
   mostrarTempo.value = false;
   rellenarPreguntas();  
+   
 }
 </script>
 
