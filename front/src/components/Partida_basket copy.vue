@@ -27,8 +27,8 @@ const props={data:  {
 
 const Canastas = ref(0)
 const valorCanasta= ref(0)
-const index = ref(0)
-
+const index = ref(0);
+const Zindex= reactive({balon:10, aro:5}); 
 const info= reactive({fallo:false, canasta:0,racha:false})
 
 
@@ -125,6 +125,16 @@ let apagar=0;
       else{
         animaciones.encestar=true;
         tiroHecho.value=true;
+
+        
+
+        setTimeout(() => {
+          Zindex.balon=3;
+        },250);
+        setTimeout(() => {
+          Zindex.balon=10;
+        },500);
+
        
 }
 
@@ -256,13 +266,20 @@ function responder(num){
   <RouterLink to="/jugar"> <q-btn color="deep-orange"  size="20px" glossy label="Volver"></q-btn></RouterLink>
  -->
  
+ <div id="canasta">
+  <img :style="{zIndex: Zindex.aro }"
+   class="aro" src="../assets/bioma/aro.png" alt="">
+  <img class="tablero" src="../assets/bioma/tablero.png" alt="">
+  
+  
+ </div>
  
- <img id="canasta" src="../assets/bioma/tablero.png" alt="">
 
    
 
   <img id="balon" 
-   
+  
+ :style="{zIndex: Zindex.balon }"
   :class="{'animacion_encestar': animaciones.encestar,
   'animacion_fallo1': animaciones.fallo1,
   'animacion_fallo2': animaciones.fallo2,
@@ -270,9 +287,10 @@ function responder(num){
   'animacion_fallo4': animaciones.fallo4,
   'animacion_fallo5': animaciones.fallo5,
    
-
   }" 
-  src="../assets/bioma/pelota_beisbol.gif" alt="" srcset="">
+
+
+  src="../assets/bioma/balon.png" alt="" srcset="">
 
   <div class="tiempo_fuera">
     <div class="tiempo" >{{ props.data.duracion }} </div>
@@ -348,14 +366,17 @@ function responder(num){
  encestar {
     0% {
         transform: translateY(0); /* Empieza en la parte inferior */
-         
+       
     } 50%{
 
        transform: translateY(-300px)  scale(0.8) rotate(-90deg);
       
+      
     }
     100% {
-        transform: translateY(-200px) scale(0.4) rotate(-180deg); /* Sube 200px hacia arriba */
+        transform: translateY(-150px) scale(0.5) rotate(-180deg); 
+      
+        /* Sube 200px hacia arriba */
          
     }
   }
@@ -491,16 +512,40 @@ function responder(num){
   grid-row: 2;
   justify-self: center;  
   border-radius: 50%;
+   
+  
 }
 
 #canasta{
   grid-row: 1;
   grid-column: span 3;
   justify-self: center;  
-  
+  margin-bottom: 80px;
+ 
 
   
 }
+
+#canasta .tablero{
+   
+  width:200px;
+  z-index: 0;
+  
+}
+
+
+#canasta .aro{
+
+  position: absolute;
+  top: 0;
+  width: 100px;
+  margin-top: 140px;
+  margin-left: 50px;
+  
+  
+
+}
+
 
  
 
@@ -603,7 +648,7 @@ font-size: 50px  !important;
 
   width: 90%;
   margin: 10px; 
-  font-size: 25px; 
+  font-size: 30px; 
    
 }
 
@@ -616,9 +661,9 @@ font-size: 50px  !important;
 @media screen and (min-width: 750px){
   .botones_partida{
 
-width: 100% ;
-margin: 10px; 
+width: 70% ; 
 font-size: 50px  ;   
+border-radius: 20px;
  
 }
 .respuestas{
