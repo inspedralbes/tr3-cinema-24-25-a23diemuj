@@ -661,9 +661,9 @@ font-size: 50px  !important;
 @media screen and (min-width: 750px){
   .botones_partida{
 
-width: 100% ;
-margin: 10px; 
+width: 70% ; 
 font-size: 50px  ;   
+border-radius: 20px;
  
 }
 .respuestas{
