@@ -3,16 +3,17 @@ import { reactive,ref,computed, watch, onMounted, onUnmounted } from 'vue';
 import { useCounterStore } from '@/stores/counter';
 
 
-//const props = defineProps({
-//  data: {
- //   type: Object,
-  //  required: true,
-  //},
+const props = defineProps({
+ data: {
+   type: Object,
+    required: true,
+  },
 
 
 
 
-//},)
+},)
+/*
 const props={data:  {
     "id": 1,
     "operacion": "5 + 3",
@@ -24,7 +25,7 @@ const props={data:  {
     "duracion": 24
   }};
 
-
+*/
 const Canastas = ref(0)
 const valorCanasta= ref(0)
 const index = ref(0);
@@ -32,36 +33,19 @@ const Zindex= reactive({balon:10, aro:5});
 const info= reactive({fallo:false, canasta:0,racha:false})
 
 
-const animaciones = reactive({encestar: false, fallo1: false, fallo2: false, fallo3:false, fallo4:false, fallo5:false,temblor1:false,
-                              temblor2:false, llamas:false, tiro_en_llamas:false
+const animaciones = reactive({encestar: false, bateo1: false, bateo2: false, bateo3:false,
+                            tiro:true,bate:false
 
  })
  
 
 function apagarAnimaciones(interrumptor){
   
-  animaciones.encestar=false;
-  animaciones.fallo1=false;
-  animaciones.fallo2=false;
-  animaciones.fallo3=false;
-  animaciones.fallo4=false;
-  animaciones.fallo5=false; 
-
-  if(interrumptor==3){
-
-    animaciones.temblor1=true
-     
-    
-  }
-  if(interrumptor==4){
-    animaciones.temblor2=true;
-     
-    
-    
-  }
-  if(interrumptor>=5){
-    animaciones.llamas=true
-  }
+   
+  animaciones.bateo1=false;
+  animaciones.bateo2=false;
+  animaciones.bateo3=false;
+  animaciones.bate=false; 
 
 
 }
@@ -73,24 +57,15 @@ function reiniciarInfo(){
   info.racha=false;
 }
 
-
-function apagarAnimaciones_temblores(){
-
-  animaciones.temblor1=false;
-  animaciones.temblor2=false;
-  animaciones.llamas=false;
-  
-
-}
+ 
 let puntosSeguidos=0;
 
 function comprobarPunto(num) {
-  
- reiniciarInfo();
 
+ reiniciarInfo();
+ 
 let apagar=0;
-   
-    apagarAnimaciones_temblores();
+    
     if (props.data.respuesta_correcta == num) {
        
 
@@ -123,30 +98,35 @@ let apagar=0;
         
       }
       else{
-        animaciones.encestar=true;
+        let aux= Math.floor(Math.random() * 3) + 1;
+        console.log(aux);
+        animaciones.bate=true;
+
+        if(props.data.duracion>= 2 && props.data.duracion <= 3){
+
+        setTimeout(() => {
+          animaciones.tiro=false;
+          animaciones[`bateo${aux}`] = true; 
+          console.log(animaciones.bate);
+          
+  }, 500);}
+ 
         tiroHecho.value=true;
 
-        
-
-        setTimeout(() => {
-          Zindex.balon=3;
-        },250);
-        setTimeout(() => {
-          Zindex.balon=10;
-        },500);
 
        
 }
 
     }else{
-      let aux= Math.floor(Math.random() * 5) + 1;
-      animaciones[`fallo${aux}`] = true;
+      console.log("hola")
       tiroHecho.value=true;
       info.fallo=true;
       info.canasta=0;
       puntosSeguidos=0;
+      animaciones.tiro=false;
+      
 
-
+     
     }
   
   index.value++;
@@ -154,9 +134,10 @@ let apagar=0;
   setTimeout(() => {
     apagarAnimaciones(apagar);
     tiroHecho.value=false;
-  }, 500);
+    animaciones.tiro=true
+  },1000);
 
- 
+  
 }
 
 
@@ -179,7 +160,8 @@ function reiniciarTemporizador() {
   progress.value = 0.0;
   color.value = '';
   
-  aux.value = 1 / props.data.duracion;  
+  aux.value = 1 / 7;  
+  props.data.duracion=7;
   iniciarTemporizador();
 }
 
@@ -266,38 +248,33 @@ function responder(num){
   <RouterLink to="/jugar"> <q-btn color="deep-orange"  size="20px" glossy label="Volver"></q-btn></RouterLink>
  -->
  
- <div id="canasta">
-  <img :style="{zIndex: Zindex.aro }"
-   class="aro" src="../assets/bioma/aro.png" alt="">
-  <img class="tablero" src="../assets/bioma/tablero.png" alt="">
-  
-  
- </div>
- 
-
-   
 
   <img id="balon" 
-  
- :style="{zIndex: Zindex.balon }"
-  :class="{'animacion_encestar': animaciones.encestar,
-  'animacion_fallo1': animaciones.fallo1,
-  'animacion_fallo2': animaciones.fallo2,
-  'animacion_fallo3': animaciones.fallo3,
-  'animacion_fallo4': animaciones.fallo4,
-  'animacion_fallo5': animaciones.fallo5,
+   
+  :class="{
+  'animacion_bateo1': animaciones.bateo1,
+  'animacion_bateo2': animaciones.bateo2,
+  'animacion_bateo3': animaciones.bateo3,
+  'animacion_tiro': animaciones.tiro
    
   }" 
 
 
-  src="../assets/bioma/balon.png" alt="" srcset="">
+  src="../assets/bioma/pelota_beisbol.gif" alt="" srcset="">
+
+  <img class="bate" src="@/assets/bioma/bate.png" alt="" srcset="" 
+:class="{
+  'animacion_bate': animaciones.bate}"
+>
+
+
 
   <div class="tiempo_fuera">
     <div class="tiempo" >{{ props.data.duracion }} </div>
    </div>
     
-
-   <span class="titul"> {{ props.data.operacion }} </span>
+    
+   <div class="titul"> {{ props.data.operacion }} </div>
    
     <div class="respuestas">
      
@@ -318,63 +295,25 @@ function responder(num){
 
 
   </div> 
-  </main>
-<!--<Partida class="arcade":data="data[index]" @siguiente="siguientePregunta" />  -->
+  </main> 
 </template>
 
 <style scoped>
-
-@keyframes temblor1 {
-            0% { transform: translate(0, 0); }
-            20% { transform: translate(7px, 7px); }
-            40% { transform: translate(-7px, -7px); }
-            60% { transform: translate(7px, -7px); }
-            80% { transform: translate(-7px, 7px); }
-            100% { transform: translate(0, 0); }
-        }
-
-
-@keyframes temblor2 {
-            0% { transform: translate(0, 0); }
-            10% { transform: translate(8px, 8px); }
-            20% { transform: translate(-12px, -10px); }
-            30% { transform: translate(10px, -15px); }
-            40% { transform: translate(-8px, 12px); }
-            50% { transform: translate(5px, -10px); }
-            60% { transform: translate(-6px, 8px); }
-            70% { transform: translate(12px, 15px); }
-            80% { transform: translate(-10px, -8px); }
-            90% { transform: translate(5px, 12px); }
-            100% { transform: translate(0, 0); }
-        }
-
-@keyframes llamas {
-            0% {
-                
-                box-shadow: none;
-            }
-            100% {
-                
-                box-shadow: 0 0 40px 20px yellow, 0 0 60px 30px red, 0 0 80px 40px #ff4500;
-                background-color:rgb(255, 196, 0);
-                filter:brightness(1.4);
-            }
-        }
  
 
  @keyframes 
- encestar {
+ bateo1 {
     0% {
         transform: translateY(0); /* Empieza en la parte inferior */
        
     } 50%{
 
-       transform: translateY(-300px)  scale(0.8) rotate(-90deg);
+       transform: translateY(-200px)  scale(0.5) rotate(-90deg);
       
       
     }
     100% {
-        transform: translateY(-150px) scale(0.5) rotate(-180deg); 
+        transform: translateY(-150px) scale(0.1) rotate(-180deg); 
       
         /* Sube 200px hacia arriba */
          
@@ -383,115 +322,112 @@ function responder(num){
 
 
   @keyframes 
- fallo1 {
-    0% {
+ bateo2 {
+  0% {
         transform: translateY(0); /* Empieza en la parte inferior */
+       
     } 50%{
 
-       transform: translateY(-300px) translateX(-100px)  scale(0.8) rotate(-90deg);
-       
+       transform: translateY(-200px) translateX(120px)   scale(0.5) rotate(-90deg);
+      
+      
     }
     100% {
-        transform: translateY(-200px) translateX(-150px)  scale(0.4) rotate(-180deg); /* Sube 200px hacia arriba */
+        transform: translateY(-190px) translateX(140px) scale(0.1) rotate(-180deg); 
+      
+        /* Sube 200px hacia arriba */
+         
     }
   }
 
   @keyframes 
- fallo2 {
-    0% {
+ bateo3 {
+  0% {
         transform: translateY(0); /* Empieza en la parte inferior */
+       
     } 50%{
 
-       transform: translateY(-300px) translateX(100px)  scale(0.8) rotate(-90deg);
-       
+       transform: translateY(-200px) translateX(-120px)   scale(0.5) rotate(-90deg);
+      
+      
     }
     100% {
-        transform: translateY(-200px) translateX(150px)  scale(0.4) rotate(-180deg); /* Sube 200px hacia arriba */
+        transform: translateY(-180px) translateX(-140px) scale(0.1) rotate(-180deg); 
+      
+        /* Sube 200px hacia arriba */
+         
     }
   }
 
-  @keyframes 
- fallo3 {
-    0% {
-        transform: translateY(0); /* Empieza en la parte inferior */
-    } 50%{
 
-       transform: translateY(-300px) translateX(10px)  scale(0.8) rotate(-90deg);
+
+
+  @keyframes tiro {
+    0% {
+       
+        transform: translate(0, 0) scale(0.1);
+         
+    }
+    100% {
+        transform: translate(0, 0) rotate(360deg) scale(1.5);
        
     }
-    70% {
-        transform: translateY(-250px)translateX(10px)   scale(0.4) rotate(-180deg); /* Sube 200px hacia arriba */
-    }
-    100%{
-      transform: translateY(-200px) translateX(50px)  scale(0.4) rotate(-180deg); /* Sube 200px hacia arriba */
-    }
-  }
-  @keyframes 
- fallo4{
-    0% {
-        transform: translateY(0); /* Empieza en la parte inferior */
-    }
-    100%{
-      transform: translateY(-500px) translateX(200px)  scale(0.4) rotate(-180deg); /* Sube 200px hacia arriba */
-    }
-  }
 
-  @keyframes 
- fallo5{
+    
+    
+}
+@keyframes bateo {
     0% {
-        transform: translateY(0); /* Empieza en la parte inferior */
+        transform-origin: 0 50%;
+        transform:  scaleX(-1)  translateX(40px)   translateY(-50px);
+         
     }
-    100%{
-      transform: translateY(-800px) translateX(-100px)  scale(0.4) rotate(-180deg); /* Sube 200px hacia arriba */
+  
+    100% {
+      transform-origin: 0 50%;
+      transform: scaleX(-1) translateX(-80px)  translateY(-50px) rotate(250deg);  
+       
     }
+    
+
   }
+.bate{
+  grid-row: 4;
+  height: 200px;
+  grid-column: 2;
+  z-index: 2;
+  
+   
+  
+
+}
+
+.animacion_bate{
+  animation: bateo 0.5s linear;
+}
 
   .q-btn:disabled {
   opacity: 1 !important;  /* Elimina la opacidad */
  
 }
-.animacion_encestar_llamas{
-  animation: tiro_en_llamas 0.5s linear;
+  
+
+.animacion_bateo1{
+  animation: bateo1  0.5s linear infinite ;
 }
 
-.animacion_encestar{
-
+.animacion_bateo2{
+  animation: bateo2  0.5s linear  ;
+}
+.animacion_bateo3{
+  animation: bateo3  0.5s linear  ;
+}
  
-  animation: encestar  0.5s linear  ;
+.animacion_tiro{
 
-}  
-
-.animacion_fallo1{
-  animation: fallo1  0.5s linear  ;
+  animation: tiro 7s linear;
 }
-
-.animacion_fallo2{
-  animation: fallo2  0.5s linear  ;
-}
-.animacion_fallo3{
-  animation: fallo3  0.5s linear  ;
-}
-.animacion_fallo4{
-  animation: fallo4  0.5s linear  ;
-}
-.animacion_fallo5{
-  animation: fallo5  0.5s linear  ;
-}
-
-.animacion_temblor1{
-  animation: temblor1 0.5s infinite;
-}
-
-
-.animacion_temblor2{
-  animation: temblor2 0.5s infinite;
-}
-
-
-.animacion_fuego{
-
-  animation: temblor2 0.5s infinite, llamas 1s forwards;
-}
+ 
 
 
 .imagen_volver {
@@ -509,9 +445,13 @@ function responder(num){
   height: 150px;
   width: 150px;
   grid-column: 2;
-  grid-row: 2;
+  grid-row: 4;
   justify-self: center;  
   border-radius: 50%;
+  z-index: 0;
+  filter: sepia(1) saturate(6) contrast(1.2) hue-rotate(45deg);
+ 
+ 
    
   
 }
@@ -577,19 +517,21 @@ function responder(num){
  
 
 .titul{
-
-  grid-column: span 3;
-  grid-row: 4;
+  grid-row: 1;
+  grid-column: 1 / 4;;
   height: 70px;
   font-size: 50px;
   border: 1px solid black;
   background-color: white;
-  text-align: center
+  text-align: center;
+  margin-top: 60px;
+  
 }
 
 .tiempo_fuera{
   
   grid-column: 2; 
+  grid-row: 1;
   place-items: center;
  
 
@@ -624,6 +566,7 @@ function responder(num){
     grid-column: span 3;
     grid-template-columns: 1fr 1fr;
     grid-row: 5;
+   
     
 }
  
@@ -649,6 +592,7 @@ font-size: 50px  !important;
   width: 90%;
   margin: 10px; 
   font-size: 30px; 
+  align-self: end;
    
 }
 
@@ -663,7 +607,7 @@ font-size: 50px  !important;
 
 width: 70% ; 
 font-size: 50px  ;   
-border-radius: 20px;
+border-radius: 20px; 
  
 }
 .respuestas{
@@ -674,6 +618,16 @@ border-radius: 20px;
     
 }
 
+
+.body_arcade{
+ 
+  max-height:100vh;
+  
+            
+           
+           
+
+}
 
 }
 

@@ -6,8 +6,46 @@ import Temporizador from '../../components/temporizador.vue';
 import { getPreguntas } from '@/comunication_manager';
 import { useCounterStore } from '@/stores/counter';
 
-const data = reactive({ pregunta: "" });
-
+// const data = reactive({ pregunta: "" });
+const data = reactive({ pregunta: [
+  {
+    "id": 1,
+    "operacion": "5 + 3",
+    "respuesta_correcta": 8,
+    "respuestaIncorrecta_1": 9,
+    "respuestaIncorrecta_2": 7,
+    "respuestaIncorrecta_3": 10,
+    "nivel": 1,
+    "duracion": 7
+  },{
+    "id": 1,
+    "operacion": "5 + 3",
+    "respuesta_correcta": 8,
+    "respuestaIncorrecta_1": 9,
+    "respuestaIncorrecta_2": 7,
+    "respuestaIncorrecta_3": 10,
+    "nivel": 1,
+    "duracion": 7
+  },{
+    "id": 1,
+    "operacion": "5 + 4",
+    "respuesta_correcta": 8,
+    "respuestaIncorrecta_1": 9,
+    "respuestaIncorrecta_2": 7,
+    "respuestaIncorrecta_3": 10,
+    "nivel": 1,
+    "duracion": 7
+  },{
+    "id": 1,
+    "operacion": "5 + 3",
+    "respuesta_correcta": 8,
+    "respuestaIncorrecta_1": 9,
+    "respuestaIncorrecta_2": 7,
+    "respuestaIncorrecta_3": 10,
+    "nivel": 1,
+    "duracion": 7
+  }
+] });
 const visibleJuego = ref(false);
 const index = ref(0);
 const puntuacion = ref(0);
@@ -41,10 +79,12 @@ function jugar() {
   visibleName.value=false;
   mostrarTempo.value=true;
 }
+function siguientePregunta2(info) {
 
-function siguientePregunta(info2) {
+}
+function siguientePregunta(info) {
 
-
+/*
   if (info.fallo) {
     visibleJuego.value = false;
   } else {
@@ -54,7 +94,12 @@ function siguientePregunta(info2) {
       index.value = 0;
     }
     puntuacion.value += info.canasta;
-  }
+  }*/
+  index.value++;
+    if (index.value > 2) {
+      index.value = 0;
+    }
+
 }
 
 function ocultarTemporizador() {
@@ -94,7 +139,7 @@ function ocultarTemporizador() {
 <style scoped> 
 
 .main {
-  background-image: url("@/assets/bioma/parque.png");
+  background-image: url("@/assets/bioma/beisbol.png");
   background-position: center center;
   background-size: cover;
   background-attachment: fixed;
