@@ -9,7 +9,7 @@ import musica from './components/musica.vue';
   
 </template>
 
-<style scoped>
+<style>
 
 .a021{
 position: absolute;
@@ -17,5 +17,12 @@ right: 0;
 margin-right: 20px;
 }
 
-
+.imagen_volver {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  width: 40px;
+  border: 2px solid white;
+  border-radius: 5px;
+}
 </style>

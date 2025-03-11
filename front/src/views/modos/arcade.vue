@@ -68,7 +68,9 @@ function ocultarTemporizador() {
         
   <main class="main">
  
-   
+    <RouterLink to="/jugar">
+    <img style="right: inherit;" src="@/assets/imagenes/volver.png" alt="Volver" class="imagen_volver">
+  </RouterLink>
     <div v-if="visibleName" class="menu-mult"> 
       <div class="boton-grid">
         <div >
@@ -92,7 +94,7 @@ function ocultarTemporizador() {
 <style scoped> 
 
 .main {
-  background-image: url("@/assets/bioma/parque.jpg");
+  background-image: url("@/assets/bioma/parque.png");
   background-position: center center;
   background-size: cover;
   background-attachment: fixed;
