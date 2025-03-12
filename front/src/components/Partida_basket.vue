@@ -31,7 +31,7 @@ const valorCanasta= ref(0)
 const index = ref(0);
 const Zindex= reactive({balon:0, bate:1}); 
 const info= reactive({fallo:false, canasta:0,racha:false})
-const bases= reactive({primera:false, segunda:false, tercera:false}); 
+const bases= reactive([false,false,false]); 
 const animaciones = reactive({encestar: false, bateo1: false, bateo2: false, bateo3:false,
                             tiro:true,bate:false, disolver:false
 
@@ -58,22 +58,17 @@ function reiniciarInfo(){
 
  
 let puntosSeguidos=0;
+ 
+
 
 function comprobarBase(num){
 
-  switch (num) {
-    case 1:
-      bases.primera=true;
-      
-      break;
+
   
-    default:
-      break;
-  }
+
 
 
 }
-
 
 
 function comprobarPunto(num) {
@@ -253,8 +248,8 @@ function responder(num){
   comprobarPunto(num);
  
     setTimeout(() => {
-      animaciones.tiro=false
-      emit('siguiente',info); 
+      animaciones.tiro=false;
+      
        
     }, 500);
 
@@ -272,8 +267,11 @@ function responder(num){
     }else{
 
       setTimeout(() => {
-      animaciones.tiro=true
+
+      animaciones.tiro=true;
+      comprobarBase(info.canasta);
       emit('siguiente',info); 
+
        
     }, 1000);
     }
@@ -329,9 +327,9 @@ function responder(num){
  
 </div>
 <div class="poder">
-  <div v-if="bases.primera" class="primera"> </div>
-  <div v-if="bases.segunda" class="segunda"> </div>
-  <div v-if="bases.tercera" class="tercera"> </div>
+  <div  v-if="bases[0]" class="primera"> </div>
+  <div v-if="bases[1]" class="segunda"> </div>
+  <div v-if="bases[2]" class="tercera"> </div>
  <img class="campo"  src="@/assets/bioma/campo.png" alt="">
 </div>
 
@@ -385,6 +383,24 @@ function responder(num){
          
     }
   }
+
+
+  @keyframes 
+ primera {
+    0% {
+      transform: translateY(60px) translateX(-60px); 
+       
+       
+    } 
+    100% {
+      transform: translateY(0); /* Empieza en la parte inferior */
+      
+        /* Sube 200px hacia arriba */
+         
+    }
+  }
+
+  
 
 
   @keyframes 
@@ -499,6 +515,7 @@ function responder(num){
   margin-left: 200px;
   margin-top: 150px;
   z-index: 2;
+  
 
 }
 

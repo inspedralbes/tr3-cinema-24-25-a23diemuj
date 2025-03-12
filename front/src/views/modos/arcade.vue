@@ -77,7 +77,8 @@ async function rellenarPreguntas() {
 function jugar() {
   useCounterStore().loginInfo.username=name.value;
   visibleName.value=false;
-  mostrarTempo.value=true;
+  rellenarPreguntas();  
+  mostrarTempo.value=false;
 }
 function siguientePregunta2(info) {
 
