@@ -29,12 +29,11 @@ const props={data:  {
 const Canastas = ref(0)
 const valorCanasta= ref(0)
 const index = ref(0);
-const Zindex= reactive({balon:10, aro:5}); 
+const Zindex= reactive({balon:0, bate:1}); 
 const info= reactive({fallo:false, canasta:0,racha:false})
-
-
+const bases= reactive({primera:false, segunda:false, tercera:false}); 
 const animaciones = reactive({encestar: false, bateo1: false, bateo2: false, bateo3:false,
-                            tiro:true,bate:false
+                            tiro:true,bate:false, disolver:false
 
  })
  
@@ -60,12 +59,29 @@ function reiniciarInfo(){
  
 let puntosSeguidos=0;
 
+function comprobarBase(num){
+
+  switch (num) {
+    case 1:
+      bases.primera=true;
+      
+      break;
+  
+    default:
+      break;
+  }
+
+
+}
+
+
+
 function comprobarPunto(num) {
 
  reiniciarInfo();
  
 let apagar=0;
-    
+    animaciones.bate=true;
     if (props.data.respuesta_correcta == num) {
        
 
@@ -99,15 +115,34 @@ let apagar=0;
       }
       else{
         let aux= Math.floor(Math.random() * 3) + 1;
-        console.log(aux);
-        animaciones.bate=true;
+        
+        
+        if(props.data.duracion>= 0 && props.data.duracion <= 2){
 
-        if(props.data.duracion>= 2 && props.data.duracion <= 3){
+setTimeout(() => {
+  animaciones.tiro=false;
+  animaciones[`bateo2`] = true; 
+
+  
+}, 500);}
+
+if(props.data.duracion>= 3 && props.data.duracion <= 4){
+
+setTimeout(() => {
+  animaciones.tiro=false;
+  animaciones[`bateo3`] = true; 
+
+  
+}, 500);}
+
+
+
+        if(props.data.duracion>= 5 && props.data.duracion <= 7){
 
         setTimeout(() => {
           animaciones.tiro=false;
-          animaciones[`bateo${aux}`] = true; 
-          console.log(animaciones.bate);
+         // animaciones[`bateo${aux}`] = true; 
+         animaciones[`bateo1`] = true; 
           
   }, 500);}
  
@@ -123,7 +158,8 @@ let apagar=0;
       info.fallo=true;
       info.canasta=0;
       puntosSeguidos=0;
-      animaciones.tiro=false;
+     
+       
       
 
      
@@ -134,9 +170,11 @@ let apagar=0;
   setTimeout(() => {
     apagarAnimaciones(apagar);
     tiroHecho.value=false;
-    animaciones.tiro=true
+   
+    
+    
   },1000);
-
+  
   
 }
 
@@ -213,18 +251,37 @@ function responder(num){
     
     
   comprobarPunto(num);
-
-  if(info.fallo){
+ 
     setTimeout(() => {
+      animaciones.tiro=false
       emit('siguiente',info); 
-  }, 800);
+       
+    }, 500);
+
+    if(info.fallo){
+      Zindex.balon=1;
+      Zindex.bate=0;
+
+      setTimeout(() => {
+      animaciones.tiro=true
+      emit('siguiente',info); 
+      Zindex.balon=0;
+      Zindex.bate=1;
+       
+    }, 600);
+    }else{
+
+      setTimeout(() => {
+      animaciones.tiro=true
+      emit('siguiente',info); 
+       
+    }, 1000);
+    }
 
 
-  }else{
-
-    emit('siguiente',info); 
-  }
-
+    
+     
+  
     reiniciarTemporizador();
    
     
@@ -249,25 +306,34 @@ function responder(num){
  -->
  
 
-  <img id="balon" 
-   
+ <div class="bate_balon" >
+  <img :style="{zIndex: Zindex.bate }"   class="bate" src="@/assets/bioma/bate.png" alt="" srcset="" 
+:class="{
+  'animacion_bate': animaciones.bate}"
+>
+  <img 
+    id="balon"
+    :style="{zIndex: Zindex.balon }"
   :class="{
   'animacion_bateo1': animaciones.bateo1,
   'animacion_bateo2': animaciones.bateo2,
   'animacion_bateo3': animaciones.bateo3,
-  'animacion_tiro': animaciones.tiro
+  'animacion_tiro': animaciones.tiro,
+  'animacion_disolver': animaciones.disolver
    
   }" 
 
 
   src="../assets/bioma/pelota_beisbol.gif" alt="" srcset="">
 
-  <img class="bate" src="@/assets/bioma/bate.png" alt="" srcset="" 
-:class="{
-  'animacion_bate': animaciones.bate}"
->
-
-
+ 
+</div>
+<div class="poder">
+  <div v-if="bases.primera" class="primera"> </div>
+  <div v-if="bases.segunda" class="segunda"> </div>
+  <div v-if="bases.tercera" class="tercera"> </div>
+ <img class="campo"  src="@/assets/bioma/campo.png" alt="">
+</div>
 
   <div class="tiempo_fuera">
     <div class="tiempo" >{{ props.data.duracion }} </div>
@@ -368,14 +434,30 @@ function responder(num){
         transform: translate(0, 0) scale(0.1);
          
     }
+    10% {
+       
+       transform: translate(0, 0) scale(0.7);
+        
+   }
     100% {
-        transform: translate(0, 0) rotate(360deg) scale(1.5);
+        transform: translate(0, 0) scale(1.5);
        
     }
 
     
     
 }
+
+@keyframes disolver {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+
 @keyframes bateo {
     0% {
         transform-origin: 0 50%;
@@ -391,11 +473,65 @@ function responder(num){
     
 
   }
-.bate{
-  grid-row: 4;
-  height: 200px;
-  grid-column: 2;
+
+  .animacion_disolver{
+    animation: disolver 0.2s linear;
+  }
+
+  .poder {
+  width: 120px;
+  height: 120px;
+  border: 1px solid white;
+  position: absolute;
+  right: 0;
+  top: 25%;
+  overflow: hidden;
+
+}
+
+.primera{
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border: 1px solid white;
+  border-radius: 50%;
+  background-color: blueviolet;
+  margin-left: 200px;
+  margin-top: 150px;
   z-index: 2;
+
+}
+
+.segunda{
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border: 1px solid white;
+  border-radius: 50%;
+  background-color: blueviolet;
+  margin-left: 140px;
+  margin-top: 100px;
+  z-index: 2;
+
+}
+.tercera{
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border: 1px solid white;
+  border-radius: 50%;
+  background-color: blueviolet;
+  margin-left: 80px;
+  margin-top: 150px;
+  z-index: 2;
+
+}
+
+.bate{
+  position: absolute;
+  height: 200px;
+   
+ margin-left: -150px;
   
    
   
@@ -440,21 +576,32 @@ function responder(num){
 }
 
 
+.bate_balon{
+  grid-row: 4;
+  grid-column: 2;
+}
+
 
 #balon{
   height: 150px;
-  width: 150px;
-  grid-column: 2;
-  grid-row: 4;
+  width: 150px; 
   justify-self: center;  
   border-radius: 50%;
-  z-index: 0;
-  filter: sepia(1) saturate(6) contrast(1.2) hue-rotate(45deg);
+   
+  
  
  
    
   
 }
+
+.campo{
+  position: absolute;
+  width: 140px; 
+  margin-left: -68px;
+  margin-top: -15px;
+}
+
 
 #canasta{
   grid-row: 1;
@@ -622,10 +769,24 @@ border-radius: 20px;
 .body_arcade{
  
   max-height:100vh;
-  
-            
-           
-           
+
+}
+
+.campo{
+  position: absolute;
+  width: 330px; 
+  margin-left: -165px;
+  margin-top: -25px;
+}
+
+.poder {
+  width: 300px;
+  height: 300px;
+  border: 1px solid white;
+  position: absolute;
+  right: 0;
+  top: 25%;
+  overflow: hidden;
 
 }
 

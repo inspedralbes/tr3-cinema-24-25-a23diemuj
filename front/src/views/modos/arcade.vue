@@ -10,7 +10,16 @@ import { useCounterStore } from '@/stores/counter';
 const data = reactive({ pregunta: [
   {
     "id": 1,
-    "operacion": "5 + 3",
+    "operacion": "5 + 1",
+    "respuesta_correcta": 8,
+    "respuestaIncorrecta_1": 9,
+    "respuestaIncorrecta_2": 7,
+    "respuestaIncorrecta_3": 10,
+    "nivel": 1,
+    "duracion": 7
+  },{
+    "id": 1,
+    "operacion": "5 + 2",
     "respuesta_correcta": 8,
     "respuestaIncorrecta_1": 9,
     "respuestaIncorrecta_2": 7,
@@ -29,15 +38,6 @@ const data = reactive({ pregunta: [
   },{
     "id": 1,
     "operacion": "5 + 4",
-    "respuesta_correcta": 8,
-    "respuestaIncorrecta_1": 9,
-    "respuestaIncorrecta_2": 7,
-    "respuestaIncorrecta_3": 10,
-    "nivel": 1,
-    "duracion": 7
-  },{
-    "id": 1,
-    "operacion": "5 + 3",
     "respuesta_correcta": 8,
     "respuestaIncorrecta_1": 9,
     "respuestaIncorrecta_2": 7,
@@ -96,7 +96,7 @@ function siguientePregunta(info) {
     puntuacion.value += info.canasta;
   }*/
   index.value++;
-    if (index.value > 2) {
+    if (index.value > 3) {
       index.value = 0;
     }
 
