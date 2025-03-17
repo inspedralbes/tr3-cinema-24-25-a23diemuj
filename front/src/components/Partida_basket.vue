@@ -29,6 +29,7 @@ const props={data:  {
 const Canastas = ref(0)
 const valorCanasta = ref(0)
 const index = ref(0);
+const carreras = ref(0);
 const Zindex = reactive({ balon: 0, bate: 1 });
 const info = reactive({ fallo: false, canasta: 0, racha: false })
 const bases = reactive([false, false, false, false]);
@@ -61,192 +62,89 @@ function reiniciarInfo() {
 let puntosSeguidos = 0;
 
 
-function moverBase(num) {
-
-  setTimeout(() => {
-    bases[num] = true;
-  }, 100);
-}
 
 
-function prueba(num){
-    
-  bases[num] = false;
+function moverBase(num, aux) {
 
-   setTimeout(() => {
-    bases[num] = true;
-  }, 100);
-  setTimeout(() => {
-        bases[num-1] = false;
-      }, 600);
 
+  if (aux >= 500) {
+    setTimeout(() => {
+      moverBase(num);
+    }, aux);
+  } else {
+
+    bases[num] = false;
+    bases[num - 1] = false;
+    setTimeout(() => {
+      bases[num] = true;
+    }, 10);
+
+    if (num == 3) {
+      setTimeout(() => {
+        bases[num] = false;
+        carreras.value++;
+      }, 500);
+    }
+
+  }
 
 
 }
 
 
 async function comprobarBase(num) {
-  let carreras = 0;
+
 
 
 
   switch (num) {
 
     case 1:
-      if (bases[2]) {
-        bases[2] = false;
-        moverBase(3);
-        setTimeout(() => {
-          bases[3] = false;
-        }, 500);
-        carreras++;
-      }
-      if (bases[1]) {
-        bases[1] = false;
-        moverBase(2)
-      }
-      if(bases[0]==true){
-         prueba(1);
-      }
-        prueba(0);
-      
-      
 
-        
-       
-       
-      
-      
+      for (let index = 2; index >= 0; index--) {
+        if (bases[index]) {
+          moverBase(index + 1);
+        }
+
+      }
+
+      moverBase(0);
+
 
       break;
     case 2:
 
-      // home to 2nd
-     
-      
 
-      // 2nd to home
-      if (bases[1]) {
-        bases[1] = false;
-        carreras++;
-
-
-        moverBase(2);
-        setTimeout(() => {
-          bases[2] = false;
-
-        }, 600);
-        setTimeout(() => {
-          moverBase(3);
-        }, 500);
-        setTimeout(() => {
-          bases[3] = false;
-        }, 1000);
-      }
-      // 1st to 3rd
-      if (bases[0]) {
-        bases[0] = false;
-        moverBase(1);
-          setTimeout(() => {
-            
-            bases[1] = false;
-
-          }, 600);
-        setTimeout(() => {
-            moverBase(2);
-          }, 500);
-
-
-      }
-
-
-
-
+      // 3rd to home
       if (bases[2]) {
-        setTimeout(() => {
-          bases[2] = false;
-        }, 100);
-       
-        moverBase(3);
+        moverBase(3, 500);
+      }
 
-        setTimeout(() => {
-          bases[3] = false;
-        }, 500);
-        carreras++;
+      for (let index = 1; index >= 0; index--) {
+        if (bases[index]) {
+          moverBase(index + 1);
+          moverBase(index + 2, 500);
+        }
+      }
+
+      // home to 2nd
+      for (let index = 1; index >= 0; index--) {
+        moverBase(index, index * 500);
+      }
 
 
-      } 
+
+
+
 
 
       break;
     case 3:
 
-    // home to 1st
-     
-    
-    prueba(2);
-
-
-      if(bases[0]){
-    // 1st to 2nd
-    bases[0] = false;
-        moverBase(1)
-        setTimeout(() => {
-          bases[1] = false;
-      }, 600);
-
-    // 2nd to 3rd
-      setTimeout(() => {
-        moverBase(2)
-      }, 500);
-
-      setTimeout(() => {
-          bases[2] = false;
-      }, 1100);
-
-      setTimeout(() => {
-        moverBase(3)
-      }, 1000);
-      setTimeout(() => {
-          bases[3] = false;
-      }, 1500);
-
-      }
-
-
-      if(bases[1]){
-    // 1st to 2nd
-    bases[1] = false;
-        moverBase(2)
-        setTimeout(() => {
-          bases[2] = false;
-      }, 600);
-
-    // 2nd to 3rd
-      setTimeout(() => {
-        moverBase(3)
-      }, 500);
-
-      setTimeout(() => {
-          bases[3] = false;
-      }, 1100);
- 
-
-      }
-
-      if(bases[2]){
-    // 2st to 2nd
-    bases[2] = false;
-        moverBase(3)
-        setTimeout(() => {
-          bases[3] = false;
-      }, 600);
-
-    
- 
-
-      }
-
+      // home to 3rd
+      moverBase(0);
+      moverBase(1, 500);
+      moverBase(2, 1000);
 
 
 
@@ -254,44 +152,14 @@ async function comprobarBase(num) {
 
       break;
     case 4:
-      moverBase(0)
 
+    
 
-      // 1st to 2nd
-      setTimeout(() => {
-        bases[0] = false;
-      }, 600);
+      // home to home
+      for (let index = 0; index < 4; index++) {
+        moverBase(index, index * 500);
 
-
-      setTimeout(() => {
-        moverBase(1)
-      }, 500);
-
-
-      // 2nd to 3rd
-      setTimeout(() => {
-        bases[1] = false;
-      }, 1100);
-
-
-
-      setTimeout(() => {
-        moverBase(2)
-      }, 1000);
-
-      setTimeout(() => {
-        bases[2] = false;
-      }, 1600);
-
-
-
-      setTimeout(() => {
-        moverBase(3)
-      }, 1500);
-
-      setTimeout(() => {
-        bases[3] = false;
-      }, 2000);
+      }
 
 
 
@@ -300,7 +168,7 @@ async function comprobarBase(num) {
 
   }
 
-  console.log("carreras" + carreras)
+ 
 
 }
 
@@ -389,7 +257,7 @@ function comprobarPunto(num) {
     }
 
   } else {
-    console.log("hola")
+    
     tiroHecho.value = true;
     info.fallo = true;
     info.canasta = 0;
@@ -575,7 +443,7 @@ function responder(num) {
       </div>
 
 
-      <div class="titul"> {{ props.data.operacion }} </div>
+      <div class="titul"> {{ props.data.operacion }} {{ carreras }} </div>
 
       <div class="respuestas">
 
