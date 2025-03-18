@@ -3,26 +3,17 @@ import { reactive,ref,computed, watch, onMounted, onUnmounted } from 'vue';
 import { useCounterStore } from '@/stores/counter';
 
 
-//const props = defineProps({
-//  data: {
- //   type: Object,
-  //  required: true,
-  //},
+const props = defineProps({
+ data: {
+   type: Object,
+    required: true,
+  },
 
 
 
 
-//},)
-const props={data:  {
-    "id": 1,
-    "operacion": "5 + 3",
-    "respuesta_correcta": 8,
-    "respuestaIncorrecta_1": 9,
-    "respuestaIncorrecta_2": 7,
-    "respuestaIncorrecta_3": 10,
-    "nivel": 1,
-    "duracion": 24
-  }};
+},)
+ 
 
 
 const Canastas = ref(0)
@@ -97,12 +88,14 @@ let apagar=0;
     if (progress.value < 0.3) {
         puntosSeguidos++;
         info.canasta=3;
+        Canastas.value+=3;
     } else if(progress.value < 0.7) {
       info.canasta=2;
       puntosSeguidos=0;
-
+      Canastas.value+=2;
     } else if(progress.value < 1){
       info.canasta=1;
+      Canastas.value+=1;
       puntosSeguidos=0;
     }else{}
      
@@ -231,9 +224,10 @@ function responder(num){
     
     
   comprobarPunto(num);
-
+  
   if(info.fallo){
     setTimeout(() => {
+      info.canasta=Canastas.value;
       emit('siguiente',info); 
   }, 800);
 
@@ -259,12 +253,13 @@ function responder(num){
   </RouterLink> 
  <div class="body_arcade">
   
-   <!--
-  <h4  >Puntos:  {{ Canastas }} </h4>
-  
-  
-  <RouterLink to="/jugar"> <q-btn color="deep-orange"  size="20px" glossy label="Volver"></q-btn></RouterLink>
- -->
+ 
+
+ <div class="marcador">
+        <img class="pelota2" src="@/assets/bioma/balon.png" alt=""> <span class="carreras">{{ Canastas }} </span> <br>
+        <img class="corazon" v-if="!info.fallo" src="@/assets/bioma/corazon.png" alt="">
+       
+      </div>
  
  <div id="canasta">
   <img :style="{zIndex: Zindex.aro }"
@@ -492,6 +487,38 @@ function responder(num){
 
   animation: temblor2 0.5s infinite, llamas 1s forwards;
 }
+
+
+.marcador {
+  width: 300px;
+  height: 140px;
+  border: 1px solid white;
+  position: absolute;
+  left: 0;
+  top: 25%;
+  overflow: hidden;
+
+}
+
+  .corazon {
+
+    width: 50px;
+  }
+
+  .pelota2{
+    width: 100px;
+    position: absolute;
+    margin-left: -100px;
+    margin-top: -10px;
+  }
+
+  .carreras{
+    font-size: 50px;
+    color: white;
+    font-family: 'DS-Digital';
+    
+  }
+
 
 
 .imagen_volver {

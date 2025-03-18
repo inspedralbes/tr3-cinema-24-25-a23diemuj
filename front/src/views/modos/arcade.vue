@@ -1,10 +1,12 @@
 <script setup>
 import { ref, reactive, onUnmounted,onMounted } from 'vue';
 import Ranking from '../../components/ranking.vue';
-import Partida from '../../components/Partida_basket.vue';
+import Partida_beisbol from '../../components/Partida_beisbol.vue';
+import Partida_futbol from '../../components/Partida_basquet.vue';
 import Temporizador from '../../components/temporizador.vue';
 import { getPreguntas } from '@/comunication_manager';
 import { useCounterStore } from '@/stores/counter';
+import Partida_basquet from '../../components/Partida_basquet.vue';
 
 const data = reactive({ pregunta: "" });
 
@@ -53,6 +55,7 @@ const index = ref(0);
 const puntuacion = ref(0);
 const cargando = ref(true);
 const mostrarTempo = ref(false); 
+const deporte=ref(0)
 const name = ref("");
 const visibleName = ref(false);
 const visibleModos = ref(true);
@@ -72,6 +75,15 @@ async function rellenarPreguntas() {
   cargando.value = false;
  
 }
+
+function modo(data){
+  visibleModos.value=false;
+  visibleName.value=true;
+  deporte.value=data;
+
+
+}
+
 
 function jugar() {
   useCounterStore().loginInfo.username=name.value;
@@ -117,12 +129,12 @@ function ocultarTemporizador() {
 
   <div v-if="visibleModos">
     <div id="div_menu">
-      <q-btn class="botones_menu" glossy  > <span style="font-size: 60px;" class="material-icons">sports_baseball</span>  </q-btn>
+      <q-btn class="botones_menu" glossy  > <span style="font-size: 60px;" class="material-icons" @click="modo(1)">sports_baseball</span>  </q-btn>
       <br>
       <q-btn class="botones_menu" glossy  > 
-        <span style="font-size: 60px;" class="material-icons">sports_basketball</span>  </q-btn>
+        <span style="font-size: 60px;" class="material-icons" @click="modo(2)">sports_basketball</span>  </q-btn>
       <br>
-      <q-btn class="botones_menu" glossy  > <span style="font-size: 60px;" class="material-icons">sports_soccer</span></q-btn>
+      <q-btn class="botones_menu" glossy  > <span style="font-size: 60px;" class="material-icons" @click="modo(3)">sports_soccer</span></q-btn>
       <br>
       <RouterLink to="/" @click="ocultarTot">
         <q-btn class="botones_menu" glossy label="Volver"></q-btn>
@@ -153,7 +165,9 @@ function ocultarTemporizador() {
 
     <Temporizador v-if="mostrarTempo" @complete="ocultarTemporizador" />
 
-    <Partida v-if="!cargando && visibleJuego && !mostrarTempo" :data="data.pregunta[index]" @siguiente="siguientePregunta" />
+    <Partida_beisbol v-if="!cargando && visibleJuego && !mostrarTempo && deporte==1" :data="data.pregunta[index]" @siguiente="siguientePregunta" />
+    <Partida_basquet v-if="!cargando && visibleJuego && !mostrarTempo && deporte==2" :data="data.pregunta[index]" @siguiente="siguientePregunta" />
+   
     <Ranking v-if="!cargando && !visibleJuego" :puntuacion="puntuacion" />
   </main>
 </template>
@@ -180,12 +194,12 @@ function ocultarTemporizador() {
 
 .botones_menu {
   margin: 10px;
-  width: 350px;
+  width: 200px;
   font-size: 26px;
   border: 1px solid black;
   background-color: #000000;
   color: #ffffff;
-  border: none;
+  border-radius: 20%;
   cursor: pointer;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.9);
   transition: transform 0.3s, background-color 0.3s;
