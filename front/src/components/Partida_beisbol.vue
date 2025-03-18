@@ -693,6 +693,9 @@ function responder(num) {
   animation: disolver 0.2s linear;
 }
 
+
+
+
 .marcador {
   width: 120px;
   height: 120px;

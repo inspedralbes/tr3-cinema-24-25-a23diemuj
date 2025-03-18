@@ -34,9 +34,9 @@ function ocultarTot() {
   visibleOpciones.value = false;
 }
 
-function verificarHistoria() {
+function salir() {
   
-    router.push('/jugar/historia');
+    router.push('/');
   
 }
 
@@ -84,7 +84,7 @@ if (useApp.loginInfo.loggedIn) {
       
       <q-btn class="botones_menu" glossy label=""><span style="font-size: 60px;" class="material-icons"> favorite </span> </q-btn>
 
-      <q-btn class="botones_menu" glossy label=""><span style="font-size: 60px;" class="material-icons"> keyboard_return </span>   </q-btn>    
+      <q-btn class="botones_menu" glossy label=""  @click="salir"><span style="font-size: 60px;" class="material-icons"> keyboard_return </span>   </q-btn>    
    
     </div>
 

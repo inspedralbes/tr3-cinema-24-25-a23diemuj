@@ -121,7 +121,7 @@ function ocultarTemporizador() {
 
 <template>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=sports_baseball" />
-  <main class="main">
+  <main :style="{ backgroundImage: `url(/bioma/${deporte}.png)` }" class="main" >
  
     <RouterLink to="/jugar">
     <img style="right: inherit;" src="@/assets/imagenes/volver.png" alt="Volver" class="imagen_volver">
@@ -175,7 +175,7 @@ function ocultarTemporizador() {
 <style scoped> 
 
 .main {
-  background-image: url("@/assets/bioma/beisbol.png");
+   
   background-position: center center;
   background-size: cover;
   background-attachment: fixed;
@@ -188,7 +188,7 @@ function ocultarTemporizador() {
 #div_menu {
 
   text-align: center;
-  margin-top: 20%;
+  margin-top: 10%;
  
 }
 
