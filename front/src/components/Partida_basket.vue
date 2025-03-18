@@ -29,6 +29,7 @@ const props={data:  {
 const Canastas = ref(0)
 const valorCanasta = ref(0)
 const index = ref(0);
+const strikes= ref(3);
 const carreras = ref(0);
 const Zindex = reactive({ balon: 0, bate: 1 });
 const info = reactive({ fallo: false, canasta: 0, racha: false })
@@ -141,6 +142,16 @@ async function comprobarBase(num) {
       break;
     case 3:
 
+    for (let index = 2; index >= 0; index--) {
+        if (bases[index]) {
+          moverBase(index + 1);
+          moverBase(index + 2, 500);
+          moverBase(index + 3, 500);
+        }
+      }
+
+
+
       // home to 3rd
       moverBase(0);
       moverBase(1, 500);
@@ -152,9 +163,14 @@ async function comprobarBase(num) {
 
       break;
     case 4:
-
-    
-
+ 
+    for (let index = 2; index >= 0; index--) {
+        if (bases[index]) {
+          moverBase(index + 1);
+          moverBase(index + 2, 500);
+          moverBase(index + 3, 500);
+        }
+      }
       // home to home
       for (let index = 0; index < 4; index++) {
         moverBase(index, index * 500);
@@ -261,6 +277,7 @@ function comprobarPunto(num) {
     tiroHecho.value = true;
     info.fallo = true;
     info.canasta = 0;
+   
     puntosSeguidos = 0;
 
 
@@ -277,7 +294,7 @@ function comprobarPunto(num) {
 
 
 
-  }, 1000);
+  }, 2000);
 
 
 }
@@ -369,7 +386,12 @@ function responder(num) {
     Zindex.bate = 0;
 
     setTimeout(() => {
+      strikes.value--;
+      if(strikes.value!=0){
+        info.fallo=false;
+      }
       animaciones.tiro = true
+      info.canasta=carreras.value;
       emit('siguiente', info);
       Zindex.balon = 0;
       Zindex.bate = 1;
@@ -381,6 +403,7 @@ function responder(num) {
 
       animaciones.tiro = true;
       comprobarBase(info.canasta);
+     
       emit('siguiente', info);
 
 
@@ -438,12 +461,19 @@ function responder(num) {
         <img class="campo" src="@/assets/bioma/campo.png" alt="">
       </div>
 
+      <div class="marcador">
+        <img class="pelota2" src="@/assets/bioma/pelota2.png" alt=""> <span class="carreras">{{ carreras }} </span> <br>
+        <img v-if="strikes>=1" class="corazon" src="@/assets/bioma/corazon.png" alt="">
+        <img v-if="strikes>=2" class="corazon" src="@/assets/bioma/corazon.png" alt="">
+        <img v-if="strikes>=3" class="corazon" src="@/assets/bioma/corazon.png" alt="">
+      </div>
+
       <div class="tiempo_fuera">
         <div class="tiempo">{{ props.data.duracion }} </div>
       </div>
 
 
-      <div class="titul"> {{ props.data.operacion }} {{ carreras }} </div>
+      <div class="titul"> {{ props.data.operacion }}  </div>
 
       <div class="respuestas">
 
@@ -662,6 +692,19 @@ function responder(num) {
 .animacion_disolver {
   animation: disolver 0.2s linear;
 }
+
+.marcador {
+  width: 120px;
+  height: 120px;
+  border: 1px solid white;
+  position: absolute;
+  left: 0;
+  top: 25%;
+  overflow: hidden;
+
+}
+
+
 
 .poder {
   width: 120px;
@@ -989,6 +1032,36 @@ function responder(num) {
     width: 330px;
     margin-left: -165px;
     margin-top: -25px;
+  }
+
+  .marcador {
+  width: 300px;
+  height: 140px;
+  border: 1px solid white;
+  position: absolute;
+  left: 0;
+  top: 25%;
+  overflow: hidden;
+
+}
+
+  .corazon {
+
+    width: 50px;
+  }
+
+  .pelota2{
+    width: 100px;
+    position: absolute;
+    margin-left: -90px;
+    margin-top: -10px;
+  }
+
+  .carreras{
+    font-size: 50px;
+    color: white;
+    font-family: 'DS-Digital';
+    
   }
 
   .poder {

@@ -6,7 +6,9 @@ import Temporizador from '../../components/temporizador.vue';
 import { getPreguntas } from '@/comunication_manager';
 import { useCounterStore } from '@/stores/counter';
 
-// const data = reactive({ pregunta: "" });
+const data = reactive({ pregunta: "" });
+
+/*
 const data = reactive({ pregunta: [
   {
     "id": 1,
@@ -45,14 +47,15 @@ const data = reactive({ pregunta: [
     "nivel": 1,
     "duracion": 7
   }
-] });
+] }); */
 const visibleJuego = ref(false);
 const index = ref(0);
 const puntuacion = ref(0);
 const cargando = ref(true);
 const mostrarTempo = ref(false); 
 const name = ref("");
-const visibleName = ref(true);
+const visibleName = ref(false);
+const visibleModos = ref(true);
 onMounted(() => {
       const useApp = useCounterStore();
       if (useApp.ActivarMusica==true) {
@@ -63,11 +66,7 @@ onMounted(() => {
 
 async function rellenarPreguntas() {
 
-  if(name.value=="sexoooooo"){
-  
   data.pregunta = await getPreguntas(0);
- 
-  }
   cargando.value = true; 
   visibleJuego.value = true;
   cargando.value = false;
@@ -79,13 +78,9 @@ function jugar() {
   visibleName.value=false;
   rellenarPreguntas();  
   mostrarTempo.value=false;
-}
-function siguientePregunta2(info) {
-
-}
+} 
 function siguientePregunta(info) {
-
-/*
+ 
   if (info.fallo) {
     visibleJuego.value = false;
   } else {
@@ -93,13 +88,15 @@ function siguientePregunta(info) {
     if (index.value > 19) {
       rellenarPreguntas();
       index.value = 0;
+     
     }
-    puntuacion.value += info.canasta;
-  }*/
-  index.value++;
-    if (index.value > 3) {
-      index.value = 0;
-    }
+    console.log(index.value)
+    
+  } 
+  puntuacion.value = info.canasta;
+
+  
+    
 
 }
 
@@ -111,12 +108,36 @@ function ocultarTemporizador() {
 </script>
 
 <template>
-        
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=sports_baseball" />
   <main class="main">
  
     <RouterLink to="/jugar">
     <img style="right: inherit;" src="@/assets/imagenes/volver.png" alt="Volver" class="imagen_volver">
   </RouterLink>
+
+  <div v-if="visibleModos">
+    <div id="div_menu">
+      <q-btn class="botones_menu" glossy  > <span style="font-size: 60px;" class="material-icons">sports_baseball</span>  </q-btn>
+      <br>
+      <q-btn class="botones_menu" glossy  > 
+        <span style="font-size: 60px;" class="material-icons">sports_basketball</span>  </q-btn>
+      <br>
+      <q-btn class="botones_menu" glossy  > <span style="font-size: 60px;" class="material-icons">sports_soccer</span></q-btn>
+      <br>
+      <RouterLink to="/" @click="ocultarTot">
+        <q-btn class="botones_menu" glossy label="Volver"></q-btn>
+      </RouterLink>
+    </div>
+
+  
+  
+  
+  </div>
+
+
+
+
+
     <div v-if="visibleName" class="menu-mult"> 
       <div class="boton-grid">
         <div >
@@ -150,8 +171,30 @@ function ocultarTemporizador() {
   
 
 }
+#div_menu {
 
+  text-align: center;
+  margin-top: 20%;
+ 
+}
 
+.botones_menu {
+  margin: 10px;
+  width: 350px;
+  font-size: 26px;
+  border: 1px solid black;
+  background-color: #000000;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.9);
+  transition: transform 0.3s, background-color 0.3s;
+}
+.botones_menu:hover {
+  background-color: #ffffff;
+  color: #000000;
+  transform: scale(1.05);
+}
  
   
 .menu-mult {
