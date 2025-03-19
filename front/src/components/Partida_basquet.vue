@@ -228,7 +228,7 @@ function responder(num){
   if(info.fallo){
     setTimeout(() => {
       info.canasta=Canastas.value;
-      emit('siguiente',info); 
+     emit('siguiente',info); 
   }, 800);
 
 
@@ -498,9 +498,10 @@ function responder(num){
 }
 
 
+
 .marcador {
-  width: 300px;
-  height: 140px;
+  width: 120px;
+  height: 120px;
   border: 1px solid white;
   position: absolute;
   left: 0;
@@ -511,18 +512,19 @@ function responder(num){
 
   .corazon {
 
-    width: 50px;
+    width: 40px;
   }
 
   .pelota2{
-    width: 100px;
+    width: 50px;
     position: absolute;
-    margin-left: -100px;
-    margin-top: -10px;
+    margin-left: -35px;
+    margin-top: 10px;
   }
 
   .carreras{
     font-size: 50px;
+    margin-left: 20px;
     color: white;
     font-family: 'DS-Digital';
     
@@ -695,6 +697,24 @@ font-size: 50px  !important;
 }
 
 @media screen and (min-width: 750px){
+  .corazon {
+
+width: 50px;
+}
+
+.pelota2{
+width: 100px;
+position: absolute;
+margin-left: -100px;
+margin-top: -10px;
+}
+
+.carreras{
+font-size: 50px;
+color: white;
+font-family: 'DS-Digital';
+
+}
   .botones_partida{
 
 width: 70% ; 
@@ -708,6 +728,17 @@ border-radius: 20px;
     grid-template-columns: 1fr 1fr;
      
     
+}
+
+.marcador {
+  width: 300px;
+  height: 140px;
+  border: 1px solid white;
+  position: absolute;
+  left: 0;
+  top: 25%;
+  overflow: hidden;
+
 }
 
 

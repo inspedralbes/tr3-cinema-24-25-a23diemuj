@@ -386,7 +386,8 @@ function responder(num) {
     Zindex.bate = 0;
 
     setTimeout(() => {
-      strikes.value--;
+    strikes.value--;
+     
       if(strikes.value!=0){
         info.fallo=false;
       }
@@ -454,10 +455,10 @@ function responder(num) {
 
       </div>
       <div class="poder">
-        <div v-if="bases[0]" class="primera"> </div>
-        <div v-if="bases[1]" class="segunda"> </div>
-        <div v-if="bases[2]" class="tercera"> </div>
-        <div v-if="bases[3]" class="home"> </div>
+        <div v-if="bases[0]"  class="primera"> </div>
+        <div v-if="bases[1]"class="segunda"> </div>
+        <div v-if="bases[2]"  class="tercera"> </div>
+        <div v-if="bases[3]"  class="home"> </div>
         <img class="campo" src="@/assets/bioma/campo.png" alt="">
       </div>
 
@@ -499,32 +500,11 @@ function responder(num) {
 </template>
 
 <style scoped>
-@keyframes bateo1 {
-  0% {
-    transform: translateY(0);
-    /* Empieza en la parte inferior */
-
-  }
-
-  50% {
-
-    transform: translateY(-200px) scale(0.5) rotate(-90deg);
-
-
-  }
-
-  100% {
-    transform: translateY(-150px) scale(0.1) rotate(-180deg);
-
-    /* Sube 200px hacia arriba */
-
-  }
-}
 
 
 @keyframes primera {
   0% {
-    transform: translateY(60px) translateX(-60px);
+    transform: translateY(25px) translateX(-25px);
 
 
   }
@@ -542,7 +522,7 @@ function responder(num) {
 
 @keyframes segunda {
   0% {
-    transform: translateY(50px) translateX(60px);
+    transform: translateY(25px) translateX(25px);
 
 
   }
@@ -558,7 +538,7 @@ function responder(num) {
 
 @keyframes tercera {
   0% {
-    transform: translateY(-55px) translateX(60px);
+    transform: translateY(-25px) translateX(25px);
 
 
   }
@@ -575,7 +555,7 @@ function responder(num) {
 
 @keyframes home {
   0% {
-    transform: translateY(-60px) translateX(-60px);
+    transform: translateY(-25px) translateX(-25px);
 
 
   }
@@ -590,7 +570,27 @@ function responder(num) {
 }
 
 
+@keyframes bateo1 {
+  0% {
+    transform: translateY(0);
+    /* Empieza en la parte inferior */
 
+  }
+
+  50% {
+
+    transform: translateY(-150px) scale(0.5) rotate(-90deg);
+
+
+  }
+
+  100% {
+    transform: translateY(-100px) scale(0.1) rotate(-180deg);
+
+    /* Sube 200px hacia arriba */
+
+  }
+}
 
 
 @keyframes bateo2 {
@@ -602,13 +602,13 @@ function responder(num) {
 
   50% {
 
-    transform: translateY(-200px) translateX(120px) scale(0.5) rotate(-90deg);
+    transform: translateY(-150px) translateX(120px) scale(0.5) rotate(-90deg);
 
 
   }
 
   100% {
-    transform: translateY(-190px) translateX(140px) scale(0.1) rotate(-180deg);
+    transform: translateY(-100px) translateX(140px) scale(0.1) rotate(-180deg);
 
     /* Sube 200px hacia arriba */
 
@@ -624,13 +624,13 @@ function responder(num) {
 
   50% {
 
-    transform: translateY(-200px) translateX(-120px) scale(0.5) rotate(-90deg);
+    transform: translateY(-150px) translateX(-120px) scale(0.5) rotate(-90deg);
 
 
   }
 
   100% {
-    transform: translateY(-180px) translateX(-140px) scale(0.1) rotate(-180deg);
+    transform: translateY(-100px) translateX(-140px) scale(0.1) rotate(-180deg);
 
     /* Sube 200px hacia arriba */
 
@@ -722,13 +722,13 @@ function responder(num) {
 
 .primera {
   position: absolute;
-  width: 20px;
-  height: 20px;
+  width: 15px;
+  height: 15px;
   border: 1px solid white;
   border-radius: 50%;
   background-color: blueviolet;
-  margin-left: 200px;
-  margin-top: 150px;
+  margin-left: 80px;
+  margin-top: 55px;
   z-index: 2;
   animation: primera 0.5s linear;
 
@@ -737,13 +737,13 @@ function responder(num) {
 
 .segunda {
   position: absolute;
-  width: 20px;
-  height: 20px;
+  width: 15px;
+  height: 15px;
   border: 1px solid white;
   border-radius: 50%;
   background-color: blueviolet;
-  margin-left: 140px;
-  margin-top: 100px;
+  margin-left: 54px;
+  margin-top: 30px;
   z-index: 2;
   animation: segunda 0.5s linear;
 
@@ -751,13 +751,13 @@ function responder(num) {
 
 .tercera {
   position: absolute;
-  width: 20px;
-  height: 20px;
+  width: 15px;
+  height: 15px;
   border: 1px solid white;
   border-radius: 50%;
   background-color: blueviolet;
-  margin-left: 80px;
-  margin-top: 150px;
+  margin-left: 25px;
+  margin-top: 55px;
   z-index: 2;
   animation: tercera 0.5s linear;
 
@@ -766,13 +766,13 @@ function responder(num) {
 
 .home {
   position: absolute;
-  width: 20px;
-  height: 20px;
+  width: 15px;
+  height: 15px;
   border: 1px solid white;
   border-radius: 50%;
   background-color: blueviolet;
-  margin-left: 140px;
-  margin-top: 220px;
+  margin-left: 53px;
+  margin-top: 85px;
   z-index: 2;
   animation: home 0.5s linear;
 
@@ -781,7 +781,6 @@ function responder(num) {
 .bate {
   position: absolute;
   height: 200px;
-
   margin-left: -150px;
 
 
@@ -981,7 +980,25 @@ function responder(num) {
 
 
 }
+.carreras{
+    font-size: 50px;
+    color: white;
+    font-family: 'DS-Digital';
+    margin-left: 20px;
+    
+  }
+.pelota2{
+    width: 70px;
+    position: absolute;
+     margin-left: -40px;
+     margin-top: 2px;
+    
+     
+  }
+.corazon {
 
+width: 30px;
+}
 
 @media screen and (min-width: 500px) {
   .botones_partida {
@@ -1015,6 +1032,202 @@ function responder(num) {
 }
 
 @media screen and (min-width: 750px) {
+
+
+
+
+  @keyframes bateo1 {
+  0% {
+    transform: translateY(0);
+    /* Empieza en la parte inferior */
+
+  }
+
+  50% {
+
+    transform: translateY(-200px) scale(0.5) rotate(-90deg);
+
+
+  }
+
+  100% {
+    transform: translateY(-150px) scale(0.1) rotate(-180deg);
+
+    /* Sube 200px hacia arriba */
+
+  }
+}
+
+
+@keyframes bateo2 {
+  0% {
+    transform: translateY(0);
+    /* Empieza en la parte inferior */
+
+  }
+
+  50% {
+
+    transform: translateY(-200px) translateX(120px) scale(0.5) rotate(-90deg);
+
+
+  }
+
+  100% {
+    transform: translateY(-190px) translateX(140px) scale(0.1) rotate(-180deg);
+
+    /* Sube 200px hacia arriba */
+
+  }
+}
+
+@keyframes bateo3 {
+  0% {
+    transform: translateY(0);
+    /* Empieza en la parte inferior */
+
+  }
+
+  50% {
+
+    transform: translateY(-200px) translateX(-120px) scale(0.5) rotate(-90deg);
+
+
+  }
+
+  100% {
+    transform: translateY(-180px) translateX(-140px) scale(0.1) rotate(-180deg);
+
+    /* Sube 200px hacia arriba */
+
+  }
+}
+
+  .primera {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border: 1px solid white;
+  border-radius: 50%;
+  background-color: blueviolet;
+  margin-left: 200px;
+  margin-top: 150px;
+  z-index: 2;
+  animation: primera 0.5s linear;
+
+
+}
+
+.segunda {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border: 1px solid white;
+  border-radius: 50%;
+  background-color: blueviolet;
+  margin-left: 140px;
+  margin-top: 100px;
+  z-index: 2;
+  animation: segunda 0.5s linear;
+
+}
+
+.tercera {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border: 1px solid white;
+  border-radius: 50%;
+  background-color: blueviolet;
+  margin-left: 80px;
+  margin-top: 150px;
+  z-index: 2;
+  animation: tercera 0.5s linear;
+
+}
+
+
+.home {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border: 1px solid white;
+  border-radius: 50%;
+  background-color: blueviolet;
+  margin-left: 140px;
+  margin-top: 220px;
+  z-index: 2;
+  animation: home 0.5s linear;
+
+}
+
+@keyframes primera {
+  0% {
+    transform: translateY(60px) translateX(-60px);
+
+
+  }
+
+  100% {
+    transform: translateY(0);
+    /* Empieza en la parte inferior */
+
+    /* Sube 200px hacia arriba */
+
+  }
+}
+
+
+
+@keyframes segunda {
+  0% {
+    transform: translateY(50px) translateX(60px);
+
+
+  }
+
+  100% {
+    transform: translateY(0);
+    /* Empieza en la parte inferior */
+
+    /* Sube 200px hacia arriba */
+
+  }
+}
+
+@keyframes tercera {
+  0% {
+    transform: translateY(-55px) translateX(60px);
+
+
+  }
+
+  100% {
+    transform: translateY(0);
+    /* Empieza en la parte inferior */
+
+    /* Sube 200px hacia arriba */
+
+  }
+}
+
+
+@keyframes home {
+  0% {
+    transform: translateY(-60px) translateX(-60px);
+
+
+  }
+
+  100% {
+    transform: translateY(0);
+    /* Empieza en la parte inferior */
+
+    /* Sube 200px hacia arriba */
+
+  }
+}
+
   .botones_partida {
 
     width: 70%;
