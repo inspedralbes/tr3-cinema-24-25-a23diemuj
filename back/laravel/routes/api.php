@@ -11,5 +11,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/preguntas/nivel/{nivel}', [PartidaController::class, 'obtenerPreguntasPorNivel']);
 Route::post('/ranking', [RankingController::class, 'store']);
-Route::get('/ranking', [RankingController::class, 'getRanking']);
+Route::get('/rankings/{username}', [RankingController::class, 'getRankings']);
+Route::get('/ranking/{deporte}', [RankingController::class, 'getRanking']);
  

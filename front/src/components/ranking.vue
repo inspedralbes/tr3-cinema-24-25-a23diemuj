@@ -59,32 +59,35 @@
         rankings: [], 
         loading: true, 
         error: null,   
+
       };
     },
     methods: {
       async guardarPuntuacion() {
       const counterStore = useCounterStore();
       const userInfo = counterStore.getLoginInfo;
-      
+      let aux;
       console.log('Información del usuario:', userInfo);
       console.log('Puntuación actual:', this.puntuacion);
 
       
-        try {
-          const existingRank = this.rankings.find(rank => rank.id_user === userInfo.id_user);
+        
 
-          if (existingRank) {
-            if (this.puntuacion > existingRank.puntuacion) {
-              
-              await axios.put(`${laravel.URL}/ranking/${existingRank.id}`, {
-                puntuacion: this.puntuacion,
-              
-              });
-              console.log('Puntuación actualizada con éxito');
-            } else {
-              console.log('La nueva puntuación no es mayor, no se actualiza');
-            }
-          } else {
+          try {
+          aux = await axios.get(`${laravel.URL}/rankings/${userInfo.username}`);
+           
+          
+        } catch (err) {
+          this.error = "No se pudo cargar la tabla de ranking.";
+          console.error(err);
+        } finally {
+          this.loading = false;
+          this.$q.loading.hide(); 
+          const puntuacionAnterior = aux?.data?.length > 0 ? aux.data[0].puntuacion : 0;
+          const deporteAnterior = aux?.data?.length > 0 ? aux.data[0].deporte : null;
+          console.log(deporteAnterior, this.deporte);
+          if(puntuacionAnterior <this.puntuacion || deporteAnterior !== this.deporte ) {
+            
             await axios.post(`${laravel.URL}/ranking`, {
               username: userInfo.username,
               puntuacion: this.puntuacion,
@@ -94,9 +97,11 @@
           }
           
           this.fetchRanking();
-        } catch (error) {
-          console.error('Error al guardar la puntuación:', error);
-        }
+        } 
+
+
+
+      
        
     },
 
@@ -111,7 +116,7 @@
         });
   
         try {
-          const response = await axios.get(`${laravel.URL}/ranking`);
+          const response = await axios.get(`${laravel.URL}/ranking/${this.deporte}`);
           this.rankings = response.data;
         } catch (err) {
           this.error = "No se pudo cargar la tabla de ranking.";
