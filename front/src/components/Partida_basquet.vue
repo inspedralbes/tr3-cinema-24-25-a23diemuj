@@ -482,6 +482,15 @@ function responder(num){
   animation: temblor2 0.5s infinite;
 }
 
+#main_arcade{
+  background-image: url("/bioma/2.png"); 
+  background-position: center center;
+  background-size: cover;
+  background-attachment: fixed;
+  height: 100vh;
+  position: relative;
+  padding-top: 20px;
+}
 
 .animacion_fuego{
 

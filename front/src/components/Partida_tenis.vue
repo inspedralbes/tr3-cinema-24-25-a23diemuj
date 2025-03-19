@@ -2,7 +2,7 @@
 import { reactive, ref, computed, watch, onMounted, onUnmounted } from 'vue';
 import { useCounterStore } from '@/stores/counter';
 
-
+/*
 const props = defineProps({
   data: {
     type: Object,
@@ -13,7 +13,7 @@ const props = defineProps({
 
 
 },)
-/*
+*/
 const props={data:  {
     "id": 1,
     "operacion": "5 + 3",
@@ -25,7 +25,7 @@ const props={data:  {
     "duracion": 24
   }};
 
-*/
+
 const Canastas = ref(0)
 const valorCanasta = ref(0)
 const index = ref(0);
@@ -89,102 +89,6 @@ function moverBase(num, aux) {
 
   }
 
-
-}
-
-
-async function comprobarBase(num) {
-
-
-
-
-  switch (num) {
-
-    case 1:
-
-      for (let index = 2; index >= 0; index--) {
-        if (bases[index]) {
-          moverBase(index + 1);
-        }
-
-      }
-
-      moverBase(0);
-
-
-      break;
-    case 2:
-
-
-      // 3rd to home
-      if (bases[2]) {
-        moverBase(3, 500);
-      }
-
-      for (let index = 1; index >= 0; index--) {
-        if (bases[index]) {
-          moverBase(index + 1);
-          moverBase(index + 2, 500);
-        }
-      }
-
-      // home to 2nd
-      for (let index = 1; index >= 0; index--) {
-        moverBase(index, index * 500);
-      }
-
-
-
-
-
-
-
-      break;
-    case 3:
-
-    for (let index = 2; index >= 0; index--) {
-        if (bases[index]) {
-          moverBase(index + 1);
-          moverBase(index + 2, 500);
-          moverBase(index + 3, 500);
-        }
-      }
-
-
-
-      // home to 3rd
-      moverBase(0);
-      moverBase(1, 500);
-      moverBase(2, 1000);
-
-
-
-
-
-      break;
-    case 4:
- 
-    for (let index = 2; index >= 0; index--) {
-        if (bases[index]) {
-          moverBase(index + 1);
-          moverBase(index + 2, 500);
-          moverBase(index + 3, 500);
-        }
-      }
-      // home to home
-      for (let index = 0; index < 4; index++) {
-        moverBase(index, index * 500);
-
-      }
-
-
-
-      break;
-
-
-  }
-
- 
 
 }
 
@@ -386,9 +290,10 @@ function responder(num) {
     Zindex.bate = 0;
 
     setTimeout(() => {
-      strikes.value--;
+      
+      info.fallo=false;
       if(strikes.value!=0){
-        info.fallo=false;
+       
       }
       animaciones.tiro = true
       info.canasta=carreras.value;
@@ -402,8 +307,7 @@ function responder(num) {
     setTimeout(() => {
 
       animaciones.tiro = true;
-      comprobarBase(info.canasta);
-     
+      
       emit('siguiente', info);
 
 
@@ -439,7 +343,7 @@ function responder(num) {
 
 
       <div class="bate_balon">
-        <img :style="{ zIndex: Zindex.bate }" class="bate" src="@/assets/bioma/bate.png" alt="" srcset="" :class="{
+        <img :style="{ zIndex: Zindex.bate }" class="bate" src="@/assets/bioma/raqueta.png" alt="" srcset="" :class="{
           'animacion_bate': animaciones.bate
         }">
         <img id="balon" :style="{ zIndex: Zindex.balon }" :class="{
@@ -449,17 +353,11 @@ function responder(num) {
           'animacion_tiro': animaciones.tiro,
           'animacion_disolver': animaciones.disolver
 
-        }" src="../assets/bioma/pelota_beisbol.gif" alt="" srcset="">
+        }" src="../assets/bioma/pelota_tenis.png" alt="" srcset="">
 
 
       </div>
-      <div class="poder">
-        <div v-if="bases[0]" class="primera"> </div>
-        <div v-if="bases[1]" class="segunda"> </div>
-        <div v-if="bases[2]" class="tercera"> </div>
-        <div v-if="bases[3]" class="home"> </div>
-        <img class="campo" src="@/assets/bioma/campo.png" alt="">
-      </div>
+      
 
       <div class="marcador">
         <img class="pelota2" src="@/assets/bioma/pelota2.png" alt=""> <span class="carreras">{{ carreras }} </span> <br>
@@ -508,89 +406,18 @@ function responder(num) {
 
   50% {
 
-    transform: translateY(-200px) scale(0.5) rotate(-90deg);
+    transform: translateY(-160px) scale(0.5) rotate(-90deg);
 
 
   }
 
   100% {
-    transform: translateY(-150px) scale(0.1) rotate(-180deg);
+    transform: translateY(-110px) scale(0.1) rotate(-180deg);
 
     /* Sube 200px hacia arriba */
 
   }
 }
-
-
-@keyframes primera {
-  0% {
-    transform: translateY(60px) translateX(-60px);
-
-
-  }
-
-  100% {
-    transform: translateY(0);
-    /* Empieza en la parte inferior */
-
-    /* Sube 200px hacia arriba */
-
-  }
-}
-
-
-
-@keyframes segunda {
-  0% {
-    transform: translateY(50px) translateX(60px);
-
-
-  }
-
-  100% {
-    transform: translateY(0);
-    /* Empieza en la parte inferior */
-
-    /* Sube 200px hacia arriba */
-
-  }
-}
-
-@keyframes tercera {
-  0% {
-    transform: translateY(-55px) translateX(60px);
-
-
-  }
-
-  100% {
-    transform: translateY(0);
-    /* Empieza en la parte inferior */
-
-    /* Sube 200px hacia arriba */
-
-  }
-}
-
-
-@keyframes home {
-  0% {
-    transform: translateY(-60px) translateX(-60px);
-
-
-  }
-
-  100% {
-    transform: translateY(0);
-    /* Empieza en la parte inferior */
-
-    /* Sube 200px hacia arriba */
-
-  }
-}
-
-
-
 
 
 @keyframes bateo2 {
@@ -602,13 +429,13 @@ function responder(num) {
 
   50% {
 
-    transform: translateY(-200px) translateX(120px) scale(0.5) rotate(-90deg);
+    transform: translateY(-160px) translateX(120px) scale(0.5) rotate(-90deg);
 
 
   }
 
   100% {
-    transform: translateY(-190px) translateX(140px) scale(0.1) rotate(-180deg);
+    transform: translateY(-150px) translateX(140px) scale(0.1) rotate(-180deg);
 
     /* Sube 200px hacia arriba */
 
@@ -624,13 +451,13 @@ function responder(num) {
 
   50% {
 
-    transform: translateY(-200px) translateX(-120px) scale(0.5) rotate(-90deg);
+    transform: translateY(-160px) translateX(-120px) scale(0.5) rotate(-90deg);
 
 
   }
 
   100% {
-    transform: translateY(-180px) translateX(-140px) scale(0.1) rotate(-180deg);
+    transform: translateY(-140px) translateX(-140px) scale(0.1) rotate(-180deg);
 
     /* Sube 200px hacia arriba */
 
@@ -693,7 +520,15 @@ function responder(num) {
   animation: disolver 0.2s linear;
 }
 
-
+#main_arcade{
+  background-image: url("/bioma/4.png"); 
+  background-position: center center;
+  background-size: cover;
+  background-attachment: fixed;
+  height: 100vh;
+  position: relative;
+  padding-top: 20px;
+}
 
 
 .marcador {
@@ -780,9 +615,8 @@ function responder(num) {
 
 .bate {
   position: absolute;
-  height: 200px;
-
-  margin-left: -150px;
+  width: 300px;
+  margin-left: -200px;
 
 
 
@@ -831,6 +665,7 @@ function responder(num) {
 
 .bate_balon {
   grid-row: 4;
+ 
   grid-column: 2;
 }
 
@@ -872,15 +707,7 @@ function responder(num) {
   z-index: 0;
 
 }
-#main_arcade{
-  background-image: url("/bioma/1.png"); 
-  background-position: center center;
-  background-size: cover;
-  background-attachment: fixed;
-  height: 100vh;
-  position: relative;
-  padding-top: 20px;
-}
+
 
 #canasta .aro {
 

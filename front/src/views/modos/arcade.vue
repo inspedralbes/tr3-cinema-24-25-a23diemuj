@@ -2,7 +2,8 @@
 import { ref, reactive, onUnmounted,onMounted } from 'vue';
 import Ranking from '../../components/ranking.vue';
 import Partida_beisbol from '../../components/Partida_beisbol.vue';
-import Partida_futbol from '../../components/Partida_basquet.vue';
+import Partida_tenis from '../../components/Partida_tenis.vue';
+
 import Temporizador from '../../components/temporizador.vue';
 import { getPreguntas } from '@/comunication_manager';
 import { useCounterStore } from '@/stores/counter';
@@ -136,6 +137,9 @@ function ocultarTemporizador() {
       <br>
       <q-btn class="botones_menu" glossy  > <span style="font-size: 60px;" class="material-icons" @click="modo(3)">sports_soccer</span></q-btn>
       <br>
+      <q-btn class="botones_menu" glossy  > <span style="font-size: 60px;" class="material-icons" @click="modo(4)">sports_tennis</span></q-btn>
+        <br>
+      
       <RouterLink to="/" @click="ocultarTot">
         <q-btn class="botones_menu" glossy label="Volver"></q-btn>
       </RouterLink>
@@ -167,6 +171,7 @@ function ocultarTemporizador() {
 
     <Partida_beisbol v-if="!cargando && visibleJuego && !mostrarTempo && deporte==1" :data="data.pregunta[index]" @siguiente="siguientePregunta" />
     <Partida_basquet v-if="!cargando && visibleJuego && !mostrarTempo && deporte==2" :data="data.pregunta[index]" @siguiente="siguientePregunta" />
+    <Partida_tenis v-if="!cargando && visibleJuego && !mostrarTempo && deporte==4" :data="data.pregunta[index]" @siguiente="siguientePregunta" />
    
     <Ranking v-if="!cargando && !visibleJuego" :puntuacion="puntuacion" />
   </main>

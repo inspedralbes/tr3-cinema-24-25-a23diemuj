@@ -5,7 +5,7 @@ const http = require('http');
 const socketIo = require('socket.io');
 const axios = require('axios');  
 const { log } = require('console');
-
+const tenis = require('./modos/tenis');
 const app = express();
 
 
@@ -84,8 +84,9 @@ let poderes=[
 rellenarPreguntas();
 
 async function rellenarPreguntas(){
-    const URL = `http://localhost:8000/api/preguntas/nivel/0`;
-    const response = await fetch(URL);
+   // const URL = `http://localhost:8000/api/preguntas/nivel/0`;
+      const URL = `http://a23diemujper.juego.daw.inspedralbes.cat/laravel/public/api/preguntas/nivel/0`;
+   const response = await fetch(URL);
     Preguntas=await response.json();
 
 
@@ -94,7 +95,7 @@ async function rellenarPreguntas(){
 io.on('connection', async (socket) => {
  
     socket.user = { username: socket.handshake.auth.username };
-  
+    tenis(socket, io, salas, conexiones);
     console.log(socket.user);
 
     function comprobarCero(datas,sala){
@@ -361,7 +362,6 @@ io.on('connection', async (socket) => {
 
 
     socket.on('empezar',(sala)=>{
-        
         
         socket.broadcast.to(sala).emit('pregunta', Preguntas[0]);
            
