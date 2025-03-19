@@ -88,6 +88,9 @@ function modo(data){
 
 function jugar() {
   useCounterStore().loginInfo.username=name.value;
+  if(name.value.trim()==""){  
+    useCounterStore().loginInfo.username="Invitado"
+  }
   visibleName.value=false;
   rellenarPreguntas();  
   mostrarTempo.value=false;
@@ -130,14 +133,14 @@ function ocultarTemporizador() {
 
   <div v-if="visibleModos">
     <div id="div_menu">
-      <q-btn class="botones_menu" glossy  > <span style="font-size: 60px;" class="material-icons" @click="modo(1)">sports_baseball</span>  </q-btn>
+      <q-btn class="botones_menu" glossy  @click="modo(1)"  > <span style="font-size: 60px;" class="material-icons">sports_baseball</span>  </q-btn>
       <br>
-      <q-btn class="botones_menu" glossy  > 
-        <span style="font-size: 60px;" class="material-icons" @click="modo(2)">sports_basketball</span>  </q-btn>
+      <q-btn class="botones_menu" glossy @click="modo(2)"  > 
+        <span style="font-size: 60px;" class="material-icons" >sports_basketball</span>  </q-btn>
       <br>
-      <q-btn class="botones_menu" glossy disable  > <span style="font-size: 60px;" class="material-icons" @click="modo(3)" >sports_soccer</span></q-btn>
+      <q-btn class="botones_menu" glossy disable  @click="modo(3)"   > <span style="font-size: 60px;" class="material-icons">sports_soccer</span></q-btn>
       <br>
-      <q-btn class="botones_menu" glossy  disable > <span style="font-size: 60px;" class="material-icons" @click="modo(4)">sports_tennis</span></q-btn>
+      <q-btn class="botones_menu" glossy  disable  @click="modo(4)" > <span style="font-size: 60px;" class="material-icons">sports_tennis</span></q-btn>
         <br>
       
       <RouterLink to="/" @click="ocultarTot">
