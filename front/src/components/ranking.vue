@@ -49,6 +49,9 @@
       puntuacion: {
       type: Number,
       default: 0,
+    },deporte: {
+      type: Number,
+      default: 0,
     },
     },
     data() {
@@ -75,6 +78,7 @@
               
               await axios.put(`${laravel.URL}/ranking/${existingRank.id}`, {
                 puntuacion: this.puntuacion,
+              
               });
               console.log('Puntuación actualizada con éxito');
             } else {
@@ -84,6 +88,7 @@
             await axios.post(`${laravel.URL}/ranking`, {
               username: userInfo.username,
               puntuacion: this.puntuacion,
+              deporte:this.deporte,
             });
             console.log('Puntuación guardada con éxito');
           }

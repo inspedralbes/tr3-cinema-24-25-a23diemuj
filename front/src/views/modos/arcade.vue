@@ -173,7 +173,7 @@ function ocultarTemporizador() {
     <Partida_basquet v-if="!cargando && visibleJuego && !mostrarTempo && deporte==2" :data="data.pregunta[index]" @siguiente="siguientePregunta" />
     <Partida_tenis v-if="!cargando && visibleJuego && !mostrarTempo && deporte==4" :data="data.pregunta[index]" @siguiente="siguientePregunta" />
    
-    <Ranking v-if="!cargando && !visibleJuego" :puntuacion="puntuacion" />
+    <Ranking v-if="!cargando && !visibleJuego" :puntuacion="puntuacion" :deporte="deporte" />
   </main>
 </template>
 

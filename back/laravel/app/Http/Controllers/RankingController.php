@@ -12,11 +12,13 @@ class RankingController extends Controller
         $validated = $request->validate([
             'username' => 'required',
             'puntuacion' => 'required',
+            'deporte'=> 'deporte'
         ]);
 
         $ranking = new Ranking();
         $ranking->username = $validated['username'];
         $ranking->puntuacion = $validated['puntuacion'];
+        $ranking->deporte = $validated['deporte'];
         $ranking->save();
 
         return response()->json(['message' => 'Puntuación guardada con éxito'], 201);

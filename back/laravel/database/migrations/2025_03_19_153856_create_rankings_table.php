@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('biomas', function (Blueprint $table) {
+        Schema::create('rankings', function (Blueprint $table) {
             $table->id();
-            $table->string('fondo');
-            $table->string('canasta');
-            $table->string('balon');   
+            $table->string('username');
+            $table->integer('puntuacion'); 
+            $table->integer('deporte'); 
             $table->timestamps();
         });
     }
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('biomas');
+        Schema::dropIfExists('rankings');
     }
 };
