@@ -41,7 +41,7 @@
   import axios from 'axios';
   import { useQuasar, QSpinnerFacebook } from 'quasar';
   import { useCounterStore } from '@/stores/counter';
-
+  import { laravel } from '@/comunication_manager';
   export default {
     name: "Ranking",
     props: {
@@ -72,7 +72,8 @@
 
           if (existingRank) {
             if (this.puntuacion > existingRank.puntuacion) {
-              await axios.put(`http://a23diemujper.juego.daw.inspedralbes.cat/laravel/public/api/ranking/${existingRank.id}`, {
+              
+              await axios.put(`${laravel.URL}/ranking/${existingRank.id}`, {
                 puntuacion: this.puntuacion,
               });
               console.log('Puntuación actualizada con éxito');
@@ -80,7 +81,7 @@
               console.log('La nueva puntuación no es mayor, no se actualiza');
             }
           } else {
-            await axios.post('http://a23diemujper.juego.daw.inspedralbes.cat/laravel/public/api/ranking', {
+            await axios.post(`${laravel.URL}/ranking`, {
               username: userInfo.username,
               puntuacion: this.puntuacion,
             });
@@ -105,7 +106,7 @@
         });
   
         try {
-          const response = await axios.get("http://a23diemujper.juego.daw.inspedralbes.cat/laravel/public/api/ranking");
+          const response = await axios.get(`${laravel.URL}/ranking`);
           this.rankings = response.data;
         } catch (err) {
           this.error = "No se pudo cargar la tabla de ranking.";

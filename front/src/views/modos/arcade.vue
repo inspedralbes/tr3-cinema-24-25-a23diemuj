@@ -135,9 +135,9 @@ function ocultarTemporizador() {
       <q-btn class="botones_menu" glossy  > 
         <span style="font-size: 60px;" class="material-icons" @click="modo(2)">sports_basketball</span>  </q-btn>
       <br>
-      <q-btn class="botones_menu" glossy  > <span style="font-size: 60px;" class="material-icons" @click="modo(3)">sports_soccer</span></q-btn>
+      <q-btn class="botones_menu" glossy disable  > <span style="font-size: 60px;" class="material-icons" @click="modo(3)" >sports_soccer</span></q-btn>
       <br>
-      <q-btn class="botones_menu" glossy  > <span style="font-size: 60px;" class="material-icons" @click="modo(4)">sports_tennis</span></q-btn>
+      <q-btn class="botones_menu" glossy  disable > <span style="font-size: 60px;" class="material-icons" @click="modo(4)">sports_tennis</span></q-btn>
         <br>
       
       <RouterLink to="/" @click="ocultarTot">
