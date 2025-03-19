@@ -13,6 +13,13 @@ return new class extends Migration
     {
         Schema::create('partidas', function (Blueprint $table) {
             $table->id();
+            $table->string('operacion');
+            $table->integer('respuesta_correcta'); 
+            $table->integer('respuestaIncorrecta_1');
+            $table->integer('respuestaIncorrecta_2');
+            $table->integer('respuestaIncorrecta_3');
+            $table->integer('nivel')->default(1); 
+            $table->integer('duracion'); 
             $table->timestamps();
         });
     }
