@@ -8,14 +8,16 @@ const props = defineProps({
    type: Object,
     required: true,
   },
+  new: {
+   type: Number,
+    required: false,
+  },
 
 
 
 
 },)
- 
-
-
+  
 const Canastas = ref(0)
 const valorCanasta= ref(0)
 const index = ref(0);
@@ -161,8 +163,13 @@ let idTemporizador = null;
 reiniciarTemporizador(); 
 watch(() => props.data, () => { 
   reiniciarTemporizador();
-  info.fallo=false;
+  info.fallo=false; 
 });
+
+watch(() => props.new, () => { 
+  console.log(props.new)
+});
+ 
 
 function reiniciarTemporizador() { 
   

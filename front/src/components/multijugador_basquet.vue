@@ -106,13 +106,9 @@ socket.on('acabar', (index, puntuacion) => {
 
 function siguientePregunta(info) {
   socket.emit('cambio_pregunta', store.loginInfo.username, store.SalaActual, info.canasta);
-  console.log(store.loginInfo.username, store.SalaActual)
+   
 }
-
-function desconectar() {
-  socketManager.RemSocket();
-}
-
+ 
 
 
 function empezar() {
@@ -138,11 +134,22 @@ function tempoAcabado() {
 
 
 }
-
+let newPunto;
 let poderYaObtenido=[];
 
   socket.on('ranking', async (rankings) => {
     posiciones.value = [...rankings];
+
+    posiciones.value.forEach(element => {
+        
+
+        if(element.username==store.loginInfo.username){
+           newPunto=element.puntacion;
+           console.log(newPunto)
+        }
+    });
+     
+    
 
     posiciones.value.forEach((posicion) => {
       if (!poderYaObtenido[posicion.username]) {
@@ -189,7 +196,7 @@ socket.on('poderes', (param) => {
 
 })
 
-const tiempo = ref(18000);
+const tiempo = ref(180);
 let interval;
 
 function temporizador() {
@@ -236,7 +243,7 @@ function usarpoder() {
 
 socket.on('pregunta', (pregunta) => {
   data.preguntas = pregunta;
-  console.log(data.preguntas)
+   
   if (visibleJuego.value == false) {
     visibleJuego.value = true;
     visibleSalas.value = false;
@@ -361,7 +368,7 @@ function mostrarRanking() {
 
 
       
-      <Partida :data="data.preguntas" @siguiente="siguientePregunta"> </Partida>
+      <Partida :data="data.preguntas" @siguiente="siguientePregunta" :new="newPunto"> </Partida>
 
     </div>
 
