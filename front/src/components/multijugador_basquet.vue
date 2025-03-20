@@ -189,7 +189,7 @@ socket.on('poderes', (param) => {
 
 })
 
-const tiempo = ref(180);
+const tiempo = ref(18000);
 let interval;
 
 function temporizador() {
@@ -334,12 +334,11 @@ function mostrarRanking() {
       <table class="ranking-table">
 
         <transition-group name="rank" tag="tbody">
-          <tr :class="{ 'yoMismo': player.username === store.loginInfo.username }"
-            v-for="(player, index) in posiciones.slice(0, 3)" :key="player.username">
-            <td>{{ index + 1 }}</td>
-            <td><img class="foto_ranking" :src="`/avatar/boy${player.avatar}.png`" alt="" srcset=""></td>
-
-            <td>{{ player.puntacion }} </td>
+          <tr
+            v-for="(player, index) in posiciones" :key="player.username">
+            
+            <td v-if="player.username === store.loginInfo.username">{{ index + 1 }}</td>
+           
           </tr>
         </transition-group>
       </table>
@@ -926,18 +925,18 @@ function mostrarRanking() {
 
 .ranking-table {
 
-  border-collapse: collapse;
-  position: absolute;
-  font-size: 20px;
-  top: 25%;
-  background-color: white;
+    border-collapse: collapse;
+position: absolute;  
+font-size: 40px;
+top: 10%;
+margin-left: 30px;
+font-family: 'Press Start 2P', cursive;  
+background-color: white;
+z-index: 10;
+
 
 }
-
-.yoMismo {
-
-  background-color: rgb(223, 223, 223);
-}
+ 
 
 .foto_ranking {
   width: 40px;
@@ -948,14 +947,11 @@ function mostrarRanking() {
 
 .ranking-table th,
 .ranking-table td {
-  border: 1px solid #ddd;
+   
   padding: 8px;
   text-align: center;
 }
-
-.ranking-table th {
-  background-color: #f2f2f2;
-}
+ 
 
 .rank-enter-active,
 .rank-leave-active {
@@ -999,6 +995,19 @@ transform: translate(-50%, -50%);
   top: 25%;
   overflow: hidden;
   z-index: 10;
+
+}
+
+.ranking-table {
+
+border-collapse: collapse;
+position: absolute;  
+font-size: 50px;
+top: 10%;
+margin-left: 135px;
+font-family: 'Press Start 2P', cursive;  
+background-color: white;
+z-index: 10;
 
 }
 
