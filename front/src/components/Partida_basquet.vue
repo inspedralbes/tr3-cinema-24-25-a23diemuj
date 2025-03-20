@@ -161,6 +161,7 @@ let idTemporizador = null;
 reiniciarTemporizador(); 
 watch(() => props.data, () => { 
   reiniciarTemporizador();
+  info.fallo=false;
 });
 
 function reiniciarTemporizador() { 
@@ -233,7 +234,7 @@ function responder(num){
 
 
   }else{
-
+    info.canasta=Canastas.value;
     emit('siguiente',info); 
   }
 
@@ -256,7 +257,12 @@ function responder(num){
  
 
  <div class="marcador">
-        <img class="pelota2" src="@/assets/bioma/balon.png" alt=""> <span class="carreras">{{ Canastas }} </span> <br>
+        <img class="pelota2" src="@/assets/bioma/balon.png" alt=""> <span class="carreras"> 
+          <Transition name="slide" mode="out-in">
+      <span :key="Canastas">{{ Canastas }}</span>
+    </Transition>  
+        
+        </span> <br>
         <img class="corazon" v-if="!info.fallo" src="@/assets/bioma/corazon.png" alt="">
        
       </div>
@@ -286,6 +292,8 @@ function responder(num){
 
 
   src="../assets/bioma/balon.png" alt="" srcset="">
+
+  
 
   <div class="tiempo_fuera">
     <div class="tiempo" >{{ props.data.duracion }} </div>
@@ -440,6 +448,19 @@ function responder(num){
       transform: translateY(-800px) translateX(-100px)  scale(0.4) rotate(-180deg); /* Sube 200px hacia arriba */
     }
   }
+
+  .slide-enter-active, .slide-leave-active {
+  transition: transform 0.5s ease-out, opacity 0.5s;
+}
+
+.slide-enter-from {
+  transform: translateY(-100%);
+  opacity: 0;
+}
+.slide-leave-to {
+  transform: translateY(100%);
+  opacity: 0;
+}
 
   .q-btn:disabled {
   opacity: 1 !important;  /* Elimina la opacidad */

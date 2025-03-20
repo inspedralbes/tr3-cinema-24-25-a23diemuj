@@ -388,7 +388,7 @@ io.on('connection', async (socket) => {
        
         let aux=salas[sala][index].index;
     
-        salas[sala][index].puntacion=salas[sala][index].puntacion+tiro;
+        salas[sala][index].puntacion=tiro;
 
         salas[sala][index].index++;
         aux=salas[sala][index].index;

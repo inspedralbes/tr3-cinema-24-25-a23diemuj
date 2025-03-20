@@ -396,7 +396,7 @@ function responder(num) {
       emit('siguiente', info);
       Zindex.balon = 0;
       Zindex.bate = 1;
-
+      
     }, 600);
   } else {
 
@@ -463,7 +463,12 @@ function responder(num) {
       </div>
 
       <div class="marcador">
-        <img class="pelota2" src="@/assets/bioma/pelota2.png" alt=""> <span class="carreras">{{ carreras }} </span> <br>
+        <img class="pelota2" src="@/assets/bioma/pelota2.png" alt=""> <span class="carreras"> 
+          <Transition name="slide" mode="out-in">
+      <span :key="carreras">{{ carreras }}</span>
+    </Transition>  
+        
+        </span><br>
         <img v-if="strikes>=1" class="corazon" src="@/assets/bioma/corazon.png" alt="">
         <img v-if="strikes>=2" class="corazon" src="@/assets/bioma/corazon.png" alt="">
         <img v-if="strikes>=3" class="corazon" src="@/assets/bioma/corazon.png" alt="">
@@ -689,6 +694,20 @@ function responder(num) {
 
 }
 
+
+
+.slide-enter-active, .slide-leave-active {
+  transition: transform 0.5s ease-out, opacity 0.5s;
+}
+
+.slide-enter-from {
+  transform: translateY(-100%);
+  opacity: 0;
+}
+.slide-leave-to {
+  transform: translateY(100%);
+  opacity: 0;
+}s
 .animacion_disolver {
   animation: disolver 0.2s linear;
 }
