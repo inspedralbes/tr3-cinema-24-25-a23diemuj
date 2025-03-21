@@ -85,7 +85,7 @@ if (useApp.loginInfo.loggedIn) {
       <q-btn class="botones_menu" glossy label="" disable><span style="font-size: 60px;" class="material-icons"> favorite </span> </q-btn>
 
       <q-btn class="botones_menu" glossy label=""  @click="salir"><span style="font-size: 60px;" class="material-icons"> keyboard_return </span>   </q-btn>    
-   
+      
     </div>
 
 
@@ -93,6 +93,9 @@ if (useApp.loginInfo.loggedIn) {
 </template>
 
 <style scoped>
+
+
+
 #main_menu {
   display: flex;
   justify-content: center; /* Centra horizontalmente */

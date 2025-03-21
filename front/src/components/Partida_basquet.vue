@@ -167,7 +167,7 @@ watch(() => props.data, () => {
 });
 
 watch(() => props.new, () => { 
-  console.log(props.new)
+  Canastas.value = props.new;
 });
  
 
@@ -266,7 +266,9 @@ function responder(num){
  <div class="marcador">
         <img class="pelota2" src="@/assets/bioma/balon.png" alt=""> <span class="carreras"> 
           <Transition name="slide" mode="out-in">
-      <span :key="Canastas">{{ Canastas }}</span>
+            <span :key="Canastas">{{ Canastas }}</span>
+     
+
     </Transition>  
         
         </span> <br>

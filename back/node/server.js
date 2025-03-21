@@ -32,48 +32,48 @@ let Preguntas=[];
 let poderes=[
     {
         poder:"banana",
-        num: 1,
+        num: 5,
         direccion: -1,
     },
     {
         poder:"caparazon_verde",
-        num: 2,
+        num: 10,
         direccion:-1
     },
     {   
         poder:"caparazon_rojo",
-        num: 3,
+        num: 15,
         direccion:1
     },
     {   
         poder:"honguito",
-        num:3,
+        num:10,
         direccion:0
 
     },
     {   
         poder:"bomba",
-        num: 5,
+        num: 20,
         direccion:2
     },
     {   
         poder:"estrella",
-        num:8,
+        num:30,
         direccion:2
     },
     {   
         poder:"caparazon_azul",
-        num:7,
+        num:30,
         direccion:2
     },
     {   
         poder:"rayo",
-        num:5,
+        num:50,
         direccion:2
     },
     {   
         poder:"bill_bala",
-        num:10,
+        num:40,
         direccion:2
     }
 
@@ -164,10 +164,11 @@ io.on('connection', async (socket) => {
          
            }
            
-           data[index].poder=poderes[numeroAleatorio];
-          
-           socket.emit('poderes', data[index].poder)
-          
+       //    data[index].poder=poderes[numeroAleatorio];
+       
+       data[index].poder=poderes[auxssss];
+        socket.emit('poderes', data[index].poder)
+        auxssss++;  
 
 
 
@@ -175,7 +176,7 @@ io.on('connection', async (socket) => {
 
 
     }
-
+let auxssss=0
 
     socket.on('poder',(poder,sala,username)=>{
         let index=obtenerIndex(username,sala)
@@ -400,7 +401,7 @@ io.on('connection', async (socket) => {
             salas[sala][index].index=0;
         }
         
-        salas[sala][index].darPoder-=tiro;
+        salas[sala][index].darPoder-=5;
         if(salas[sala][index].darPoder<=0){
 
            darPoderes(salas[sala],index)

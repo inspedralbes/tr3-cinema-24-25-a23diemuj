@@ -47,6 +47,11 @@ const visibleTedio = ref(false);
 const temblor = ref(false);
 const puntacionFinal = reactive({ puntuacion: "", posicion: "" })
 const imagenCopaGanador = ref(null);
+const visibleUsarPoder= reactive({visible:false, banana:false, caparazon_rojo:false, 
+                          caparazon_azul:false, caparazon_verde:false, bomba:false,
+                          honguito:false, rayo:false, estrella:false,bill_bala:false,
+                         })
+
 
 socket.on('tedio', (nombre, poders) => {
 
@@ -105,6 +110,7 @@ socket.on('acabar', (index, puntuacion) => {
 
 
 function siguientePregunta(info) {
+  
   socket.emit('cambio_pregunta', store.loginInfo.username, store.SalaActual, info.canasta);
    
 }
@@ -134,7 +140,7 @@ function tempoAcabado() {
 
 
 }
-let newPunto;
+const newPunto=ref(0)
 let poderYaObtenido=[];
 
   socket.on('ranking', async (rankings) => {
@@ -144,8 +150,8 @@ let poderYaObtenido=[];
         
 
         if(element.username==store.loginInfo.username){
-           newPunto=element.puntacion;
-           console.log(newPunto)
+           newPunto.value=element.puntacion;
+           
         }
     });
      
@@ -229,9 +235,21 @@ function temporizador() {
 function usarpoder() {
 
   if (poderes.data) {
-    socket.emit('poder', poderes.data, store.SalaActual, store.loginInfo.username)
-    poderes.data = "";
-    poderYaObtenido[store.loginInfo.username].aux = false;
+    visibleUsarPoder.visible=true;
+    visibleUsarPoder[poderes.data.poder]=true;
+    console.log(poderes.data.poder);
+    console.log(visibleUsarPoder[poderes.data.poder]);
+    
+ setTimeout(() => {
+  visibleUsarPoder.visible=false;
+  visibleUsarPoder[poderes.data.poder]=false;
+  socket.emit('poder', poderes.data, store.SalaActual, store.loginInfo.username)
+  poderes.data = "";
+  poderYaObtenido[store.loginInfo.username].aux = false;
+ 
+}, 1000);
+
+ 
   }
 
 
@@ -371,6 +389,20 @@ function mostrarRanking() {
       <Partida :data="data.preguntas" @siguiente="siguientePregunta" :new="newPunto"> </Partida>
 
     </div>
+
+
+<img v-if="visibleUsarPoder.visible" class="usarPoder" 
+  :class="{'animacion_banana': visibleUsarPoder.banana,
+  'animacion_caparazon_rojo': visibleUsarPoder.caparazon_rojo,
+  'animacion_caparazon_azul': visibleUsarPoder.caparazon_azul,
+  'animacion_caparazon_verde': visibleUsarPoder.caparazon_verde,
+  'animacion_bomba': visibleUsarPoder.bomba,
+  'animacion_arriba': visibleUsarPoder.rayo || visibleUsarPoder.bill_bala,
+  'animacion_abajo': visibleUsarPoder.honguito  || visibleUsarPoder.estrella,
+   
+   
+  }"  :src="`/items/${poderes.data.poder}.png`" alt="" srcset="">
+
 
     <div v-if="visibleRanking">
       <RouterLink to="/jugar" @click.native="detenerConfeti">
@@ -975,8 +1007,317 @@ z-index: 10;
   transition: transform 0.5s ease;
 }
 
+
+@keyframes banana {
+  0% {
+
+    transform:translate(-50%,-50%) scale(0.1);
+  }
+  20% {
+    transform: translate(-50%, -50%)scale(1);
+  }
+  40% {
+    transform: translate(-50%, -50%)scale(1);
+  }
+  100% {
+    transform:translate(-50%,200%)
+  }
+}
+@keyframes banana_movil {
+  0% {
+
+    transform:translate(-50%,-50%) scale(0.1);
+  }
+  20% {
+    transform: translate(-50%, -50%)scale(1);
+  }
+  40% {
+    transform: translate(-50%, -50%)scale(1);
+  }
+  100% {
+    transform:translate(-50%,300%)
+  }
+}
+
+@keyframes caparazon_rojo {
+  0% {
+
+    transform:translate(-50%,-50%) scale(0.1);
+  }
+  20% {
+    transform: translate(-55%, -55%)scale(1) rotate(180deg);
+  }
+  25%{
+    transform: translate(-45%, -45%)scale(1) rotate(180deg);
+  }
+  30%{
+    transform: translate(-55%, -55%)scale(1) rotate(180deg);
+  }
+  35%{
+    transform: translate(-50%, -50%)scale(1) rotate(180deg);
+  }
+  40% {
+    transform: translate(-45%, -45%)scale(1) rotate(180deg);
+  }
+  45% {
+    transform: translate(-55%, -55%)scale(1) rotate(180deg);
+  }
+  50% {
+    transform: translate(-65%, -65%)scale(1) rotate(180deg);
+  }
+  100% {
+    transform:translate(-50%,-300%)
+  }
+}
+@keyframes caparazon_rojo_movil {
+  0% {
+
+    transform:translate(-50%,-50%) scale(0.1);
+  }
+  20% {
+    transform: translate(-55%, -55%)scale(1) rotate(180deg);
+  }
+  25%{
+    transform: translate(-45%, -45%)scale(1) rotate(180deg);
+  }
+  30%{
+    transform: translate(-55%, -55%)scale(1) rotate(180deg);
+  }
+  35%{
+    transform: translate(-50%, -50%)scale(1) rotate(180deg);
+  }
+  40% {
+    transform: translate(-45%, -45%)scale(1) rotate(180deg);
+  }
+  45% {
+    transform: translate(-55%, -55%)scale(1) rotate(180deg);
+  }
+  50% {
+    transform: translate(-65%, -65%)scale(1) rotate(180deg);
+  }
+  100% {
+    transform:translate(-50%,-400%)
+  }
+}
+ 
+@keyframes caparazon_azul {
+  0% {
+
+    transform:translate(-50%,-50%) scale(0.1);
+  }
+  20% {
+    transform: translate(-50%, -50%)scale(1);
+  }
+  40% {
+    transform: translate(-50%, -50%)scale(1);
+  }
+  60%{
+    transform: translate(-50%, -20%)scale(1);
+  }
+  100% {
+    transform:translate(-50%,-300%)
+  }
+}
+@keyframes caparazon_azul_movil {
+  0% {
+
+    transform:translate(-50%,-50%) scale(0.1);
+  }
+  20% {
+    transform: translate(-50%, -50%)scale(1);
+  }
+  40% {
+    transform: translate(-50%, -50%)scale(1);
+  }
+  60%{
+    transform: translate(-50%, -20%)scale(1);
+  }
+  100% {
+    transform:translate(-50%,-400%)
+  }
+} 
+
+@keyframes caparazon_verde {
+  0% {
+
+    transform:translate(-50%,-50%) scale(0.1);
+  }
+  20% {
+    transform: translate(-50%, -50%)scale(1);
+  }
+  40% {
+    transform: translate(-50%, -50%)scale(1);
+  }
+  100% {
+    transform:translate(-50%,200%) rotate(180deg);
+  }
+}
+@keyframes caparazon_verde_movil {
+  0% {
+
+    transform:translate(-50%,-50%) scale(0.1);
+  }
+  20% {
+    transform: translate(-50%, -50%)scale(1);
+  }
+  40% {
+    transform: translate(-50%, -50%)scale(1);
+  }
+  100% {
+    transform:translate(-50%,300%) rotate(180deg);
+  }
+}
+@keyframes bomba {
+  0% {
+
+    transform:translate(-45%,-45%) scale(0.1);
+  }
+  20% {
+    transform: translate(-55%, -55%)scale(1) rotate(45deg);
+  }
+  25%{
+    transform: translate(-45%, -45%)scale(1) rotate(45deg);
+  }
+  30%{
+    transform: translate(-55%, -55%)scale(1) rotate(45deg);
+  }
+  35%{
+    transform: translate(-50%, -50%)scale(1) rotate(45deg);
+  }
+  40% {
+    transform: translate(-45%, -45%)scale(1) rotate(45deg);
+  }
+  45% {
+    transform: translate(-55%, -55%)scale(1) rotate(45deg);
+  }
+  50% {
+    transform: translate(-65%, -65%)scale(1) rotate(45deg);
+  }
+  100% {
+    transform:translate(-50%,-300%)
+  }
+}@keyframes bomba_movil {
+  0% {
+
+    transform:translate(-45%,-45%) scale(0.1);
+  }
+  20% {
+    transform: translate(-55%, -55%)scale(1) rotate(45deg);
+  }
+  25%{
+    transform: translate(-45%, -45%)scale(1) rotate(45deg);
+  }
+  30%{
+    transform: translate(-55%, -55%)scale(1) rotate(45deg);
+  }
+  35%{
+    transform: translate(-50%, -50%)scale(1) rotate(45deg);
+  }
+  40% {
+    transform: translate(-45%, -45%)scale(1) rotate(45deg);
+  }
+  45% {
+    transform: translate(-55%, -55%)scale(1) rotate(45deg);
+  }
+  50% {
+    transform: translate(-65%, -65%)scale(1) rotate(45deg);
+  }
+  100% {
+    transform:translate(-50%,-400%)
+  }
+}
+
+
+@keyframes arriba {
+  0% {
+
+    transform:translate(-50%,-50%) scale(0.1);
+    opacity: 1;
+  }
+  20% {
+    transform: translate(-50%, -50%)scale(1);
+    opacity: 1;
+  }
+  40% {
+    transform: translate(-50%, -50%)scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform:translate(-50%,-100%);
+    opacity: 0;
+  }
+}
+@keyframes abajo {
+  0% {
+
+    transform:translate(-50%,-50%) scale(0.1);
+    opacity: 1;
+  }
+  20% {
+    transform: translate(-50%, -50%)scale(1);
+    opacity: 1;
+  }
+  40% {
+    transform: translate(-50%, -50%)scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform:translate(-50%,-20%);
+    opacity: 0;
+  }
+}
+
+.animacion_banana{
+  animation: banana_movil 1s linear;
+}
+.animacion_caparazon_rojo{
+  animation: caparazon_rojo_movil 1s linear ;
+}
+.animacion_caparazon_azul{
+  animation: caparazon_azul_movil 1s linear ;
+}
+.animacion_caparazon_verde{
+  animation: caparazon_verde_movil 1s linear ;
+}
+.animacion_bomba{
+  animation: bomba_movil 1s linear ;
+}
+.animacion_arriba{
+  animation: arriba 1s linear ;
+}
+.animacion_abajo{
+  animation: abajo 1s linear ;
+}
+
+.usarPoder {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 200px;
+  height: 200px;
+  display: grid;
+  border-radius: 50%;
+  z-index: 20;
+}
+ 
+
+
+
 @media screen and (min-width: 750px){
-   
+ .usarPoder {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+  height: 300px;
+  display: grid;
+  border-radius: 50%;
+  
+  
+  
+}
 .poder img {
 
 width: auto;
