@@ -87,13 +87,12 @@ if (useApp.loginInfo.loggedIn) {
       <q-btn class="botones_menu" glossy label=""  @click="salir"><span style="font-size: 60px;" class="material-icons"> keyboard_return </span>   </q-btn>    
       
     </div>
-
+    
 
   </main>
 </template>
 
 <style scoped>
-
 
 
 #main_menu {

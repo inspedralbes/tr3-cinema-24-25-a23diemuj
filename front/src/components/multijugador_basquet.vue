@@ -51,22 +51,38 @@ const visibleUsarPoder= reactive({visible:false, banana:false, caparazon_rojo:fa
                           caparazon_azul:false, caparazon_verde:false, bomba:false,
                           honguito:false, rayo:false, estrella:false,bill_bala:false,
                          })
+const visiblePoderRecibido= reactive({visible:false, banana:false, caparazon_rojo:false, 
+                          caparazon_azul:false, caparazon_verde:false, bomba:false,
+                          honguito:false, rayo:false, estrella:false,bill_bala:false,
+                         })
 
 
 socket.on('tedio', (nombre, poders) => {
-
   medio.poder = poders.poder;
   medio.num = poders.num;
   medio.username = nombre;
+  visiblePoderRecibido.visible=true;
+  visiblePoderRecibido[medio.poder]=true;
+  setTimeout(() => {
+    visiblePoderRecibido.visible=false;
+    visiblePoderRecibido[medio.poder]=false;
+    temblor.value = true;
+    setTimeout(() => {
+      temblor.value = false;
+  }, 200);
+  }, 1000);
+
+
+
+  /*
+ 
   visibleTedio.value = true;
   temblor.value = true;
-  setTimeout(() => {
-    temblor.value = false;
-  }, 200);
+  
   setTimeout(() => {
     visibleTedio.value = false;
   }, 1500);
-
+*/
 })
 
 
@@ -237,8 +253,7 @@ function usarpoder() {
   if (poderes.data) {
     visibleUsarPoder.visible=true;
     visibleUsarPoder[poderes.data.poder]=true;
-    console.log(poderes.data.poder);
-    console.log(visibleUsarPoder[poderes.data.poder]);
+     
     
  setTimeout(() => {
   visibleUsarPoder.visible=false;
@@ -348,7 +363,7 @@ function mostrarRanking() {
     <Temporizador v-if="visibleTempo" @complete="tempoAcabado" />
     <div v-if="visibleJuego" :class="{ 'temblor': temblor }">
 
-      <div v-if="visibleTedio" class="tedioFuera">
+      <div v-if="visibleTedio==2" class="tedioFuera">
         <div class="tedio">
           <img :src="`/items/${medio.poder}.webp`" alt="">
           <div class="tedio_num"> {{ medio.username }}</div>
@@ -356,6 +371,13 @@ function mostrarRanking() {
 
         </div>
       </div>
+
+     
+
+
+       
+
+
       <table class="ranking-table">
 
         <transition-group name="rank" tag="tbody">
@@ -402,6 +424,20 @@ function mostrarRanking() {
    
    
   }"  :src="`/items/${poderes.data.poder}.png`" alt="" srcset="">
+
+<img v-if="visiblePoderRecibido.visible" class="poderRecibido" :src="`/items/${medio.poder}.png`" alt="" :class="{
+  'animacion_r_banana': visiblePoderRecibido.banana,
+  'animacion_r_caparazon_rojo': visiblePoderRecibido.caparazon_rojo,
+  'animacion_r_caparazon_azul': visiblePoderRecibido.caparazon_azul,
+  'animacion_r_caparazon_verde': visiblePoderRecibido.caparazon_verde,
+  'animacion_r_bomba': visiblePoderRecibido.bomba,
+  'animacion_r_estrella_bill': visiblePoderRecibido.estrella || visiblePoderRecibido.bill_bala,
+  'animacion_r_rayo': visiblePoderRecibido.rayo
+  }" >
+
+
+
+
 
 
     <div v-if="visibleRanking">
@@ -901,7 +937,7 @@ function mostrarRanking() {
   width: 150px;
   height: 150px;
   display: grid;
-
+  
   border-radius: 50%;
 
 }
@@ -1301,6 +1337,140 @@ z-index: 10;
   z-index: 20;
 }
  
+
+@keyframes r_bomba {
+  0% {
+    transform:translate(-50%,400%);
+   
+  }
+  60% { 
+    transform:translate(-50%,-50%);
+  }
+  80% { 
+    transform:translate(-50%,-50%);
+  }
+  100% { 
+    transform:translate(-50%,-50%) rotate(45deg);
+  }
+}
+
+@keyframes r_estrella_bill {
+  0% {
+    transform:translate(-50%,400%);
+    
+  }
+  
+  100% { 
+    transform:translate(-50%,-400%);
+     
+  }
+}
+@keyframes r_rayo {
+  0% {
+    transform:translate(-50%,-400%);
+    opacity: 0;
+  }
+  80% { 
+    transform:translate(-50%,-50%) ;
+    opacity: 0.5;
+  }
+  100% { 
+    transform:translate(-50%,-50%) scale(2) ;
+    opacity: 1;
+  }
+}
+
+
+@keyframes r_caparazon_azul {
+  0% {
+    transform:translate(-50%,400%) 
+   
+  }
+ 40%{
+  transform:translate(-50%,-200%) ;
+ } 
+ 60%{
+  transform:translate(-50%,-200%)rotate(-180deg) ;
+ }
+ 
+  100% { 
+    transform:translate(-50%,-50%) rotate(-180deg);
+  }
+}
+@keyframes r_caparazon_rojo {
+  0% {
+    transform:translate(-50%,400%) 
+   
+  }
+ 80%{
+  transform:translate(-50%,-50%) rotate(480deg);
+ }
+  100% { 
+    transform:translate(-50%,-50%) rotate(360deg) scale(2);
+  }
+}
+@keyframes r_caparazon_verde {
+  0% {
+    transform:translate(-50%,-400%);
+   
+  }
+ 
+  100% { 
+    transform:translate(-50%,-50%) rotate(480deg);
+  }
+}
+@keyframes r_banana {
+  0% {
+    transform:translate(-50%,-400%);
+   
+  }
+ 
+  100% { 
+    transform:translate(-50%,-50%);
+  }
+}
+
+
+.animacion_r_banana{
+  animation: r_banana 1s infinite;
+}
+.animacion_r_caparazon_rojo{
+  animation: r_caparazon_rojo 1s linear ;
+}
+.animacion_r_caparazon_azul{
+  animation: r_caparazon_azul 1s linear ;
+}
+.animacion_r_caparazon_verde{
+  animation: r_caparazon_verde 1s linear ;
+}
+.animacion_r_bomba{
+  animation: r_bomba 1s linear ;
+}
+.animacion_r_estrella_bill{
+  animation: r_estrella_bill 1s linear ;
+}
+.animacion_r_rayo{
+  animation: r_rayo 1s linear ;
+}
+
+.poderRecibido {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 150px;
+  height: 150px;
+  display: grid;
+  z-index: 20;
+  border-radius: 50%;
+  
+
+}
+
+
+
+
+
 
 
 
