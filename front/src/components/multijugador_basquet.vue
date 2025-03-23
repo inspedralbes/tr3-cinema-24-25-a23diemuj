@@ -127,7 +127,7 @@ socket.on('acabar', (index, puntuacion) => {
 
 function siguientePregunta(info) {
   
-  socket.emit('cambio_pregunta', store.loginInfo.username, store.SalaActual, info.canasta);
+  socket.emit('cambio_pregunta', store.loginInfo.username, store.SalaActual, info.canasta,info.fallo);
    
 }
  

@@ -164,9 +164,9 @@ io.on('connection', async (socket) => {
          
            }
            
-       //    data[index].poder=poderes[numeroAleatorio];
+        data[index].poder=poderes[numeroAleatorio];
        
-       data[index].poder=poderes[auxssss];
+       
         socket.emit('poderes', data[index].poder)
         auxssss++;  
 
@@ -176,7 +176,7 @@ io.on('connection', async (socket) => {
 
 
     }
-let auxssss=0
+ 
 
     socket.on('poder',(poder,sala,username)=>{
         let index=obtenerIndex(username,sala)
@@ -356,7 +356,10 @@ let auxssss=0
 
 
             salas[sala][index].poder=null;
-            emitirRanking(sala);     
+            setInterval(()=>{
+                emitirRanking(sala);     
+            },1000)
+              
         
 
     })
@@ -384,7 +387,7 @@ let auxssss=0
 
  
 
-    socket.on('cambio_pregunta',(username,sala,tiro)=>{
+    socket.on('cambio_pregunta',(username,sala,tiro,fallo)=>{
         const index= obtenerIndex(username,sala)  
        
         let aux=salas[sala][index].index;
@@ -400,8 +403,14 @@ let auxssss=0
             rellenarPreguntas();
             salas[sala][index].index=0;
         }
-        
-        salas[sala][index].darPoder-=5;
+        console.log(fallo)
+        if(!fallo){
+        salas[sala][index].darPoder-=5;}else{
+            salas[sala][index].puntacion-=3;
+            if(salas[sala][index].puntacion<0){
+                salas[sala][index].puntacion=0;
+            }
+        }
         if(salas[sala][index].darPoder<=0){
 
            darPoderes(salas[sala],index)
