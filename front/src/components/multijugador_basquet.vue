@@ -71,18 +71,7 @@ socket.on('tedio', (nombre, poders) => {
       temblor.value = false;
   }, 200);
   }, 1000);
-
-
-
-  /*
  
-  visibleTedio.value = true;
-  temblor.value = true;
-  
-  setTimeout(() => {
-    visibleTedio.value = false;
-  }, 1500);
-*/
 })
 
 
