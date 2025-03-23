@@ -85,7 +85,8 @@ rellenarPreguntas();
 
 async function rellenarPreguntas(){
    // const URL = `http://localhost:8000/api/preguntas/nivel/0`;
-      const URL = `http://a23diemujper.juego.daw.inspedralbes.cat/laravel/public/api/preguntas/nivel/0`;
+   //   const URL = `http://a23diemujper.juego.daw.inspedralbes.cat/laravel/public/api/preguntas/nivel/0`;
+   const URL = `http://masket2.daw.inspedralbes.cat/laravel/public/api/preguntas/nivel/0`;
    const response = await fetch(URL);
     Preguntas=await response.json();
 
@@ -168,7 +169,7 @@ io.on('connection', async (socket) => {
        
        
         socket.emit('poderes', data[index].poder)
-        auxssss++;  
+         
 
 
 
@@ -566,7 +567,7 @@ io.on('connection', async (socket) => {
     });
 });
 
-const PORT = 20070;
+const PORT = 20071;
 server.listen(PORT, () => {
     console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });
