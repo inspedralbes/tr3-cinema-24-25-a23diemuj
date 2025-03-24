@@ -9,6 +9,7 @@ import { getPreguntas } from '@/comunication_manager';
 import { useCounterStore } from '@/stores/counter';
 import Partida_basquet from '../../components/Partida_basquet.vue';
 import Eleccion_modos from '@/components/eleccion_modos.vue';
+import Partida_futbol from '@/components/Partida_futbol.vue';
 
 const data = reactive({ pregunta: "" });
 
@@ -155,6 +156,7 @@ function ocultarTemporizador() {
 
     <Partida_beisbol v-if="!cargando && visibleJuego && !mostrarTempo && deporte==1" :data="data.pregunta[index]" @siguiente="siguientePregunta" />
     <Partida_basquet v-if="!cargando && visibleJuego && !mostrarTempo && deporte==2" :data="data.pregunta[index]" @siguiente="siguientePregunta" />
+    <Partida_futbol v-if="!cargando && visibleJuego && !mostrarTempo && deporte==3" :data="data.pregunta[index]" @siguiente="siguientePregunta" />
     <Partida_tenis v-if="!cargando && visibleJuego && !mostrarTempo && deporte==4" :data="data.pregunta[index]" @siguiente="siguientePregunta" />
    
     <Ranking v-if="!cargando && !visibleJuego" :puntuacion="puntuacion" :deporte="deporte" />

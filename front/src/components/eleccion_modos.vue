@@ -7,7 +7,7 @@
       <q-btn class="botones_menu" glossy @click="modo(2)"  > 
         <span style="font-size: 60px;" class="material-icons" >sports_basketball</span>  </q-btn>
       <br>
-      <q-btn class="botones_menu" glossy disable  @click="modo(3)"   > <span style="font-size: 60px;" class="material-icons">sports_soccer</span></q-btn>
+      <q-btn class="botones_menu" glossy  @click="modo(3)"   > <span style="font-size: 60px;" class="material-icons">sports_soccer</span></q-btn>
       <br>
       <q-btn class="botones_menu" glossy @click="modo(4)" > <span style="font-size: 60px;" class="material-icons">sports_tennis</span></q-btn>
         <br>
