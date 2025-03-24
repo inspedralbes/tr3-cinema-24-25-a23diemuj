@@ -23,10 +23,7 @@
 </template>
 <script setup>
 import { ref } from 'vue';
-
-
-
-
+ 
 const visibleModos = ref(true);
 
 

@@ -14,9 +14,7 @@ import Multijugador_basquet from '@/components/multijugador_basquet.vue';
 
 }
 
- 
-
-
+  
 const visibleBoton = ref(false);
 
  
@@ -26,7 +24,7 @@ const visibleBoton = ref(false);
 <template>
  
   <main class="main" >
-    <Eleccion_modos @deporte="modo"/>
+    <Eleccion_modos :new="activos" @deporte="modo"/>
     
     <Multijugador_basquet v-if="deporte==2"/>
  
