@@ -30,7 +30,7 @@ const Canastas = ref(0);
 const valorCanasta = ref(0);
 const useApp = useCounterStore();
 const index = ref(0);
-const strikes= ref(3);
+const strikes = ref(3);
 const carreras = ref(0);
 const Zindex = reactive({ balon: 0, bate: 1 });
 const info = reactive({ fallo: false, canasta: 0, racha: false })
@@ -64,7 +64,7 @@ function reiniciarInfo() {
 let puntosSeguidos = 0;
 
 
- 
+
 
 
 function comprobarPunto(num) {
@@ -76,106 +76,59 @@ function comprobarPunto(num) {
   if (props.data.respuesta_correcta == num) {
 
 
-    switch(useApp.tiroTenis){
+    switch (useApp.tiroTenis) {
       case 4:
-        carreras.value +=1;
+        carreras.value += 1;
         break;
       case 3:
-        carreras.value +=2;
-      
+        carreras.value += 2;
+
         break;
       case 2:
-        carreras.value +=3;
-       
+        carreras.value += 3;
+
         break;
       case 1:
-        carreras.value +=4;
+        carreras.value += 4;
         break;
     }
 
     if (progress.value < 0.2) {
       puntosSeguidos++;
-      
-      useApp.tiroTenis=1;
+
+      useApp.tiroTenis = 1;
 
     } else if (progress.value < 0.5) {
-      
+
       puntosSeguidos = 0;
-      useApp.tiroTenis=2;
+      useApp.tiroTenis = 2;
     } else if (progress.value < 0.8) {
-      
+
       puntosSeguidos = 0;
-      useApp.tiroTenis=3;
+      useApp.tiroTenis = 3;
     } else if (progress.value < 1) {
-      
+
       puntosSeguidos = 0;
-      useApp.tiroTenis=4;
-    } else { }
+      useApp.tiroTenis = 4;
+    }  
 
+      setTimeout(() => {
+        animaciones.tiro = false;
+        // animaciones[`bateo${aux}`] = true; 
+        animaciones[`bateo1`] = true;
 
-    if (puntosSeguidos == 3) {
-
-      apagar = 3;
-
-    }
-    if (puntosSeguidos == 4) {
-      apagar = 4;
-    }
-    if (puntosSeguidos >= 5) {
-      apagar = 5
-      info.racha = true;
-      animaciones.encestar = true;
-      tiroHecho.value = true;
-
-    }
-    else {
-      let aux = Math.floor(Math.random() * 3) + 1;
-
-
-      if (props.data.duracion >= 0 && props.data.duracion <= 5) {
-
-        setTimeout(() => {
-          animaciones.tiro = false;
-          animaciones[`bateo2`] = true;
-
-
-        }, 500);
-      }
-
-      if (props.data.duracion >= 6 && props.data.duracion <= 10) {
-
-        setTimeout(() => {
-          animaciones.tiro = false;
-          animaciones[`bateo3`] = true;
-
-
-        }, 500);
-      }
-
-
-
-      if (props.data.duracion >= 11) {
-
-        setTimeout(() => {
-          animaciones.tiro = false;
-          // animaciones[`bateo${aux}`] = true; 
-          animaciones[`bateo1`] = true;
-
-        }, 500);
-      }
+      }, 500);
 
       tiroHecho.value = true;
 
-
-
-    }
+ 
 
   } else {
-    
+
     tiroHecho.value = true;
     info.fallo = true;
     info.canasta = 0;
-   
+
     puntosSeguidos = 0;
 
 
@@ -197,15 +150,15 @@ function comprobarPunto(num) {
 
 }
 
- 
+
 const progress = ref(0.0);
 const color = ref('');
-const aux = ref(0); 
+const aux = ref(0);
 let idTemporizador = null;
 reiniciarTemporizador();
 watch(() => props.data, () => {
   reiniciarTemporizador();
-   
+
 });
 
 function reiniciarTemporizador() {
@@ -219,7 +172,7 @@ function reiniciarTemporizador() {
 
   aux.value = 1 / 7;
 
-  switch(useApp.tiroTenis){
+  switch (useApp.tiroTenis) {
     case 4:
       props.data.duracion = 15;
       break;
@@ -232,9 +185,9 @@ function reiniciarTemporizador() {
     case 1:
       props.data.duracion = 5;
       break;
-    
+
   }
-  
+
   iniciarTemporizador();
 }
 
@@ -301,7 +254,7 @@ function responder(num) {
 
     setTimeout(() => {
       animaciones.tiro = true
-      info.canasta=carreras.value;
+      info.canasta = carreras.value;
       emit('siguiente', info);
       Zindex.balon = 0;
       Zindex.bate = 1;
@@ -312,7 +265,7 @@ function responder(num) {
     setTimeout(() => {
 
       animaciones.tiro = true;
-      
+
       emit('siguiente', info);
 
 
@@ -326,7 +279,7 @@ function responder(num) {
   reiniciarTemporizador();
 
 
-} 
+}
 
 
 </script>
@@ -337,7 +290,7 @@ function responder(num) {
       <img style="right: inherit;" src="@/assets/imagenes/volver.png" alt="Volver" class="imagen_volver">
     </RouterLink>
     <div class="body_arcade">
- 
+
       <div class="bate_balon">
         <img :style="{ zIndex: Zindex.bate }" class="bate" src="@/assets/bioma/raqueta.png" alt="" srcset="" :class="{
           'animacion_bate': animaciones.bate
@@ -353,21 +306,21 @@ function responder(num) {
 
 
       </div>
-      
+
 
       <div class="marcador">
         <img class="pelota2" src="@/assets/bioma/pelota_tenis.png" alt="">
         <Transition name="slide" mode="out-in">
-          
-            <span :key="carreras" class="carreras">{{ carreras }} </span>
 
-    </Transition>  
-        
-        
-        
+          <span :key="carreras" class="carreras">{{ carreras }} </span>
+
+        </Transition>
+
+
+
         <br>
         <img v-if="!info.fallo" class="corazon" src="@/assets/bioma/corazon.png" alt="">
-        
+
       </div>
 
       <div class="tiempo_fuera">
@@ -375,7 +328,7 @@ function responder(num) {
       </div>
 
 
-      <div class="titul"> {{ props.data.operacion }}  </div>
+      <div class="titul"> {{ props.data.operacion }} </div>
 
       <div class="respuestas">
 
@@ -401,8 +354,8 @@ function responder(num) {
 </template>
 
 <style scoped>
-
-.slide-enter-active, .slide-leave-active {
+.slide-enter-active,
+.slide-leave-active {
   transition: transform 0.5s ease-out, opacity 0.5s;
 }
 
@@ -410,10 +363,12 @@ function responder(num) {
   transform: translateY(-100%);
   opacity: 0;
 }
+
 .slide-leave-to {
   transform: translateY(100%);
   opacity: 0;
 }
+
 @keyframes bateo1 {
   0% {
     transform: translateY(0);
@@ -537,8 +492,8 @@ function responder(num) {
   animation: disolver 0.2s linear;
 }
 
-#main_arcade{
-  background-image: url("/bioma/4.png"); 
+#main_arcade {
+  background-image: url("/bioma/4.png");
   background-position: center center;
   background-size: cover;
   background-attachment: fixed;
@@ -682,7 +637,7 @@ function responder(num) {
 
 .bate_balon {
   grid-row: 4;
- 
+
   grid-column: 2;
 }
 
@@ -890,33 +845,33 @@ function responder(num) {
   }
 
   .marcador {
-  width: 300px;
-  height: 140px;
-  border: 1px solid white;
-  position: absolute;
-  left: 0;
-  top: 25%;
-  overflow: hidden;
+    width: 300px;
+    height: 140px;
+    border: 1px solid white;
+    position: absolute;
+    left: 0;
+    top: 25%;
+    overflow: hidden;
 
-}
+  }
 
   .corazon {
 
     width: 50px;
   }
 
-  .pelota2{
+  .pelota2 {
     width: 90px;
     position: absolute;
     margin-left: -90px;
     margin-top: -10px;
   }
 
-  .carreras{
+  .carreras {
     font-size: 50px;
     color: white;
     font-family: 'DS-Digital';
-    
+
   }
 
   .poder {
