@@ -145,7 +145,7 @@ export default {
         const caja = useCounterStore();
 
          caja.loginInfo.username = this.name;
-          this.socket.emit("join-room", this.claveSala.trim(),this.name.trim());
+          this.socket.emit("join-room", this.claveSala.trim(),this.name);
 
   } else {
     this.dialogName = true; // Muestra el diálogo
