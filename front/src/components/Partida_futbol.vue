@@ -2,7 +2,6 @@
 import { reactive,ref,computed, watch, onMounted, onUnmounted } from 'vue';
 import { useCounterStore } from '@/stores/counter';
 
-/*
 const props = defineProps({
  data: {
    type: Object,
@@ -17,8 +16,8 @@ const props = defineProps({
 
 
 },)
-*/
 
+/*
 const props={data:  {
     "id": 1,
     "operacion": "5 + 3",
@@ -31,12 +30,13 @@ const props={data:  {
   }};
 
   
-const Canastas = ref(0)
+*/
+const Goles = ref(0)
 const valorCanasta= ref(0)
 const index = ref(0);
 const Zindex= reactive({balon:10, aro:5}); 
 const info= reactive({fallo:false, canasta:0,racha:false})
-
+const penales=ref(5);
 
 const animaciones = reactive({encestar: false, fallo1: false, fallo2: false, fallo3:false, fallo4:false, fallo5:false,temblor1:false,
                               temblor2:false, llamas:false, tiro_en_llamas:false
@@ -53,21 +53,7 @@ function apagarAnimaciones(interrumptor){
   animaciones.fallo4=false;
   animaciones.fallo5=false; 
 
-  if(interrumptor==3){
-
-    animaciones.temblor1=true
-     
-    
-  }
-  if(interrumptor==4){
-    animaciones.temblor2=true;
-     
-    
-    
-  }
-  if(interrumptor>=5){
-    animaciones.llamas=true
-  }
+  
 
 
 }
@@ -100,51 +86,15 @@ let apagar=0;
     if (props.data.respuesta_correcta == num) {
        
 
-    if (progress.value < 0.3) {
-        puntosSeguidos++;
-        info.canasta=3;
-        Canastas.value+=3;
-    } else if(progress.value < 0.7) {
-      info.canasta=2;
-      puntosSeguidos=0;
-      Canastas.value+=2;
-    } else if(progress.value < 1){
-      info.canasta=1;
-      Canastas.value+=1;
-      puntosSeguidos=0;
-    }else{}
+    
+      if(progress.value > 0.2 && progress.value < 1){
+      penales.value-=1;
      
+    }
+    animaciones.encestar=true;
+    tiroHecho.value=true;
+     Goles.value+=1;
 
-      if(puntosSeguidos==3){
-       
-        apagar=3;
-
-      }
-      if(puntosSeguidos==4){
-        apagar=4;
-      }
-      if(puntosSeguidos>=5){
-        apagar=5
-        info.racha=true; 
-        animaciones.encestar=true;
-        tiroHecho.value=true;
-        
-      }
-      else{
-        animaciones.encestar=true;
-        tiroHecho.value=true;
-
-        
-
-        setTimeout(() => {
-          Zindex.balon=3;
-        },250);
-        setTimeout(() => {
-          Zindex.balon=10;
-        },500);
-
-       
-}
 
     }else{
       let aux= Math.floor(Math.random() * 5) + 1;
@@ -153,7 +103,7 @@ let apagar=0;
       info.fallo=true;
       info.canasta=0;
       puntosSeguidos=0;
-
+      penales.value-=1;
 
     }
   
@@ -180,7 +130,7 @@ watch(() => props.data, () => {
 });
 
 watch(() => props.new, () => { 
-  Canastas.value = props.new;
+  Goles.value = props.new;
 });
  
 
@@ -205,9 +155,7 @@ function iniciarTemporizador() {
     
     if (progress.value > 0 && progress.value < 0.2) {
       color.value = 'blue';
-    } else if (progress.value > 0.3 && progress.value < 0.6) {
-      color.value = 'green';
-    } else if (progress.value > 0.7 && progress.value < 0.9) {
+    } else if (progress.value > 0.3 && progress.value < 0.9) {
       color.value = 'red';
     } else if (progress.value >1) {
       
@@ -245,16 +193,24 @@ function responder(num){
     
     
   comprobarPunto(num);
-  info.fallo=false;
+   
+  if(penales.value==0){
+        info.fallo=true;
+      }
+
+
   if(info.fallo){
+    if(penales.value!=0){
+        info.fallo=false;
+      }
     setTimeout(() => {
-      info.canasta=Canastas.value;
+      info.canasta=Goles.value;
      emit('siguiente',info); 
   }, 800);
 
 
   }else{
-    info.canasta=Canastas.value;
+    info.canasta=Goles.value;
     emit('siguiente',info); 
   }
 
@@ -279,14 +235,18 @@ function responder(num){
  <div class="marcador">
         <img class="pelota2" src="@/assets/bioma/balon_futbol.png" alt=""> <span class="carreras"> 
           <Transition name="slide" mode="out-in">
-            <span :key="Canastas">{{ Canastas }}</span>
+            <span :key="Goles">{{ Goles }}</span>
      
 
     </Transition>  
         
         </span> <br>
-        <img class="corazon" v-if="!info.fallo" src="@/assets/bioma/corazon.png" alt="">
-       
+        <img class="corazon" v-if="penales>=5" src="@/assets/bioma/corazon.png" alt="">
+        <img class="corazon" v-if="penales>=4"src="@/assets/bioma/corazon.png" alt="">
+        <img class="corazon" v-if="penales>=3"src="@/assets/bioma/corazon.png" alt="">
+        <img class="corazon" v-if="penales>=2"src="@/assets/bioma/corazon.png" alt="">
+        <img class="corazon" v-if="penales>=1"src="@/assets/bioma/corazon.png" alt="">
+
       </div>
  
  <div id="canasta">
@@ -392,8 +352,15 @@ function responder(num){
         transform: translateY(0); /* Empieza en la parte inferior */
        
     } 
+   60% {
+      transform: translateY(-250px)  scale(0.3) rotate(-180deg); 
+        
+      
+        /* Sube 200px hacia arriba */
+         
+    }
     100% {
-        transform: translateY(-250px)  scale(0.2) rotate(-180deg); 
+        transform: translateY(-150px) translateX(-20px) scale(0.3) rotate(45deg); 
         
       
         /* Sube 200px hacia arriba */
@@ -550,7 +517,8 @@ function responder(num){
 
   .corazon {
 
-    width: 40px;
+    width: 30px;
+    margin-top: -20px;
   }
 
   .pelota2{

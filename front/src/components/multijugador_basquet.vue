@@ -440,7 +440,7 @@ function mostrarRanking() {
             <thead>
               <tr class="rankingTotal_tr">
                 <th class="rankingTotal_th">Posición</th>
-                <th class="rankingTotal_th">Avatar</th>
+                
                 <th class="rankingTotal_th">Username</th>
                 <th class="rankingTotal_th">Puntos</th>
                 <th class="rankingTotal_th">Poder</th>
@@ -449,7 +449,7 @@ function mostrarRanking() {
             <transition-group name="rank" tag="tbody">
               <tr v-for="(player, index) in posiciones" :key="player.username">
                 <td>{{ index + 1 }}</td>
-                <td><img class="foto_ranking" :src="`/avatar/boy${player.avatar}.png`" alt="" srcset=""></td>
+               
                 <td>{{ player.username }}</td>
                 <td>{{ player.puntacion }} </td>
                 <td><img 
@@ -708,7 +708,7 @@ function mostrarRanking() {
   background-repeat: no-repeat;
 }
 .fondo_sp{
-  background-image: url("/bioma/fondoSP.jpg");
+  background-image: url("/bioma/fondoSP.png");
   height: 100vh;
   background-position: center;  
   background-repeat: no-repeat;  
@@ -790,9 +790,8 @@ function mostrarRanking() {
   min-height: 100vh;
   text-align: center;
   font-family: 'Press Start 2P', cursive;
-
   font-size: 20px;
-  background-image: url("../assets/bioma/parque.jpg"); 
+  background-image: url("../assets/bioma/parque2.png"); 
   background-position: center center;
   background-size: cover; 
   background-attachment: fixed;
