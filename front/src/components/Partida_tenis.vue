@@ -2,7 +2,7 @@
 import { reactive, ref, computed, watch, onMounted, onUnmounted } from 'vue';
 import { useCounterStore } from '@/stores/counter';
 
-/*
+
 const props = defineProps({
   data: {
     type: Object,
@@ -13,7 +13,7 @@ const props = defineProps({
 
 
 },)
-*/
+/*
 const props={data:  {
     "id": 1,
     "operacion": "5 + 3",
@@ -24,10 +24,11 @@ const props={data:  {
     "nivel": 1,
     "duracion": 24
   }};
+*/
 
-
-const Canastas = ref(0)
-const valorCanasta = ref(0)
+const Canastas = ref(0);
+const valorCanasta = ref(0);
+const useApp = useCounterStore();
 const index = ref(0);
 const strikes= ref(3);
 const carreras = ref(0);
@@ -63,34 +64,7 @@ function reiniciarInfo() {
 let puntosSeguidos = 0;
 
 
-
-
-function moverBase(num, aux) {
-
-
-  if (aux >= 500) {
-    setTimeout(() => {
-      moverBase(num);
-    }, aux);
-  } else {
-
-    bases[num] = false;
-    bases[num - 1] = false;
-    setTimeout(() => {
-      bases[num] = true;
-    }, 10);
-
-    if (num == 3) {
-      setTimeout(() => {
-        bases[num] = false;
-        carreras.value++;
-      }, 500);
-    }
-
-  }
-
-
-}
+ 
 
 
 function comprobarPunto(num) {
@@ -102,20 +76,40 @@ function comprobarPunto(num) {
   if (props.data.respuesta_correcta == num) {
 
 
+    switch(useApp.tiroTenis){
+      case 4:
+        carreras.value +=1;
+        break;
+      case 3:
+        carreras.value +=2;
+      
+        break;
+      case 2:
+        carreras.value +=3;
+       
+        break;
+      case 1:
+        carreras.value +=4;
+        break;
+    }
+
     if (progress.value < 0.2) {
       puntosSeguidos++;
-      info.canasta = 4;
+      
+      useApp.tiroTenis=1;
+
     } else if (progress.value < 0.5) {
-      info.canasta = 3;
+      
       puntosSeguidos = 0;
-
+      useApp.tiroTenis=2;
     } else if (progress.value < 0.8) {
-      info.canasta = 2;
+      
       puntosSeguidos = 0;
-
+      useApp.tiroTenis=3;
     } else if (progress.value < 1) {
-      info.canasta = 1;
+      
       puntosSeguidos = 0;
+      useApp.tiroTenis=4;
     } else { }
 
 
@@ -138,7 +132,7 @@ function comprobarPunto(num) {
       let aux = Math.floor(Math.random() * 3) + 1;
 
 
-      if (props.data.duracion >= 0 && props.data.duracion <= 2) {
+      if (props.data.duracion >= 0 && props.data.duracion <= 5) {
 
         setTimeout(() => {
           animaciones.tiro = false;
@@ -148,7 +142,7 @@ function comprobarPunto(num) {
         }, 500);
       }
 
-      if (props.data.duracion >= 3 && props.data.duracion <= 4) {
+      if (props.data.duracion >= 6 && props.data.duracion <= 10) {
 
         setTimeout(() => {
           animaciones.tiro = false;
@@ -160,7 +154,7 @@ function comprobarPunto(num) {
 
 
 
-      if (props.data.duracion >= 5 && props.data.duracion <= 7) {
+      if (props.data.duracion >= 11) {
 
         setTimeout(() => {
           animaciones.tiro = false;
@@ -203,15 +197,15 @@ function comprobarPunto(num) {
 
 }
 
-
-
+ 
 const progress = ref(0.0);
 const color = ref('');
-const aux = ref(0);
+const aux = ref(0); 
 let idTemporizador = null;
 reiniciarTemporizador();
 watch(() => props.data, () => {
   reiniciarTemporizador();
+   
 });
 
 function reiniciarTemporizador() {
@@ -224,7 +218,23 @@ function reiniciarTemporizador() {
   color.value = '';
 
   aux.value = 1 / 7;
-  props.data.duracion = 7;
+
+  switch(useApp.tiroTenis){
+    case 4:
+      props.data.duracion = 15;
+      break;
+    case 3:
+      props.data.duracion = 10;
+      break;
+    case 2:
+      props.data.duracion = 7;
+      break;
+    case 1:
+      props.data.duracion = 5;
+      break;
+    
+  }
+  
   iniciarTemporizador();
 }
 
@@ -290,11 +300,6 @@ function responder(num) {
     Zindex.bate = 0;
 
     setTimeout(() => {
-      
-      info.fallo=false;
-      if(strikes.value!=0){
-       
-      }
       animaciones.tiro = true
       info.canasta=carreras.value;
       emit('siguiente', info);
@@ -321,8 +326,7 @@ function responder(num) {
   reiniciarTemporizador();
 
 
-}
-
+} 
 
 
 </script>
@@ -333,15 +337,7 @@ function responder(num) {
       <img style="right: inherit;" src="@/assets/imagenes/volver.png" alt="Volver" class="imagen_volver">
     </RouterLink>
     <div class="body_arcade">
-
-      <!--
-  <h4  >Puntos:  {{ Canastas }} </h4>
-  
-  
-  <RouterLink to="/jugar"> <q-btn color="deep-orange"  size="20px" glossy label="Volver"></q-btn></RouterLink>
- -->
-
-
+ 
       <div class="bate_balon">
         <img :style="{ zIndex: Zindex.bate }" class="bate" src="@/assets/bioma/raqueta.png" alt="" srcset="" :class="{
           'animacion_bate': animaciones.bate
@@ -360,10 +356,18 @@ function responder(num) {
       
 
       <div class="marcador">
-        <img class="pelota2" src="@/assets/bioma/pelota2.png" alt=""> <span class="carreras">{{ carreras }} </span> <br>
-        <img v-if="strikes>=1" class="corazon" src="@/assets/bioma/corazon.png" alt="">
-        <img v-if="strikes>=2" class="corazon" src="@/assets/bioma/corazon.png" alt="">
-        <img v-if="strikes>=3" class="corazon" src="@/assets/bioma/corazon.png" alt="">
+        <img class="pelota2" src="@/assets/bioma/pelota_tenis.png" alt="">
+        <Transition name="slide" mode="out-in">
+          
+            <span :key="carreras" class="carreras">{{ carreras }} </span>
+
+    </Transition>  
+        
+        
+        
+        <br>
+        <img v-if="!info.fallo" class="corazon" src="@/assets/bioma/corazon.png" alt="">
+        
       </div>
 
       <div class="tiempo_fuera">
@@ -397,6 +401,19 @@ function responder(num) {
 </template>
 
 <style scoped>
+
+.slide-enter-active, .slide-leave-active {
+  transition: transform 0.5s ease-out, opacity 0.5s;
+}
+
+.slide-enter-from {
+  transform: translateY(-100%);
+  opacity: 0;
+}
+.slide-leave-to {
+  transform: translateY(100%);
+  opacity: 0;
+}
 @keyframes bateo1 {
   0% {
     transform: translateY(0);
@@ -889,7 +906,7 @@ function responder(num) {
   }
 
   .pelota2{
-    width: 100px;
+    width: 90px;
     position: absolute;
     margin-left: -90px;
     margin-top: -10px;

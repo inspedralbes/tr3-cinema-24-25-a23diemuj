@@ -95,7 +95,8 @@ function jugar() {
   mostrarTempo.value=false;
 } 
 function siguientePregunta(info) {
- 
+  
+   
   if (info.fallo) {
     visibleJuego.value = false;
   } else {
@@ -109,7 +110,7 @@ function siguientePregunta(info) {
     
   } 
   puntuacion.value = info.canasta;
-  console.log(info.canasta)
+ 
 
   
     

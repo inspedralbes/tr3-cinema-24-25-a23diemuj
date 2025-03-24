@@ -5,7 +5,7 @@ import { defineStore } from 'pinia'
 export const useCounterStore = defineStore('counter', () => {
   
 
-    const ActivarMusica=ref(true);
+  const ActivarMusica=ref(true);
 
   const ApagarMusica = () => {
       ActivarMusica.value=false;
@@ -22,7 +22,7 @@ export const useCounterStore = defineStore('counter', () => {
   });
 
  
-
+  const tiroTenis = ref(4);
 
   const SalaActual= ref("");
   
@@ -33,7 +33,7 @@ export const useCounterStore = defineStore('counter', () => {
 
 
   return { 
-    getLoginInfo, loginInfo,ActivarMusica,SalaActual, ApagarMusica, EncenderMusica
+    getLoginInfo, loginInfo,ActivarMusica,SalaActual,tiroTenis, ApagarMusica, EncenderMusica
 
 
   }
