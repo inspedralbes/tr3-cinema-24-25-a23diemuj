@@ -653,7 +653,7 @@ function mostrarRanking() {
 
 .body-p {
   font-family: 'Press Start 2P', cursive;
-  background-image: url("@/assets/bioma/parque.jpg");
+  background-image: url("@/assets/bioma/parque.png");
   background-position: center center;
   background-size: cover;
   background-attachment: fixed;
