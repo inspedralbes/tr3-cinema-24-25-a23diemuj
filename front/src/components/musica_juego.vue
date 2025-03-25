@@ -1,7 +1,9 @@
 <template>
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 <div class="music-player" v-if="!ActivarMusica">
-    <q-btn-dropdown rounded  content-style="background-color: transparent" class="glossy" color="black" icon="eva-music-outline" menu-anchor="top right"
+    <q-btn-dropdown rounded  content-style="background-image: url('/bioma/musica.png'); background-size: cover; 
+    background-position: center center; 
+    background-repeat: no-repeat; "   class="glossy" color="black" icon="eva-music-outline" menu-anchor="top right"
       menu-self="bottom right" size="25px">
 
       <div class="music-info">
@@ -151,7 +153,7 @@ const pauseTrack = () => {
   text-align: center;
   font-size: 10px;
   font-family: 'Press Start 2P', cursive;
-  color: black;
+  color: white;
 
 }
 
