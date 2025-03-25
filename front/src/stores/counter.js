@@ -13,7 +13,7 @@ export const useCounterStore = defineStore('counter', () => {
   const EncenderMusica = () => {
       ActivarMusica.value=true;
   }
-  
+  const musicaInicio = ref(0);
 
   const loginInfo = reactive({
     loggedIn: true,
@@ -22,6 +22,7 @@ export const useCounterStore = defineStore('counter', () => {
   });
 
  
+
   const tiroTenis = ref(4);
 
   const SalaActual= ref("");
@@ -33,7 +34,7 @@ export const useCounterStore = defineStore('counter', () => {
 
 
   return { 
-    getLoginInfo, loginInfo,ActivarMusica,SalaActual,tiroTenis, ApagarMusica, EncenderMusica
+    getLoginInfo, loginInfo,ActivarMusica,SalaActual,tiroTenis, musicaInicio,ApagarMusica, EncenderMusica
 
 
   }

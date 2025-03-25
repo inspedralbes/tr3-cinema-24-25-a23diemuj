@@ -66,6 +66,7 @@
       async guardarPuntuacion() {
       const counterStore = useCounterStore();
       const userInfo = counterStore.getLoginInfo;
+      counterStore.EncenderMusica();
       let aux;
       console.log('Información del usuario:', userInfo);
       console.log('Puntuación actual:', this.puntuacion);

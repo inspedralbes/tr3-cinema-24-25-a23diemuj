@@ -25,7 +25,6 @@ const visibleBoton = ref(false);
  
   <main class="main" >
     <Eleccion_modos :new="activos" @deporte="modo"/>
-    
     <Multijugador_basquet v-if="deporte==2"/>
  
   

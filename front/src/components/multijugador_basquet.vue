@@ -7,6 +7,8 @@ import Partida from '@/components/Partida_basquet.vue';
 import Temporizador from '@/components/temporizador.vue';
 import confetti from 'canvas-confetti';
 import audioPodio from '@/assets/audio/podio_multi.mp3';
+import Musica_juego from './musica_juego.vue';
+import Musica from './musica.vue';
 
 const visibleSalas = ref(true);
 const visibleJuego = ref(false);
@@ -24,7 +26,7 @@ const visibleRanking = ref(false);
 const visibleTempo = ref(false);
 const visiblePodio = ref(false);
 const visibleCopa = ref(false);
-
+const visibleMusica = ref(false);
 const imagenes = ["/items/banana.webp", "/items/bill_bala.webp",
   "/items/bomba.webp", "/items/caparazon_azul.webp",
   "/items/caparazon_rojo.webp", "/items/caparazon_verde.webp",
@@ -100,12 +102,18 @@ socket.on('acabar', (index, puntuacion) => {
 
 
   } else if (visibleRanking.value == true) {
+    visibleMusica.value=false;
+    
     visibleRanking.value = false;
     visiblePodio.value = true;
     audio.play().catch(error => {
       console.error('No se pudo reproducir el audio:', error);
     });
     lanzarConfeti();
+    setTimeout(() => {
+      store.ActivarMusica = true;
+    }, 1000);
+  
   }
 
 
@@ -137,8 +145,8 @@ function empezar() {
 function tempoAcabado() {
   visibleTempo.value = false;
   visibleRanking.value = true;
+  visibleMusica.value=true;
   const SalaActual = store.SalaActual;
-  store.ActivarMusica = true;
   socket.emit('empezar', SalaActual);
   visibleRanking.value = true;
   temporizador();
@@ -207,7 +215,7 @@ socket.on('poderes', (param) => {
 
 })
 
-const tiempo = ref(180);
+const tiempo = ref(10);
 let interval;
 
 function temporizador() {
@@ -331,7 +339,11 @@ function mostrarRanking() {
 </script>
 
 <template>
+  
+  
+  
   <main class="fondo_sp">
+    <Musica_juego v-if="visibleMusica"/>
     <div v-if="visibleSalas" class="main-multijugador">
       <div class="body_multijugador">
         <SalasPrivadas :socket="socket" @boton="mostrarBoton" @cerrar="cerrarBoton" />

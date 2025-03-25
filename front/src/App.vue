@@ -1,21 +1,22 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
 import musica from './components/musica.vue';
+import { useCounterStore } from './stores/counter';
+ 
+
+
+const useApp = useCounterStore();
 </script>
 
 <template>
-  <musica class="a021"></musica>
+ <musica v-if="useApp.ActivarMusica"/>
  <RouterView />
   
 </template>
 
 <style>
 
-.a021{
-position: absolute;
-right: 0; 
-margin-right: 20px;
-}
+
 
 .imagen_volver {
   position: fixed;

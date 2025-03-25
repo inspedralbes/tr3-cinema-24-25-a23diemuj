@@ -70,8 +70,9 @@ if (useApp.loginInfo.loggedIn) {
 <template>
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
+  
   <main id="main_menu">
+
     <div id="div_menu" v-if="visibleOpciones">
       <q-btn class="botones_menu" glossy label="" @click="verificarArcade"><span style="font-size: 62px;" class="material-icons">person</span>  </q-btn>
        
@@ -88,7 +89,7 @@ if (useApp.loginInfo.loggedIn) {
       
     </div>
     
-
+   
   </main>
 </template>
 

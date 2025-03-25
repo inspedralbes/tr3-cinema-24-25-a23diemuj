@@ -1,6 +1,7 @@
 <script setup>
 import { reactive,ref,computed, watch, onMounted, onUnmounted } from 'vue';
 import { useCounterStore } from '@/stores/counter';
+import Musica from './musica.vue';
 
 
 const props = defineProps({
@@ -285,7 +286,7 @@ function responder(num){
  </div>
  
 
-   
+   <Musica></Musica>
 
   <img id="balon" 
   

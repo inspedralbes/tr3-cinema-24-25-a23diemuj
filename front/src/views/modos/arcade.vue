@@ -10,49 +10,9 @@ import { useCounterStore } from '@/stores/counter';
 import Partida_basquet from '../../components/Partida_basquet.vue';
 import Eleccion_modos from '@/components/eleccion_modos.vue';
 import Partida_futbol from '@/components/Partida_futbol.vue';
+import Musica_juego from '@/components/musica_juego.vue';
 
 const data = reactive({ pregunta: "" });
-
-/*
-const data = reactive({ pregunta: [
-  {
-    "id": 1,
-    "operacion": "5 + 1",
-    "respuesta_correcta": 8,
-    "respuestaIncorrecta_1": 9,
-    "respuestaIncorrecta_2": 7,
-    "respuestaIncorrecta_3": 10,
-    "nivel": 1,
-    "duracion": 7
-  },{
-    "id": 1,
-    "operacion": "5 + 2",
-    "respuesta_correcta": 8,
-    "respuestaIncorrecta_1": 9,
-    "respuestaIncorrecta_2": 7,
-    "respuestaIncorrecta_3": 10,
-    "nivel": 1,
-    "duracion": 7
-  },{
-    "id": 1,
-    "operacion": "5 + 3",
-    "respuesta_correcta": 8,
-    "respuestaIncorrecta_1": 9,
-    "respuestaIncorrecta_2": 7,
-    "respuestaIncorrecta_3": 10,
-    "nivel": 1,
-    "duracion": 7
-  },{
-    "id": 1,
-    "operacion": "5 + 4",
-    "respuesta_correcta": 8,
-    "respuestaIncorrecta_1": 9,
-    "respuestaIncorrecta_2": 7,
-    "respuestaIncorrecta_3": 10,
-    "nivel": 1,
-    "duracion": 7
-  }
-] }); */
 const visibleJuego = ref(false);
 const index = ref(0);
 const puntuacion = ref(0);
@@ -61,14 +21,8 @@ const mostrarTempo = ref(false);
 const deporte=ref(0)
 const name = ref("");
 const visibleName = ref(false); 
-onMounted(() => {
-      const useApp = useCounterStore();
-      if (useApp.ActivarMusica==true) {
-        useApp.ApagarMusica();
-        
-      }
-    });
 
+ 
 async function rellenarPreguntas() {
 
   data.pregunta = await getPreguntas(0);
@@ -79,6 +33,8 @@ async function rellenarPreguntas() {
 }
 
 function modo(data){
+
+  
   visibleName.value=true;
   deporte.value=data;
 
@@ -88,6 +44,7 @@ function modo(data){
 
 function jugar() {
   useCounterStore().loginInfo.username=name.value;
+  useCounterStore().ApagarMusica();
   if(name.value.trim()==""){  
     useCounterStore().loginInfo.username="Invitado"
   }
@@ -127,8 +84,9 @@ function ocultarTemporizador() {
 
 <template>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=sports_baseball" />
-  <main :style="{ backgroundImage: `url(/bioma/${deporte}.png)` }" class="main" >
  
+  <main :style="{ backgroundImage: `url(/bioma/${deporte}.png)` }" class="main" >
+    <Musica_juego v-if="!cargando && visibleJuego && !mostrarTempo"></Musica_juego>
     <RouterLink to="/jugar">
     <img style="right: inherit;" src="@/assets/imagenes/volver.png" alt="Volver" class="imagen_volver">
   </RouterLink>
@@ -158,7 +116,7 @@ function ocultarTemporizador() {
     <Partida_basquet v-if="!cargando && visibleJuego && !mostrarTempo && deporte==2" :data="data.pregunta[index]" @siguiente="siguientePregunta" />
     <Partida_futbol v-if="!cargando && visibleJuego && !mostrarTempo && deporte==3" :data="data.pregunta[index]" @siguiente="siguientePregunta" />
     <Partida_tenis v-if="!cargando && visibleJuego && !mostrarTempo && deporte==4" :data="data.pregunta[index]" @siguiente="siguientePregunta" />
-   
+    
     <Ranking v-if="!cargando && !visibleJuego" :puntuacion="puntuacion" :deporte="deporte" />
   </main>
 </template>

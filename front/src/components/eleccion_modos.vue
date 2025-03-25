@@ -1,5 +1,7 @@
 <template>
+   
 <main>
+  
     <div v-if="visibleModos">
     <div id="div_menu">
       <q-btn class="botones_menu" glossy  @click="modo(1)"  > <span style="font-size: 60px;" class="material-icons">sports_baseball</span>  </q-btn>
@@ -23,6 +25,7 @@
 </template>
 <script setup>
 import { ref } from 'vue';
+import Musica from './musica.vue';
  
 const visibleModos = ref(true);
 
