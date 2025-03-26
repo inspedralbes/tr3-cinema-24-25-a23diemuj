@@ -27,7 +27,7 @@ const visibleTempo = ref(false);
 const visiblePodio = ref(false);
 const visibleCopa = ref(false);
 
-const miModo=ref(2);
+const miModo=ref(4);
 const visibleMusica = ref(false);
 const imagenes = ["/items/banana.webp", "/items/bill_bala.webp",
   "/items/bomba.webp", "/items/caparazon_azul.webp",
@@ -722,7 +722,7 @@ function mostrarRanking() {
   background-repeat: no-repeat;
 }
 .fondo_sp{
-  background-image: url("/bioma/lobby_basquet.png");
+  background-image: url("/bioma/lobby_tenis.png");
   height: 100vh;
   background-position: center;  
   background-repeat: no-repeat;  

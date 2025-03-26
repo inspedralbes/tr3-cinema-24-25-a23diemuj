@@ -347,7 +347,7 @@ function mostrarRanking() {
     <Musica_juego v-if="visibleMusica"/>
     <div v-if="visibleSalas" class="main-multijugador">
       <div class="body_multijugador">
-        <SalasPrivadas :socket="socket" @boton="mostrarBoton" @cerrar="cerrarBoton" />
+        <SalasPrivadas :socket="socket" :deporte="miModo" @boton="mostrarBoton" @cerrar="cerrarBoton" />
         <div class="boton-container">
           <q-btn v-if="visibleBoton" @click="empezar"class="boton-volver" glossy label="Empezar"></q-btn>
         </div>
@@ -721,7 +721,7 @@ function mostrarRanking() {
   background-repeat: no-repeat;
 }
 .fondo_sp{
-  background-image: url("/bioma/fondoSP.png");
+  background-image: url("/bioma/lobby_futbol.png");
   height: 100vh;
   background-position: center;  
   background-repeat: no-repeat;  

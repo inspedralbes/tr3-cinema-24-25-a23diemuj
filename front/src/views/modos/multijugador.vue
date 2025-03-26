@@ -7,6 +7,7 @@ import Eleccion_modos from '@/components/eleccion_modos.vue';
 import Multijugador_basquet from '@/components/multijugador_basquet.vue';
 import Multijugador_futbol from '@/components/multijugador_futbol.vue';
 import Multijugador_beisbol from '@/components/multijugador_beisbol.vue';
+import Multijugador_tenis from '@/components/multijugador_tenis.vue';
 
 
 
@@ -31,7 +32,7 @@ const visibleBoton = ref(false);
     <Multijugador_beisbol v-if="deporte==1"/>
     <Multijugador_basquet v-if="deporte==2"/>
     <Multijugador_futbol v-if="deporte==3"/>
-   
+    <Multijugador_tenis v-if="deporte==4"/>
 
   </main>
 

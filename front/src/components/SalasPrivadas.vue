@@ -36,7 +36,11 @@
             <div v-for="usuario in usuarios" :key="usuario.id" class="usuario-item">
             <li v-if="usuario.username!='Anfitrión' && usuario.username!='Invitado'">
              
-              <span  class="icono">🏀</span>
+              <span v-if="deporte==1"  class="icono">⚾</span>
+              <span v-if="deporte==2"  class="icono">🏀</span>
+              <span v-if="deporte==3"  class="icono">⚽</span>
+              <span v-if="deporte==4"  class="icono">🥎</span>
+
               <span class="nombre-usuario">{{ usuario.username }}</span>
              
 
@@ -120,6 +124,10 @@ export default {
   props: {
     socket: {
       type: Object,
+      required: true
+    },
+    deporte: {
+      type: Number,
       required: true
     }
   },
