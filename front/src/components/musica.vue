@@ -3,7 +3,7 @@
   <div class="music-player" v-if="ActivarMusica">
     <q-btn-dropdown rounded  content-style="background-image: url('/bioma/musica.png'); background-size: cover; 
     background-position: center center; 
-    background-repeat: no-repeat; "  class="glossy" color="black" icon="eva-music-outline" menu-anchor="top right"
+    background-repeat: no-repeat; border:1px solid black"  class="glossy" color="black" icon="eva-music-outline" menu-anchor="top right"
       menu-self="bottom right" size="25px">
 
       <div class="music-info">
