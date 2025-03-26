@@ -149,7 +149,7 @@ font-size: 50px;
   display: inline;
   font-size: 26px;
   border: 1px solid black;
-  background-color: #000000;
+  background-color: black;
   color: #ffffff;
   border: none;
   cursor: pointer;
@@ -170,7 +170,7 @@ font-size: 50px;
   display: inline;
   font-size: 26px;
   border: 1px solid black;
-  background-color: #000000;
+  background-color: black;
   color: #ffffff;
  border-radius: 20px;
   cursor: pointer;
@@ -180,7 +180,9 @@ font-size: 50px;
 }
 
 .boton_single{
+ 
   clip-path: polygon(0% 0%, 100% 0%, 0% 100%);
+  
 }
 
 .boton_multi{

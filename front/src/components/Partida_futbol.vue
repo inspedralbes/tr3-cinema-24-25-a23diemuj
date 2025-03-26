@@ -35,7 +35,8 @@ const Goles = ref(0)
 const valorCanasta= ref(0)
 const index = ref(0);
 const Zindex= reactive({balon:10, aro:5}); 
-const info= reactive({fallo:false, canasta:0,racha:false})
+
+const info = reactive({ fallo: false, canasta: 0, racha: false,aux:false })
 const penales=ref(5);
 
 const animaciones = reactive({encestar: false, fallo1: false, fallo2: false, fallo3:false, fallo4:false, fallo5:false,temblor1:false,
@@ -85,7 +86,7 @@ let apagar=0;
     apagarAnimaciones_temblores();
     if (props.data.respuesta_correcta == num) {
        
-
+      info.aux=true;
     
       if(progress.value > 0.2 && progress.value < 1){
       penales.value-=1;
@@ -104,6 +105,7 @@ let apagar=0;
       info.canasta=0;
       puntosSeguidos=0;
       penales.value-=1;
+      info.aux=false;
 
     }
   
