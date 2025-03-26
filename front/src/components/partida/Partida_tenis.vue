@@ -302,7 +302,7 @@ function responder(num) {
           'animacion_tiro': animaciones.tiro,
           'animacion_disolver': animaciones.disolver
 
-        }" src="../assets/bioma/pelota_tenis.png" alt="" srcset="">
+        }" src="@/assets/bioma/pelota_tenis.png" alt="" srcset="">
 
 
       </div>

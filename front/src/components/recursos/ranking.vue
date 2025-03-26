@@ -138,7 +138,7 @@
   
 <style scoped>
   #main-ranking {
-    background-image: url("@/assets/bioma/parque.png"); 
+    background-image: url("/bioma/parque.png"); 
     background-position: center center;
     background-size: cover; 
     background-attachment: fixed;

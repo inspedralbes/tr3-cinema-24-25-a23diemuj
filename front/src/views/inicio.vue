@@ -10,7 +10,7 @@
   <main id="main_inicio">
  <div id="div_inicio">
    <img src="/bioma/logo.png" width="350px" height="320px" alt="Logo"><br>
-   <RouterLink to="/jugar"> <q-btn class="botones_menu" glossy size="40px"><span style="font-size: 150px;" class="material-icons">play_arrow</span> </q-btn></RouterLink>
+    <q-btn class="botones_menu" glossy size="40px" @click="$router.push('/jugar')"><span style="font-size: 150px;" class="material-icons">play_arrow</span> </q-btn> 
  </div>
  
   </main>
