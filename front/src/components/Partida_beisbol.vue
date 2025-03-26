@@ -450,7 +450,7 @@ function responder(num) {
           'animacion_tiro': animaciones.tiro,
           'animacion_disolver': animaciones.disolver
 
-        }" src="../assets/bioma/pelota_beisbol.gif" alt="" srcset="">
+        }" src="../assets/bioma/pelota_beisbol.png" alt="" srcset="">
 
 
       </div>
@@ -648,18 +648,18 @@ function responder(num) {
 @keyframes tiro {
   0% {
 
-    transform: translate(0, 0) scale(0.1);
+    transform: translate(0, 0) scale(0.1)rotate(90deg);
 
   }
 
   10% {
 
-    transform: translate(0, 0) scale(0.7);
+    transform: translate(10, 10) scale(0.7) rotate(1000deg);;
 
   }
 
   100% {
-    transform: translate(0, 0) scale(1.5);
+    transform: translate(0, 0) scale(1.5)rotate(10000deg);;
 
   }
 
@@ -801,6 +801,7 @@ function responder(num) {
   position: absolute;
   height: 200px;
   margin-left: -150px;
+  
 
 
 
@@ -850,14 +851,16 @@ function responder(num) {
 .bate_balon {
   grid-row: 4;
   grid-column: 2;
+    
 }
 
 
 #balon {
-  height: 150px;
-  width: 150px;
+  height: 100px;
+  width: 100px;
   justify-self: center;
   border-radius: 50%;
+ 
 
 
 

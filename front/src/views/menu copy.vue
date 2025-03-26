@@ -74,11 +74,19 @@ if (useApp.loginInfo.loggedIn) {
   <main id="main_menu">
 
     <div id="div_menu" v-if="visibleOpciones">
-      <q-btn class="botones_menu boton_single" glossy label="" @click="verificarArcade">   <span class="texto_menu">1</span>  </q-btn>
+      <q-btn class="botones_menu" glossy label="" @click="verificarArcade"><span style="font-size: 62px;" class="material-icons">person</span>  </q-btn>
        
-      <q-btn class="botones_menu boton_multi" glossy label=""@click="verificarMultijugador" > <span class="texto_menu_multi">2+</span>  </q-btn>
-      <q-btn class="botones_atras" glossy label=""  @click="salir"><span style="font-size: 60px;" class="material-icons"> keyboard_return </span>   </q-btn>           
+      <q-btn class="botones_menu" glossy label=""@click="verificarMultijugador" ><span style="font-size: 90px;" class="material-icons">groups</span>  </q-btn>
      
+
+      <q-btn class="botones_menu" glossy label="" disable><span style="font-size: 60px;"  class="material-icons">brush</span>    </q-btn>    
+
+      <q-btn class="botones_menu" glossy label="" disable> <span style="font-size: 60px;" class="material-icons">settings</span>    </q-btn>
+      
+      <q-btn class="botones_menu" glossy label="" disable><span style="font-size: 60px;" class="material-icons"> favorite </span> </q-btn>
+
+      <q-btn class="botones_menu" glossy label=""  @click="salir"><span style="font-size: 60px;" class="material-icons"> keyboard_return </span>   </q-btn>    
+      
     </div>
     
    
@@ -118,34 +126,19 @@ if (useApp.loginInfo.loggedIn) {
   width: 200px;
   grid-column: 2;
   grid-row: 2;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2 columnas del mismo tamaño */
   gap: 20px; /* Elimina cualquier separación entre botones */
   justify-content: center;
   align-items: center;
    
 }
-.texto_menu {
-position: absolute;
-top: 0;
-left: 0;
-margin-top: 70px;
-margin-left: 60px;
-font-size: 50px;
-}
-.texto_menu_multi {
-position: absolute;
-right: 0;
-bottom: 0;
-margin-bottom: 70px;
-margin-right: 30px;
-font-size: 50px;
-}
+
 .botones_menu {
-  position: absolute;
-  width: 300px;
-  height: 300px; 
-  top:50%;
-  left:50%;
-  transform: translate(-50%, -50%);
+   
+  height: 100px;  
+  padding: 0;
+  width: 150px;
   display: inline;
   font-size: 26px;
   border: 1px solid black;
@@ -155,44 +148,17 @@ font-size: 50px;
   cursor: pointer;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.9);
   transition: transform 0.3s, background-color 0.3s;
-   
- border-radius: 20px;
 }
 
-.botones_atras {
-  position: absolute;
-  width: 310px;
-  height: 100px; 
-  top:75%;
-  left:50%;
-  transform: translate(-50%, -50%);
-  display: inline;
-  font-size: 26px;
-  border: 1px solid black;
-  background-color: #000000;
-  color: #ffffff;
- border-radius: 20px;
-  cursor: pointer;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.9);
-  transition: transform 0.3s, background-color 0.3s;
-   
-}
-
-.boton_single{
-  clip-path: polygon(0% 0%, 100% 0%, 0% 100%);
-}
-
-.boton_multi{
-  margin-left: 10px;
-  clip-path: polygon(100% 0%, 100% 100%, 0% 100%);
-
-}
 .botones_menu:hover {
   background-color: #ffffff;
   color: #000000;
-  
+  transform: scale(1.05);
 }
- 
+
+.botones_menu:active {
+  transform: scale(1);
+}
 
 .botones_desple {
   margin-top: 10px;

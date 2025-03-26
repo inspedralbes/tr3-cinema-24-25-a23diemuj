@@ -29,7 +29,7 @@ const io = socketIo(server, {
 const salas={};
 let conexiones = {};
 let Preguntas=[];
-let poderes=[
+let poderes_basket=[
     {
         poder:"banana",
         num: 5,
@@ -76,11 +76,161 @@ let poderes=[
         num:40,
         direccion:2
     }
+]
 
 
+let poderes_futbol=[
+    {
+        poder:"banana",
+        num: 1,
+        direccion: -1,
+    },
+    {
+        poder:"caparazon_verde",
+        num: 2,
+        direccion:-1
+    },
+    {   
+        poder:"caparazon_rojo",
+        num: 4,
+        direccion:1
+    },
+    {   
+        poder:"honguito",
+        num:6,
+        direccion:0
 
+    },
+    {   
+        poder:"bomba",
+        num: 7,
+        direccion:2
+    },
+    {   
+        poder:"estrella",
+        num:10,
+        direccion:2
+    },
+    {   
+        poder:"caparazon_azul",
+        num:10,
+        direccion:2
+    },
+    {   
+        poder:"rayo",
+        num:20,
+        direccion:2
+    },
+    {   
+        poder:"bill_bala",
+        num:15,
+        direccion:2
+    }
 
 ]
+
+let poderes_beisbol=[
+    {
+        poder:"banana",
+        num: 1,
+        direccion: -1,
+    },
+    {
+        poder:"caparazon_verde",
+        num: 2,
+        direccion:-1
+    },
+    {   
+        poder:"caparazon_rojo",
+        num: 4,
+        direccion:1
+    },
+    {   
+        poder:"honguito",
+        num:6,
+        direccion:0
+
+    },
+    {   
+        poder:"bomba",
+        num: 7,
+        direccion:2
+    },
+    {   
+        poder:"estrella",
+        num:10,
+        direccion:2
+    },
+    {   
+        poder:"caparazon_azul",
+        num:10,
+        direccion:2
+    },
+    {   
+        poder:"rayo",
+        num:20,
+        direccion:2
+    },
+    {   
+        poder:"bill_bala",
+        num:15,
+        direccion:2
+    }
+
+]
+
+
+let poderes_tenis=[
+    {
+        poder:"caparazon_rojo",
+        num: 5,
+        direccion: 1,
+    },
+    {
+        poder:"caparazon_rojo",
+        num: 10,
+        direccion:1
+    },
+    {   
+        poder:"caparazon_rojo",
+        num: 15,
+        direccion:1
+    },
+    {   
+        poder:"honguito",
+        num:10,
+        direccion:0
+
+    },
+    {   
+        poder:"bomba",
+        num: 20,
+        direccion:1
+    },
+    {   
+        poder:"estrella",
+        num:30,
+        direccion:0
+    },
+    {   
+        poder:"caparazon_azul",
+        num:30,
+        direccion:1
+    },
+    {   
+        poder:"rayo",
+        num:50,
+        direccion:2
+    },
+    {   
+        poder:"bill_bala",
+        num:40,
+        direccion:0
+    }
+]
+
+
+
 rellenarPreguntas();
 
 async function rellenarPreguntas(){
@@ -97,7 +247,7 @@ io.on('connection', async (socket) => {
  
     socket.user = { username: socket.handshake.auth.username };
     tenis(socket, io, salas, conexiones);
-    console.log(socket.user);
+    
 
     function comprobarCero(datas,sala){
 
@@ -133,7 +283,7 @@ io.on('connection', async (socket) => {
 
     }
 
-    function darPoderes(data,index){
+    function darPoderes(data,index,modo){
 
         if(data[index].poder==null){
           let numeroAleatorio = Math.floor(Math.random() * 3);  
@@ -164,8 +314,19 @@ io.on('connection', async (socket) => {
            
          
            }
+           console.log(modo)
+          switch (modo) {
+            case 2:
+                data[index].poder=poderes_basket[numeroAleatorio];
+                console.log("basket")
+                break;
+            case 3:
+                data[index].poder=poderes_futbol[numeroAleatorio];
+                console.log("futbol")
+                break;
+          }
            
-        data[index].poder=poderes[numeroAleatorio];
+      
        
        
         socket.emit('poderes', data[index].poder)
@@ -264,8 +425,7 @@ io.on('connection', async (socket) => {
                     aux-=index;
 
                     for (let i = 1; i <= aux; i++) {
-                        let probabilidad=Math.floor(Math.random() * 2);
-                        console.log(probabilidad)
+                        let probabilidad=Math.floor(Math.random() * 2); 
                         if(probabilidad==1){
                            
                             if(salas[sala][index+i]){
@@ -388,7 +548,7 @@ io.on('connection', async (socket) => {
 
  
 
-    socket.on('cambio_pregunta',(username,sala,tiro,fallo)=>{
+    socket.on('cambio_pregunta',(username,sala,tiro,fallo,modo)=>{
         const index= obtenerIndex(username,sala)  
        
         let aux=salas[sala][index].index;
@@ -397,14 +557,13 @@ io.on('connection', async (socket) => {
 
         salas[sala][index].index++;
         aux=salas[sala][index].index;
-        console.log(salas)
-        console.log(aux)
+        
         socket.emit('pregunta',Preguntas[aux])
         if (aux>18){
             rellenarPreguntas();
             salas[sala][index].index=0;
         }
-        console.log(fallo)
+     
         if(!fallo){
         salas[sala][index].darPoder-=5;}else{
             salas[sala][index].puntacion-=3;
@@ -414,7 +573,7 @@ io.on('connection', async (socket) => {
         }
         if(salas[sala][index].darPoder<=0){
 
-           darPoderes(salas[sala],index)
+           darPoderes(salas[sala],index,modo)
            salas[sala][index].darPoder=15;
         }
         
@@ -494,12 +653,12 @@ io.on('connection', async (socket) => {
             console.log(`Usuario ${socket.user.username} (ID=${socket.user.id}) se unió a la sala: ${claveSala}`);
             socket.emit('room-joined', claveSala);
             asignarValores();
-            console.log(socket.user)
+            
             
             salas[claveSala].push(socket.user);
             conexiones[socket.id]=socket
 
-            console.log(salas)
+          
             io.to(claveSala).emit('room-users', {
                 room: claveSala,
                 users: [...room].map(id => ({

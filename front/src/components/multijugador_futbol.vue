@@ -3,7 +3,7 @@ import { ref, reactive, onBeforeUnmount, onMounted } from 'vue';
 import SalasPrivadas from '@/components/SalasPrivadas.vue';
 import { useCounterStore } from '@/stores/counter';
 import socketManager from '@/socket';
-import Partida from '@/components/Partida_basquet.vue';
+import Partida from '@/components/Partida_futbol.vue';
 import Temporizador from '@/components/temporizador.vue';
 import confetti from 'canvas-confetti';
 import audioPodio from '@/assets/audio/podio_multi.mp3';
@@ -26,8 +26,6 @@ const visibleRanking = ref(false);
 const visibleTempo = ref(false);
 const visiblePodio = ref(false);
 const visibleCopa = ref(false);
-
-const miModo=ref(2);
 const visibleMusica = ref(false);
 const imagenes = ["/items/banana.webp", "/items/bill_bala.webp",
   "/items/bomba.webp", "/items/caparazon_azul.webp",
@@ -49,6 +47,7 @@ let medio = reactive({ poder: "", username: "", num: "" });
 let animacionConfetti;
 const visibleTedio = ref(false);
 const temblor = ref(false);
+const miModo=ref(3);
 const puntacionFinal = reactive({ puntuacion: "", posicion: "" })
 const imagenCopaGanador = ref(null);
 const visibleUsarPoder= reactive({visible:false, banana:false, caparazon_rojo:false, 
