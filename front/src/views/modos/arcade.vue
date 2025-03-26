@@ -51,7 +51,7 @@ function jugar() {
   visibleName.value=false;
   rellenarPreguntas();  
   mostrarTempo.value=false;
-} 
+}  
 function siguientePregunta(info) {
   
    

@@ -316,6 +316,10 @@ io.on('connection', async (socket) => {
            }
            console.log(modo)
           switch (modo) {
+            case 1:
+                data[index].poder=poderes_beisbol[numeroAleatorio];
+                console.log("beibol")
+                break;
             case 2:
                 data[index].poder=poderes_basket[numeroAleatorio];
                 console.log("basket")

@@ -8,6 +8,16 @@ const props = defineProps({
     type: Object,
     required: true,
   },
+  new: {
+   type: Number,
+    required: false,
+  },
+  pelota: {
+   type: String,
+    required: false,
+  },
+
+
 
 
 
@@ -39,8 +49,11 @@ const animaciones = reactive({
   tiro: true, bate: false, disolver: false
 
 })
+const pelota=ref("pelota")
 
-
+watch(() => props.pelota, () => { 
+  pelota.value = props.pelota;
+});
 function apagarAnimaciones(interrumptor) {
 
 
@@ -450,7 +463,7 @@ function responder(num) {
           'animacion_tiro': animaciones.tiro,
           'animacion_disolver': animaciones.disolver
 
-        }" src="../assets/bioma/pelota_beisbol.png" alt="" srcset="">
+        }" :src="`/items_beisbol/${pelota}.png`">
 
 
       </div>
@@ -860,7 +873,7 @@ function responder(num) {
   width: 100px;
   justify-self: center;
   border-radius: 50%;
- 
+  
 
 
 
