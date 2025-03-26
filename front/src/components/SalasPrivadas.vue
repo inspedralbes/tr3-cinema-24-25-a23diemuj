@@ -33,10 +33,15 @@
         <div class="usuarios-sala">
           <h3>Usuarios en la sala:</h3>
           <ul class="lista-usuarios">
-            <li v-for="usuario in usuarios" :key="usuario.id" class="usuario-item">
-              <span class="icono">🏀</span>
+            <div v-for="usuario in usuarios" :key="usuario.id" class="usuario-item">
+            <li v-if="usuario.username!='Anfitrión' && usuario.username!='Invitado'">
+             
+              <span  class="icono">🏀</span>
               <span class="nombre-usuario">{{ usuario.username }}</span>
+             
+
             </li>
+          </div>
           </ul>
         </div>
 

@@ -549,10 +549,15 @@ io.on('connection', async (socket) => {
         socket.emit('acabar',0, 0);
     })
 
+    socket.on('puntaje_beisbol',(username,sala,tiro)=>{
+        const index= obtenerIndex(username,sala);
+        salas[sala][index].puntacion=tiro;
+        emitirRanking(sala);
 
+    });
  
 
-    socket.on('cambio_pregunta',(username,sala,tiro,fallo,modo)=>{
+    socket.on('cambio_pregunta',(username,sala,tiro,vida,modo,encesta)=>{
         const index= obtenerIndex(username,sala)  
        
         let aux=salas[sala][index].index;
@@ -568,13 +573,16 @@ io.on('connection', async (socket) => {
             salas[sala][index].index=0;
         }
      
-        if(!fallo){
-        salas[sala][index].darPoder-=5;}else{
+        if(vida){
             salas[sala][index].puntacion-=3;
             if(salas[sala][index].puntacion<0){
                 salas[sala][index].puntacion=0;
             }
         }
+
+        if(encesta){
+        salas[sala][index].darPoder-=5;     
+    }
         if(salas[sala][index].darPoder<=0){
 
            darPoderes(salas[sala],index,modo)

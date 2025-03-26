@@ -42,7 +42,7 @@ const index = ref(0);
 const strikes= ref(3);
 const carreras = ref(0);
 const Zindex = reactive({ balon: 0, bate: 1 });
-const info = reactive({ fallo: false, canasta: 0, racha: false })
+const info = reactive({ fallo: false, canasta: 0, racha: false,aux:false })
 const bases = reactive([false, false, false, false]);
 const animaciones = reactive({
   encestar: false, bateo1: false, bateo2: false, bateo3: false,
@@ -54,6 +54,11 @@ const pelota=ref("pelota")
 watch(() => props.pelota, () => { 
   pelota.value = props.pelota;
 });
+
+watch(() => props.new, () => { 
+  carreras.value = props.new;
+});
+ 
 function apagarAnimaciones(interrumptor) {
 
 
@@ -209,8 +214,7 @@ function comprobarPunto(num) {
   let apagar = 0;
   animaciones.bate = true;
   if (props.data.respuesta_correcta == num) {
-
-
+    info.aux=true;
     if (progress.value < 0.2) {
       puntosSeguidos++;
       info.canasta = 4;
@@ -290,7 +294,7 @@ function comprobarPunto(num) {
     tiroHecho.value = true;
     info.fallo = true;
     info.canasta = 0;
-   
+    info.aux=false; 
     puntosSeguidos = 0;
 
 
@@ -407,6 +411,15 @@ function responder(num) {
       animaciones.tiro = true
       info.canasta=carreras.value;
       emit('siguiente', info);
+
+      if(strikes.value==0){
+       
+        setTimeout(() => {
+          strikes.value=3;
+
+}, 500);
+
+      }
       Zindex.balon = 0;
       Zindex.bate = 1;
       
@@ -417,7 +430,7 @@ function responder(num) {
 
       animaciones.tiro = true;
       comprobarBase(info.canasta);
-     
+      info.canasta=carreras.value;
       emit('siguiente', info);
 
 

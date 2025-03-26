@@ -124,8 +124,17 @@ socket.on('acabar', (index, puntuacion) => {
 
 
 function siguientePregunta(info) {
-  
-  socket.emit('cambio_pregunta', store.loginInfo.username, store.SalaActual, info.canasta,info.fallo,miModo.value);
+  if(visiblePoder.value != "pelota" ){
+    if(info.aux){
+      usarpoder();
+    }else{
+      visiblePoder.value="pelota";
+      socket.emit('poder', "", store.SalaActual, store.loginInfo.username)
+    }
+    
+    
+  }
+  socket.emit('cambio_pregunta', store.loginInfo.username, store.SalaActual, info.canasta,info.fallo,miModo.value,info.aux);
    
 }
  
@@ -257,6 +266,7 @@ function usarpoder() {
   socket.emit('poder', poderes.data, store.SalaActual, store.loginInfo.username)
   poderes.data = "";
   poderYaObtenido[store.loginInfo.username].aux = false;
+  visiblePoder.value = "pelota";
  
 }, 1000);
 

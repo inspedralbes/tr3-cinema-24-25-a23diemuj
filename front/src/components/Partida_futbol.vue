@@ -206,6 +206,9 @@ function responder(num){
     setTimeout(() => {
       info.canasta=Goles.value;
      emit('siguiente',info); 
+     if(penales.value==0){
+        penales.value=5;
+      }
   }, 800);
 
 
