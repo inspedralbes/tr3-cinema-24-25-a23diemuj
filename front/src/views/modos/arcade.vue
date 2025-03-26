@@ -87,9 +87,7 @@ function ocultarTemporizador() {
  
   <main :style="{ backgroundImage: `url(/bioma/${deporte}.png)` }" class="main" >
     <Musica_juego v-if="!cargando && visibleJuego && !mostrarTempo"></Musica_juego>
-    <RouterLink to="/jugar">
-    <img style="right: inherit;" src="@/assets/imagenes/volver.png" alt="Volver" class="imagen_volver">
-  </RouterLink>
+   
 
  
 
