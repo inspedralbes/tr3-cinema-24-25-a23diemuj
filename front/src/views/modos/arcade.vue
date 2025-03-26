@@ -1,16 +1,16 @@
 <script setup>
 import { ref, reactive, onUnmounted,onMounted } from 'vue';
-import Ranking from '../../components/ranking.vue';
-import Partida_beisbol from '../../components/Partida_beisbol.vue';
-import Partida_tenis from '../../components/Partida_tenis.vue';
+import Ranking from '../../components/recursos/ranking.vue';
+import Partida_beisbol from '../../components/partida/Partida_beisbol.vue';
+import Partida_tenis from '../../components/partida/Partida_tenis.vue';
 
-import Temporizador from '../../components/temporizador.vue';
+import Temporizador from '../../components/recursos/temporizador.vue';
 import { getPreguntas } from '@/comunication_manager';
 import { useCounterStore } from '@/stores/counter';
-import Partida_basquet from '../../components/Partida_basquet.vue';
-import Eleccion_modos from '@/components/eleccion_modos.vue';
-import Partida_futbol from '@/components/Partida_futbol.vue';
-import Musica_juego from '@/components/musica_juego.vue';
+import Partida_basquet from '../../components/partida/Partida_basquet.vue';
+import Eleccion_modos from '@/components/recursos/eleccion_modos.vue';
+import Partida_futbol from '@/components/partida/Partida_futbol.vue';
+import Musica_juego from '@/components/musica/musica_juego.vue';
 
 const data = reactive({ pregunta: "" });
 const visibleJuego = ref(false);

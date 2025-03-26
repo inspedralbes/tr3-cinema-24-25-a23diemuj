@@ -3,11 +3,11 @@ import { ref, reactive, onBeforeUnmount, onMounted } from 'vue';
 
 const deporte=ref(0);
 
-import Eleccion_modos from '@/components/eleccion_modos.vue'; 
-import Multijugador_basquet from '@/components/multijugador_basquet.vue';
-import Multijugador_futbol from '@/components/multijugador_futbol.vue';
-import Multijugador_beisbol from '@/components/multijugador_beisbol.vue';
-import Multijugador_tenis from '@/components/multijugador_tenis.vue';
+import Eleccion_modos from '@/components/recursos/eleccion_modos.vue'; 
+import Multijugador_basquet from '@/components/multijugador/multijugador_basquet.vue';
+import Multijugador_futbol from '@/components/multijugador/multijugador_futbol.vue';
+import Multijugador_beisbol from '@/components/multijugador/multijugador_beisbol.vue';
+import Multijugador_tenis from '@/components/multijugador/multijugador_tenis.vue';
 
 
 

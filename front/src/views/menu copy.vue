@@ -6,7 +6,7 @@ import { useQuasar, QSpinnerFacebook } from 'quasar';
 import { onBeforeUnmount } from 'vue';
 
 import socketManager from '@/socket';
-import musica from '@/components/musica.vue';
+import musica from '@/components/musica/musica.vue';
 
 
 onMounted(() => {
