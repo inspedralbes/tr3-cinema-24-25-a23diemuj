@@ -232,10 +232,12 @@ function responder(num){
     
     
   comprobarPunto(num);
-  
+   
+
   if(info.fallo){
     setTimeout(() => {
       info.canasta=Canastas.value;
+      
      emit('siguiente',info); 
   }, 800);
 
@@ -312,14 +314,14 @@ function responder(num){
     <div class="respuestas">
      
       <q-linear-progress instant-feedback  :value="progress" :color="color" class=" barra"> </q-linear-progress>
-     
+     <span class="opciones">
       <div v-for="(respuesta, index) in respuestasMezcladas" :key="index">
 
       <q-btn  color="black" class="botones_partida" glossy label=""@click="responder(respuesta)" :disabled="tiroHecho"> {{ respuesta }}</q-btn>
     
      
      </div>
-   
+    </span>
     </div>
   
 
@@ -694,18 +696,6 @@ function responder(num){
 }
  
 
-@media screen and (min-width: 500px){
-  .botones_partida{
-
-width: 90%;
-margin: 10px; 
-font-size: 50px  !important;  
- 
-}
-
-
-
-}
 
 
  
@@ -724,7 +714,60 @@ font-size: 50px  !important;
    
 }
 
+.opciones{
+  display: grid;
+    grid-column: span 2;
+    grid-template-columns: 1fr 1fr; 
+
+}
+
+@media screen and (min-width: 500px){
+  .botones_partida{
+
+width: 90%;
+margin: 10px; 
+font-size: 50px;  
+ 
+}
+
+
+
+}
 @media screen and (min-width: 750px){
+
+
+.tiempo{ 
+  border: 1px solid black;
+  font-size: 20px;
+  font-family: 'DS-Digital';
+  text-shadow: 0 0 5px #f00, 0 0 10px #f00, 0 0 20px #f00, 0 0 30px #f00, 0 0 40px #f00, 0 0 50px #f00;
+  color: rgb(255, 112, 112);
+  background-color: black;
+  grid-column: 2;
+  place-items: center;
+  border: 5px solid rgb(70, 70, 70);
+  width: 70px;
+  margin: 0 auto;
+  text-align: center;
+  grid-row: 3;
+  
+  
+}
+ 
+
+
+  .titul{
+
+grid-column: span 4;
+grid-row: 4;
+height: 55px;
+font-size: 40px;
+border: 1px solid black;
+background-color: white;
+text-align: center;
+} 
+
+
   .corazon {
 
 width: 50px;
@@ -743,20 +786,29 @@ color: white;
 font-family: 'DS-Digital';
 
 }
-  .botones_partida{
-
-width: 70% ; 
-font-size: 50px  ;   
-border-radius: 20px;
- 
-}
 .respuestas{
     display: grid;
     grid-column: span 3;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr
+  
      
     
 }
+
+.opciones{
+  display: grid;
+    grid-column: span 2;
+    grid-template-columns: 1fr 1fr 1fr 1fr; 
+
+}
+  .botones_partida{
+    text-align: center; 
+width: 70% ; 
+font-size: 30px  ;   
+border-radius: 20px;
+ 
+}
+
 
 .marcador {
   width: 300px;
