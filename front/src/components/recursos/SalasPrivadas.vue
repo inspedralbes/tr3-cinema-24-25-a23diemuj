@@ -149,7 +149,7 @@ export default {
   },
   methods: {
     crearSala() {
-      this.socket.emit("create-room");
+      this.socket.emit("create-room",this.$props.deporte);
       
     },
 
@@ -158,7 +158,7 @@ export default {
         const caja = useCounterStore();
 
          caja.loginInfo.username = this.name;
-          this.socket.emit("join-room", this.claveSala.trim(),this.name);
+          this.socket.emit("join-room", this.claveSala.trim(),this.name,this.$props.deporte);
 
   } else {
     this.dialogName = true; // Muestra el diálogo
@@ -166,7 +166,7 @@ export default {
     },
     comprobarSala(){
       if (this.claveSala.trim()) {
-        this.socket.emit("comprobarSala", this.claveSala.trim());
+        this.socket.emit("comprobarSala", this.claveSala.trim(),this.$props.deporte);
         console.log(this.socket);
         console.log("comprobarSala");
       } else {

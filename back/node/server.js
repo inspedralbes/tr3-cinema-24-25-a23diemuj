@@ -27,8 +27,9 @@ const io = socketIo(server, {
 });
 
 const salas={};
+let deporte={};
 let conexiones = {};
-let Preguntas=[];
+let Preguntas={};
 let poderes_basket=[
     {
         poder:"banana",
@@ -229,16 +230,17 @@ let poderes_tenis=[
     }
 ]
 
+ 
 
-
-rellenarPreguntas();
-
-async function rellenarPreguntas(){
+async function rellenarPreguntas(claveSala){
    // const URL = `http://localhost:8000/api/preguntas/nivel/0`;
    //   const URL = `http://a23diemujper.juego.daw.inspedralbes.cat/laravel/public/api/preguntas/nivel/0`;
    const URL = `http://masket2.daw.inspedralbes.cat/laravel/public/api/preguntas/nivel/0`;
    const response = await fetch(URL);
-    Preguntas=await response.json();
+   if (!Preguntas[claveSala]) {
+    Preguntas[claveSala] = [];  // Inicializamos la sala como un array vacío
+}
+    Preguntas[claveSala]=await response.json();
 
 
  }
@@ -531,8 +533,8 @@ io.on('connection', async (socket) => {
 
 
     socket.on('empezar',(sala)=>{
-        
-        socket.broadcast.to(sala).emit('pregunta', Preguntas[0]);
+        delete deporte[sala];
+        socket.broadcast.to(sala).emit('pregunta', Preguntas[sala][0]);
            
         emitirRanking(sala)
     });
@@ -567,9 +569,9 @@ io.on('connection', async (socket) => {
         salas[sala][index].index++;
         aux=salas[sala][index].index;
         
-        socket.emit('pregunta',Preguntas[aux])
+        socket.emit('pregunta',Preguntas[sala][aux])
         if (aux>18){
-            rellenarPreguntas();
+            rellenarPreguntas(sala);
             salas[sala][index].index=0;
         }
      
@@ -594,21 +596,29 @@ io.on('connection', async (socket) => {
         emitirRanking(sala);
     })
 
+ function eliminarModo(claveSala){
+    setTimeout(()=>{
+        delete deporte[claveSala];
+        console.log(deporte);
+    },600000);
+     
+ }
  
- 
-    socket.on('create-room', () => {
+    socket.on('create-room', (param) => {
         const claveSala = uuidv4().slice(0, 5); 
         if (!salas[claveSala]) {
             salas[claveSala] = [];  // Inicializamos la sala como un array vacío
         }
-       
+        
+       deporte[claveSala]=param;
+       eliminarModo(claveSala);
        asignarValores()
 
         
         conexiones[socket.id]=socket
         
         socket.join(claveSala);
-
+        rellenarPreguntas(claveSala);
         socket.emit('room-created', claveSala);
         console.log(`Sala creada: ${claveSala} por el usuario: ${socket.user.username} (ID=${socket.user.id})`);
        
@@ -623,9 +633,15 @@ io.on('connection', async (socket) => {
     });
 
    
-    socket.on('comprobarSala', (claveSala) => {
+    socket.on('comprobarSala', (claveSala,modo) => {
         const room = io.sockets.adapter.rooms.get(claveSala);
-        
+        console.log(deporte[claveSala],modo)
+        if(deporte[claveSala]!=modo){
+            socket.emit('error', 'Modo de juego equivocado');
+            return
+        }
+
+
         if (room) {
             socket.emit('ComprobarSala');
         } else {
@@ -646,7 +662,14 @@ io.on('connection', async (socket) => {
  
     });
 
-    socket.on('join-room', (claveSala,name) => {
+    socket.on('join-room', (claveSala,name,modo) => {
+
+        if(deporte[claveSala]!=modo){
+            socket.emit('error', 'Modo de juego equivocado');
+            return
+        }
+
+
         const room = io.sockets.adapter.rooms.get(claveSala);
         if (!salas[claveSala]) {
             salas[claveSala] = [];  // Inicializamos la sala como un array vacío
@@ -697,11 +720,16 @@ io.on('connection', async (socket) => {
                 }))
             });
         }
+        
+        if(salas[claveSala]){
         salas[claveSala].splice(salas[claveSala].indexOf(socket.user), 1);
+  
         if(salas[claveSala].length===0){
 
             delete salas[claveSala];
+            
         }
+    }
         socket.emit('left-room');
     });
 
@@ -733,6 +761,7 @@ io.on('connection', async (socket) => {
     socket.on('disconnect', () => {
         console.log(`Usuario desconectado: ${socket.id}`);
         delete conexiones[socket.id]
+        console.log(deporte);
          
         
     });

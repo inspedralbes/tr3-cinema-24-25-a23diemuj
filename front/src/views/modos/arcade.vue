@@ -21,11 +21,11 @@ const mostrarTempo = ref(false);
 const deporte=ref(0)
 const name = ref("");
 const visibleName = ref(false); 
-
+const dificultat=ref(0)
  
 async function rellenarPreguntas() {
 
-  data.pregunta = await getPreguntas(0);
+  data.pregunta = await getPreguntas(dificultat.value);
   cargando.value = true; 
   visibleJuego.value = true;
   cargando.value = false;
@@ -59,9 +59,14 @@ function siguientePregunta(info) {
     visibleJuego.value = false;
   } else {
     index.value++;
-    if (index.value > 19) {
+    if (index.value > 5) {
+      dificultat.value++;
+      if(dificultat.value>4){
+        dificultat.value=4;
+      }
       rellenarPreguntas();
       index.value = 0;
+      console.log(dificultat.value)
      
     }
      

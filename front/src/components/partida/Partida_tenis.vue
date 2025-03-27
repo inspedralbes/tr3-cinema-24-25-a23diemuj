@@ -442,18 +442,18 @@ function responder(num) {
 @keyframes tiro {
   0% {
 
-    transform: translate(0, 0) scale(0.1);
+    transform: translate(0, 0) scale(0.1) rotate(90deg);
 
   }
 
   10% {
 
-    transform: translate(0, 0) scale(0.7);
+    transform: translate(0, 0) scale(0.7) rotate(360deg);
 
   }
 
   100% {
-    transform: translate(0, 0) scale(1.5);
+    transform: translate(0, 0) scale(1.5) rotate(620deg);
 
   }
 
