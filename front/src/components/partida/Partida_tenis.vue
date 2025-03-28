@@ -98,20 +98,20 @@ function comprobarPunto(num) {
     if (progress.value < 0.2) {
       puntosSeguidos++;
 
-      useApp.tiroTenis = 1;
+      
 
     } else if (progress.value < 0.5) {
 
       puntosSeguidos = 0;
-      useApp.tiroTenis = 2;
+      
     } else if (progress.value < 0.8) {
 
       puntosSeguidos = 0;
-      useApp.tiroTenis = 3;
+      
     } else if (progress.value < 1) {
 
       puntosSeguidos = 0;
-      useApp.tiroTenis = 4;
+      
     }  
 
       setTimeout(() => {
@@ -189,25 +189,8 @@ function reiniciarTemporizador() {
 
   progress.value = 0.0;
   color.value = '';
-
-  aux.value = 1 / 7;
-
-  switch (useApp.tiroTenis) {
-    case 4:
-      props.data.duracion = 15;
-      break;
-    case 3:
-      props.data.duracion = 10;
-      break;
-    case 2:
-      props.data.duracion = 7;
-      break;
-    case 1:
-      props.data.duracion = 5;
-      break;
-
-  }
-
+  props.data.duracion=7;
+  aux.value = 1 / props.data.duracion;  
   iniciarTemporizador();
 }
 
@@ -266,7 +249,7 @@ function responder(num) {
 
 
   }, 500);
-
+  info.fallo=false;
   if (info.fallo) {
     Zindex.balon = 1;
     Zindex.bate = 0;
@@ -807,7 +790,7 @@ function responder(num) {
 
 @media screen and (min-width: 500px) {
   .botones_partida {
-
+    z-index: 20;
     width: 90%;
     margin: 10px;
     font-size: 50px !important;
@@ -819,7 +802,25 @@ function responder(num) {
 }
 
 
+.corazon {
 
+width: 45px;
+margin-top: -10px;
+}
+
+.pelota2 {
+width: 50px;
+position: absolute;
+margin-left: -50px;
+margin-top: 10px;
+}
+
+.carreras {
+font-size: 50px;
+color: white;
+font-family: 'DS-Digital';
+
+}
 
 .botones_partida {
 

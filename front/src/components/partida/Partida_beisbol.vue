@@ -505,7 +505,7 @@ function responder(num) {
       </div>
 
 
-      <div class="titul"> {{ props.data.operacion }}  </div>
+      <div class="titul"> {{ props.data.operacion }} </div>
 
       <div class="respuestas">
 
