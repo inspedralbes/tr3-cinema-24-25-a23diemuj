@@ -221,12 +221,12 @@ let poderes_tenis=[
     {   
         poder:"rayo",
         num:50,
-        direccion:2
+        direccion:1
     },
     {   
         poder:"bill_bala",
         num:40,
-        direccion:0
+        direccion:1
     }
 ]
 
@@ -248,7 +248,7 @@ async function rellenarPreguntas(claveSala){
 io.on('connection', async (socket) => {
  
     socket.user = { username: socket.handshake.auth.username };
-    tenis(socket, io, salas, conexiones);
+    tenis(socket, io, salas, conexiones,Preguntas,obtenerIndex,darPoderes);
     
 
     function comprobarCero(datas,sala){
@@ -271,7 +271,7 @@ io.on('connection', async (socket) => {
         return index
       }
     
-
+   
     function emitirRanking(sala){
         salas[sala].sort((a, b) => b.puntacion - a.puntacion);
         io.to(sala).emit('ranking', salas[sala]); 
@@ -330,6 +330,10 @@ io.on('connection', async (socket) => {
                 data[index].poder=poderes_futbol[numeroAleatorio];
                 console.log("futbol")
                 break;
+            case 4:
+                data[index].poder=poderes_tenis[numeroAleatorio];
+                console.log("tenis")
+                break;
           }
            
       
@@ -345,6 +349,7 @@ io.on('connection', async (socket) => {
 
     }
  
+
 
     socket.on('poder',(poder,sala,username)=>{
         let index=obtenerIndex(username,sala)
@@ -534,6 +539,8 @@ io.on('connection', async (socket) => {
 
     socket.on('empezar',(sala)=>{
         delete deporte[sala];
+        salas[sala].shift();
+
         socket.broadcast.to(sala).emit('pregunta', Preguntas[sala][0]);
            
         emitirRanking(sala)
@@ -613,8 +620,8 @@ io.on('connection', async (socket) => {
        deporte[claveSala]=param;
        eliminarModo(claveSala);
        asignarValores()
-
-        
+       socket.user.username="jugador1"
+       salas[claveSala].push(socket.user);
         conexiones[socket.id]=socket
         
         socket.join(claveSala);

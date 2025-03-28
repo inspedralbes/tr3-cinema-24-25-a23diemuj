@@ -13,6 +13,7 @@
       <div v-if="!mostarName">
         <q-btn @click="crearSala" class="boton-sp" glossy label="Crear Sala"></q-btn>
         <br> <br> <br>
+
         <input type="text" v-model="claveSala" class="input-sala" placeholder="Clave sala"/><br> <br>
         <q-btn @click="comprobarSala" class="boton-sp" glossy label="Unirse"></q-btn>
       </div>
@@ -149,6 +150,8 @@ export default {
   },
   methods: {
     crearSala() {
+      const caja = useCounterStore();
+      caja.loginInfo.username = "jugador1";
       this.socket.emit("create-room",this.$props.deporte);
       
     },

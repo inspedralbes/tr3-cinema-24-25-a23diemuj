@@ -3,7 +3,7 @@ import { ref, reactive, onBeforeUnmount, onMounted } from 'vue';
 import SalasPrivadas from '@/components/recursos/SalasPrivadas.vue';
 import { useCounterStore } from '@/stores/counter';
 import socketManager from '@/socket';
-import Partida from '@/components/partida/Partida_basquet.vue';
+import Partida from '@/components/partida/Partida_tenis.vue';
 import Temporizador from '@/components/recursos/temporizador.vue';
 import confetti from 'canvas-confetti';
 import audioPodio from '@/assets/audio/podio_multi.mp3';
@@ -125,7 +125,7 @@ socket.on('acabar', (index, puntuacion) => {
 
 function siguientePregunta(info) {
   
-  socket.emit('cambio_pregunta', store.loginInfo.username, store.SalaActual, info.canasta,info.fallo,miModo.value,info.fallo);
+  socket.emit('cambio_pregunta_tenis', store.loginInfo.username, store.SalaActual, info.canasta,info.fallo,miModo.value,info.fallo);
    
 }
  
@@ -144,12 +144,10 @@ function empezar() {
 
 
 function tempoAcabado() {
-  visibleTempo.value = false;
-  visibleRanking.value = true;
+  visibleTempo.value = false; 
   visibleMusica.value=true;
   const SalaActual = store.SalaActual;
-  socket.emit('empezar', SalaActual);
-  visibleRanking.value = true;
+  socket.emit('empezar_tenis', SalaActual); 
   temporizador();
 
 
@@ -230,7 +228,7 @@ function temporizador() {
 
     } else {
       clearInterval(interval);
-      socket.emit('acabar', store.SalaActual);
+      socket.emit('acabar_tenis', store.SalaActual);
       resetTimer();
     }
   }, 1000);
@@ -256,7 +254,7 @@ function usarpoder() {
  setTimeout(() => {
   visibleUsarPoder.visible=false;
   visibleUsarPoder[poderes.data.poder]=false;
-  socket.emit('poder', poderes.data, store.SalaActual, store.loginInfo.username)
+  socket.emit('poder_tenis', poderes.data, store.SalaActual, store.loginInfo.username)
   poderes.data = "";
   poderYaObtenido[store.loginInfo.username].aux = false;
  
@@ -274,7 +272,7 @@ function usarpoder() {
 
 socket.on('pregunta', (pregunta) => {
   data.preguntas = pregunta;
-   
+   console.log("hola");
   if (visibleJuego.value == false) {
     visibleJuego.value = true;
     visibleSalas.value = false;

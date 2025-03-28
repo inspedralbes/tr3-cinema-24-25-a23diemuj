@@ -30,8 +30,10 @@ const Canastas = ref(0);
 const valorCanasta = ref(0);
 const useApp = useCounterStore();
 const index = ref(0);
+const visiblePelota=ref(true);
 const strikes = ref(3);
 const carreras = ref(0);
+const tiroHecho = ref(false);
 const Zindex = reactive({ balon: 0, bate: 1 });
 const info = reactive({ fallo: false, canasta: 0, racha: false })
 const bases = reactive([false, false, false, false]);
@@ -156,10 +158,28 @@ const color = ref('');
 const aux = ref(0);
 let idTemporizador = null;
 reiniciarTemporizador();
+esperarTiro();
+
 watch(() => props.data, () => {
   reiniciarTemporizador();
+  esperarTiro();
 
 });
+
+function esperarTiro(){
+
+  if(props.data.id==false){
+    visiblePelota.value=false;
+    tiroHecho.value=true; 
+    animaciones.tiro=false;
+} else{
+  visiblePelota.value=true;
+  tiroHecho.value=false; 
+  animaciones.tiro=true;
+}
+
+}
+
 
 function reiniciarTemporizador() {
 
@@ -221,7 +241,6 @@ function iniciarTemporizador() {
 
 const emit = defineEmits();
 
-const tiroHecho = ref(false);
 
 function mezclarRespuestas() {
   const respuestas = [
@@ -300,7 +319,8 @@ function responder(num) {
           'animacion_bateo2': animaciones.bateo2,
           'animacion_bateo3': animaciones.bateo3,
           'animacion_tiro': animaciones.tiro,
-          'animacion_disolver': animaciones.disolver
+          'animacion_disolver': animaciones.disolver,
+          'opacidad_pelota': !visiblePelota
 
         }" src="@/assets/bioma/pelota_tenis.png" alt="" srcset="">
 
@@ -354,6 +374,9 @@ function responder(num) {
 </template>
 
 <style scoped>
+.opacidad_pelota{
+  opacity: 0;
+}
 .slide-enter-active,
 .slide-leave-active {
   transition: transform 0.5s ease-out, opacity 0.5s;
