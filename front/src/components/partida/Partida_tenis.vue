@@ -35,7 +35,7 @@ const strikes = ref(3);
 const carreras = ref(0);
 const tiroHecho = ref(false);
 const Zindex = reactive({ balon: 0, bate: 1 });
-const info = reactive({ fallo: false, canasta: 0, racha: false })
+const info = reactive({ fallo: false, canasta: 0, racha: false,tiro:0 })
 const bases = reactive([false, false, false, false]);
 const animaciones = reactive({
   encestar: false, bateo1: false, bateo2: false, bateo3: false,
@@ -77,40 +77,24 @@ function comprobarPunto(num) {
   animaciones.bate = true;
   if (props.data.respuesta_correcta == num) {
 
-
-    switch (useApp.tiroTenis) {
-      case 4:
-        carreras.value += 1;
-        break;
-      case 3:
-        carreras.value += 2;
-
-        break;
-      case 2:
-        carreras.value += 3;
-
-        break;
-      case 1:
-        carreras.value += 4;
-        break;
-    }
+     carreras.value += 1;
 
     if (progress.value < 0.2) {
-      puntosSeguidos++;
+      info.tiro=1;
 
       
 
     } else if (progress.value < 0.5) {
-
-      puntosSeguidos = 0;
+      info.tiro=2;
+      
       
     } else if (progress.value < 0.8) {
-
-      puntosSeguidos = 0;
+      info.tiro=3;
+      
       
     } else if (progress.value < 1) {
 
-      puntosSeguidos = 0;
+      info.tiro=4;
       
     }  
 
@@ -803,7 +787,6 @@ function responder(num) {
 
 
 .corazon {
-
 width: 45px;
 margin-top: -10px;
 }
