@@ -177,7 +177,7 @@ const pauseTrack = () => {
   appearance: none;
   width: 15px;
   height: 15px;
-  
+  background-color: white;
   border-radius: 50%;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
   cursor: pointer;

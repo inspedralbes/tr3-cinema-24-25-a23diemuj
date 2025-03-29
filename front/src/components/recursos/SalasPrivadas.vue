@@ -17,7 +17,7 @@
         <input type="text" v-model="claveSala" class="input-sala" placeholder="Clave sala"/><br> <br>
         <q-btn @click="comprobarSala" class="boton-sp" glossy label="Unirse"></q-btn>
       </div>
-        <div v-else>
+        <div v-else-if="deporte!=4">
           <input type="text" v-model="name" class="input-sala" placeholder="Username" /><br><br>
         <q-btn @click="unirSala" class="boton-sp" glossy label="Unirse "></q-btn>
       </div>
@@ -32,22 +32,22 @@
         </div>
 
         <div class="usuarios-sala">
-          <h3>Usuarios en la sala:</h3>
+        
           <ul class="lista-usuarios">
-            <div v-for="usuario in usuarios" :key="usuario.id" class="usuario-item">
-            <li v-if="usuario.username!='Anfitrión' && usuario.username!='Invitado'">
-             
-              <span v-if="deporte==1"  class="icono">⚾</span>
-              <span v-if="deporte==2"  class="icono">🏀</span>
-              <span v-if="deporte==3"  class="icono">⚽</span>
-              <span v-if="deporte==4"  class="icono">🥎</span>
+  <template v-for="usuario in usuarios" :key="usuario.id">
+    <li v-if="usuario.username !== 'Anfitrión' && usuario.username !== 'Invitado'">
+      <span v-if="deporte == 1" class="icono">⚾</span>
+      <span v-if="deporte == 2" class="icono">🏀</span>
+      <span v-if="deporte == 3" class="icono">⚽</span>
+      <span v-if="deporte == 4" class="icono">🥎</span>
 
-              <span class="nombre-usuario">{{ usuario.username }}</span>
-             
+      <span class="nombre-usuario">{{ usuario.username }}</span>
+    </li>
+  </template>
+  
+  
+</ul>
 
-            </li>
-          </div>
-          </ul>
         </div>
 
         <div class="acciones-sala">
@@ -175,6 +175,10 @@ export default {
       } else {
         this.dialog = true; // Muestra el diálogo
       }
+
+
+
+      
     },
    
     salirSala() {
@@ -205,8 +209,13 @@ export default {
       console.error("Error al conectar:", err.message);
     });
     this.socket.on("ComprobarSala", () => { 
+      if(this.$props.deporte==4){
+        this.name="jugador2";
+        this.unirSala();
+      }else{
       this.mostarName=true;
       console.log("ComprobarASSala");
+    }
     });
     this.socket.on("room-created", (claveSala) => {
       this.$emit('boton');

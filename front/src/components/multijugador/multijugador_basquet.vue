@@ -125,7 +125,7 @@ socket.on('acabar', (index, puntuacion) => {
 
 function siguientePregunta(info) {
   
-  socket.emit('cambio_pregunta', store.loginInfo.username, store.SalaActual, info.canasta,info.fallo,miModo.value,info.fallo);
+  socket.emit('cambio_pregunta', store.loginInfo.username, store.SalaActual, info.canasta,info.fallo,miModo.value,info.aux);
    
 }
  
@@ -216,7 +216,7 @@ socket.on('poderes', (param) => {
 
 })
 
-const tiempo = ref(180);
+const tiempo = ref(20);
 let interval;
 
 function temporizador() {

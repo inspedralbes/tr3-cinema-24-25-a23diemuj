@@ -184,48 +184,48 @@ let poderes_beisbol=[
 let poderes_tenis=[
     {
         poder:"caparazon_rojo",
-        num: 5,
+        num: 1,
         direccion: 1,
     },
     {
-        poder:"caparazon_rojo",
-        num: 10,
-        direccion:1
-    },
-    {   
-        poder:"caparazon_rojo",
-        num: 15,
+        poder:"caparazon_azul",
+        num: 2,
         direccion:1
     },
     {   
         poder:"honguito",
-        num:10,
+        num: 7,
+        direccion:0
+    },
+    {   
+        poder:"honguito",
+        num:5,
         direccion:0
 
     },
     {   
         poder:"bomba",
-        num: 20,
+        num: 3,
         direccion:1
     },
     {   
         poder:"estrella",
-        num:30,
+        num:10,
         direccion:0
     },
     {   
         poder:"caparazon_azul",
-        num:30,
+        num:7,
         direccion:1
     },
     {   
-        poder:"rayo",
-        num:50,
-        direccion:1
+        poder:"estrella",
+        num:9,
+        direccion:0
     },
     {   
         poder:"bill_bala",
-        num:40,
+        num:13,
         direccion:1
     }
 ]
@@ -248,7 +248,7 @@ async function rellenarPreguntas(claveSala){
 io.on('connection', async (socket) => {
  
     socket.user = { username: socket.handshake.auth.username };
-    tenis(socket, io, salas, conexiones,Preguntas,obtenerIndex,darPoderes);
+    tenis(socket, io, salas, conexiones,Preguntas,obtenerIndex,darPoderes,rellenarPreguntas,comprobarCero);
     
 
     function comprobarCero(datas,sala){
@@ -587,6 +587,7 @@ io.on('connection', async (socket) => {
             if(salas[sala][index].puntacion<0){
                 salas[sala][index].puntacion=0;
             }
+
         }
 
         if(encesta){
@@ -620,7 +621,12 @@ io.on('connection', async (socket) => {
        deporte[claveSala]=param;
        eliminarModo(claveSala);
        asignarValores()
-       socket.user.username="jugador1"
+       if(param==4){
+            socket.user.username="jugador1"
+       }else{
+            socket.user.username="Anfitrión"
+       }
+       
        salas[claveSala].push(socket.user);
         conexiones[socket.id]=socket
         
@@ -647,8 +653,12 @@ io.on('connection', async (socket) => {
             socket.emit('error', 'Modo de juego equivocado');
             return
         }
-
-
+        if(modo==4){
+           if(salas[claveSala].length==2){
+            socket.emit('error', 'Sala llena');
+            return
+        }
+    }
         if (room) {
             socket.emit('ComprobarSala');
         } else {

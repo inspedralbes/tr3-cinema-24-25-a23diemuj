@@ -78,7 +78,7 @@ socket.on('tedio', (nombre, poders) => {
 })
 
 
-socket.on('acabar', (index, puntuacion) => {
+socket.on('acabar_tenis', (index, puntuacion) => {
 
   if (visibleRanking.value == false) {
     puntacionFinal.puntuacion = puntuacion;
@@ -125,7 +125,7 @@ socket.on('acabar', (index, puntuacion) => {
 
 function siguientePregunta(info) {
   
-  socket.emit('cambio_pregunta_tenis', store.loginInfo.username, store.SalaActual, info.canasta,info.fallo,miModo.value,info.fallo);
+  socket.emit('cambio_pregunta_tenis', store.loginInfo.username, store.SalaActual, info.tiro,info.fallo,miModo.value);
    
 }
  
@@ -147,12 +147,14 @@ function tempoAcabado() {
   visibleTempo.value = false; 
   visibleMusica.value=true;
   const SalaActual = store.SalaActual;
-  socket.emit('empezar_tenis', SalaActual); 
   temporizador();
+  socket.emit('empezar_tenis', SalaActual); 
+ 
 
 
 }
-const newPunto=ref(0)
+const newPunto=reactive({active:true,puntaje:0});
+
 let poderYaObtenido=[];
 
   socket.on('ranking', async (rankings) => {
@@ -162,7 +164,7 @@ let poderYaObtenido=[];
         
 
         if(element.username==store.loginInfo.username){
-           newPunto.value=element.puntacion;
+           newPunto.puntaje=element.puntacion;
            
         }
     });
@@ -201,6 +203,8 @@ function promesita() {
     }, 1000); 
   });
 }
+
+
 socket.on('poderes', (param) => {
  
   visiblePoder.value = true;
@@ -214,13 +218,12 @@ socket.on('poderes', (param) => {
 
 })
 
-const tiempo = ref(180);
+const tiempo = ref(60);
 let interval;
 
 function temporizador() {
-  console.log("tiempo", tiempo.value)
-
-
+  console.log(tiempo.value);
+  
   if (interval) return;
   interval = setInterval(() => {
     if (tiempo.value > 0) {
@@ -272,7 +275,11 @@ function usarpoder() {
 
 socket.on('pregunta', (pregunta) => {
   data.preguntas = pregunta;
-   console.log("hola");
+   
+   if(store.ActivarMusica==true){
+    store.ActivarMusica=false;
+    visibleMusica.value=true;
+   }
   if (visibleJuego.value == false) {
     visibleJuego.value = true;
     visibleSalas.value = false;

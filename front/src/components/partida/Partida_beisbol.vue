@@ -1050,7 +1050,7 @@ width: 30px;
 
 @media screen and (min-width: 500px) {
   .botones_partida {
-
+    z-index: 20;
     width: 90%;
     margin: 10px;
     font-size: 50px !important;

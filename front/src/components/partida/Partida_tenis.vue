@@ -8,6 +8,10 @@ const props = defineProps({
     type: Object,
     required: true,
   },
+  new: {
+   type: Object,
+    required: false,
+  },
 
 
 
@@ -128,7 +132,7 @@ function comprobarPunto(num) {
   setTimeout(() => {
     apagarAnimaciones(apagar);
     tiroHecho.value = false;
-
+    esperarTiro();
 
 
   }, 2000);
@@ -148,6 +152,10 @@ watch(() => props.data, () => {
   reiniciarTemporizador();
   esperarTiro();
 
+});
+
+watch(() => props.new, () => { 
+  carreras.value = props.new;
 });
 
 function esperarTiro(){
@@ -173,7 +181,7 @@ function reiniciarTemporizador() {
 
   progress.value = 0.0;
   color.value = '';
-  props.data.duracion=7;
+   
   aux.value = 1 / props.data.duracion;  
   iniciarTemporizador();
 }
@@ -225,6 +233,9 @@ const respuestasMezcladas = computed(() => mezclarRespuestas());
 
 function responder(num) {
 
+   
+
+  console.log(props.data.id)
 
   comprobarPunto(num);
 
@@ -233,7 +244,7 @@ function responder(num) {
 
 
   }, 500);
-  info.fallo=false;
+  
   if (info.fallo) {
     Zindex.balon = 1;
     Zindex.bate = 0;
@@ -262,7 +273,7 @@ function responder(num) {
 
 
 
-  reiniciarTemporizador();
+  reiniciarTemporizador(); 
 
 
 }
@@ -295,11 +306,11 @@ function responder(num) {
       </div>
 
 
-      <div class="marcador">
+      <div class="marcador" v-if="props.new && props.new.active">
         <img class="pelota2" src="@/assets/bioma/pelota_tenis.png" alt="">
         <Transition name="slide" mode="out-in">
-
-          <span :key="carreras" class="carreras">{{ carreras }} </span>
+        
+          <span :key="props.new.puntaje" class="carreras">{{ props.new.puntaje }} </span>
 
         </Transition>
 
@@ -309,6 +320,21 @@ function responder(num) {
         <img v-if="!info.fallo" class="corazon" src="@/assets/bioma/corazon.png" alt="">
 
       </div>
+      <div class="marcador" v-else>
+        <img class="pelota2" src="@/assets/bioma/pelota_tenis.png" alt="">
+        <Transition name="slide" mode="out-in">
+          <span  :key="carreras" class="carreras">{{ carreras }} </span>
+
+        </Transition>
+
+
+
+        <br>
+        <img v-if="!info.fallo" class="corazon" src="@/assets/bioma/corazon.png" alt="">
+
+      </div>
+
+
 
       <div class="tiempo_fuera">
         <div class="tiempo">{{ props.data.duracion }} </div>
@@ -323,8 +349,8 @@ function responder(num) {
 
         <div v-for="(respuesta, index) in respuestasMezcladas" :key="index">
 
-          <q-btn color="black" class="botones_partida" glossy label="" @click="responder(respuesta)"
-            :disabled="tiroHecho"> {{ respuesta }}</q-btn>
+          <q-btn color="black" class="botones_partida" glossy label="" :disabled="tiroHecho" @click="responder(respuesta)"
+           > {{ respuesta }}</q-btn>
 
 
         </div>
@@ -806,7 +832,7 @@ font-family: 'DS-Digital';
 }
 
 .botones_partida {
-
+  z-index: 20;
   width: 90%;
   margin: 10px;
   font-size: 30px;
