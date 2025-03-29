@@ -1,12 +1,12 @@
 ## Integrantes ✒️
-* Diego
+* Diego Mujica
 
 ## Descripción del Proyecto 🚀
 
 ### Masket2 🏀⚾🎾⚽
 Es un juego deportivo que incluye problemas matemáticos. El objetivo del juego es mejorar el cálculo mental de forma atractiva y competitiva. Podrás jugar en cuatro disciplinas: básquet, béisbol, tenis y fútbol, respondiendo correctamente a las operaciones para anotar puntos y ganar.
 
-## 🏀 Básquet  
+## 🏀 Básquet 
 Tira a la canasta y encesta respondiendo correctamente. ¡Cuidado! Solo tienes una oportunidad por tiro.  
 
 ## ⚾ Béisbol  
@@ -29,8 +29,8 @@ Existen diferentes modos de juego:
 ## Tecnologías Utilizadas 🛠️
 Este proyecto ha sido desarrollado utilizando las siguientes tecnologías:
 
-- **Laravel**
 - **Vue.js**
+- **Laravel**
 - **Node.js**
 - **Socket.io**
 
