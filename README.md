@@ -1,22 +1,34 @@
-# Transversals Grup 4
-
 ## Integrantes ✒️
-* Simran
-* Elihu
-* Ishaa
 * Diego
 
 ## Descripción del Proyecto 🚀
 
-### Masket 🏀
-Es un juego de baloncesto que incluye problemas matemáticos. El objetivo del juego es mejorar el calculo mental de forma atractiva y competitiva, tendras que responder correctamente a las operaciones para encestar y acumular puntos. 
+### Masket2 🏀⚾🎾⚽
+Es un juego deportivo que incluye problemas matemáticos. El objetivo del juego es mejorar el cálculo mental de forma atractiva y competitiva. Podrás jugar en cuatro disciplinas: básquet, béisbol, tenis y fútbol, respondiendo correctamente a las operaciones para anotar puntos y ganar.
+
+## 🏀 Básquet  
+Tira a la canasta y encesta respondiendo correctamente. ¡Cuidado! Solo tienes una oportunidad por tiro.  
+
+## ⚾ Béisbol  
+Llena las bases y llega a home para anotar carreras. Pero cuidado, si acumulas **tres strikes**, perderás.  
+
+## ⚽ Fútbol  
+Marca la mayor cantidad de penales posible. Sé rápido, porque si tardas demasiado, **perderás vidas**.  
+
+## 🎾 Tenis  
+Cuanto más rápido respondas, **más fuerte irá la bola** y menos tiempo tendrá tu rival para reaccionar.
+
+
+
+
+
 Existen diferentes modos de juego:
-- **Modo Historia**: 10 niveles.
 - **Modo Arcade**: Consigue el maximo de puntos sin fallar.
 - **Modo Multijugador**: Crea tu sala privada y compaprte el codigo con quien quieras jugar!
 
 ## Tecnologías Utilizadas 🛠️
 Este proyecto ha sido desarrollado utilizando las siguientes tecnologías:
+
 - **Laravel**
 - **Vue.js**
 - **Node.js**
@@ -30,12 +42,6 @@ Crea una base de datos llamada masket.
 Importa el archivo back/laravel.sql en la base de datos.
 Ajusta las credenciales de conexión en el archivo .env de Laravel. 
 
-## Usando docker:
-- Primero crear el fichero '.env' .
-- Para ver el proyecto utilizando Docker, mirar el fichero 'docker-compose.yml' y seguir las instrucciones.
-
-
-## Sin usar docker:
 
 - **Backend Laravel**
 Ve a la carpeta 'back/laravel'.
@@ -57,11 +63,7 @@ Acceso a los servicios:
 
 Frontend (Vue.js): http://localhost:5173
 Backend (Laravel): http://localhost:8000
-Servidor (Node.js): http://localhost:20070
-```
-## Penpot 📌
-```
-https://design.penpot.app/#/view/7ad540b5-8190-815d-8005-5ce7036cd352?page-id=7ad540b5-8190-815d-8005-5ce7036cd353&section=interactions&index=0&share-id=7ad540b5-8190-815d-8005-5ceed113db9d
+Servidor (Node.js): http://localhost:20071
 ```
 
 ## Estado
