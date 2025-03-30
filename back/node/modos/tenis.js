@@ -14,6 +14,7 @@ let Auxpreguntas={
 
     socket.on('empezar_tenis',(sala)=>{
         socket.user.index=1;
+        Preguntas[sala][0].duracion=10;
         if(conexiones[salas[sala][0].socketId]){
             conexiones[salas[sala][0].socketId].emit('pregunta',Preguntas[sala][0])
         }

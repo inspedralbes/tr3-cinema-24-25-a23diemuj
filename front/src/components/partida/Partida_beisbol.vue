@@ -1065,7 +1065,7 @@ width: 30px;
 
 
 .botones_partida {
-
+  z-index: 20;
   width: 90%;
   margin: 10px;
   font-size: 30px;
