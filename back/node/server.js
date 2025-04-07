@@ -284,17 +284,19 @@ io.on('connection', async (socket) => {
         socket.user.poder=null;
 
     }
-
+    // Funcion para dar poderes a los usuarios
     function darPoderes(data,index,modo){
-
+        // Primero comprobamos si el usuario tiene poderes, si no lo tiene le asignamos uno.
         if(data[index].poder==null){
+        // Primero generamos un numero aleatorio entre 0 y 3
           let numeroAleatorio = Math.floor(Math.random() * 3);  
-       
+        // creamos una variable auxiliar que nos diga en que posicion del ranking este el usuario    
           let aux= ((index+1)*100)/data.length;
-           
+           // si el usuario esta en el primer tercio del ranking se queda con los 3 primeros poderes
           if(aux<34){
             
           }
+           // si el usuario esta en el segundo tercio del ranking hay probabilidad de que pueda obtener los poderes del 4 al 6, pero tambien existe la posibilidad de que obtenga los 3 primeros
            if(aux>=34 && aux<67){
             let probabilidad=Math.floor(Math.random() * 3);
             if(probabilidad>0){
@@ -304,6 +306,7 @@ io.on('connection', async (socket) => {
             
             
            }
+           // si el usuario esta en el tercer tercio del ranking hay probabilidad de que pueda obtener los poderes del 7 al 9, pero tambien existe la posibilidad de que obtenga los 6 anteriores
            if(aux>=67){
             let probabilidad=Math.floor(Math.random() * 5);
             if(probabilidad==1){
@@ -317,6 +320,8 @@ io.on('connection', async (socket) => {
          
            }
            console.log(modo)
+
+           // luego que ya el poder haya sido seleccionado, depende del modo de juego que esté el usuario, le asignará ese poder
           switch (modo) {
             case 1:
                 data[index].poder=poderes_beisbol[numeroAleatorio];
@@ -338,7 +343,7 @@ io.on('connection', async (socket) => {
            
       
        
-       
+       // luego le emite el poder al usuario
         socket.emit('poderes', data[index].poder)
          
 

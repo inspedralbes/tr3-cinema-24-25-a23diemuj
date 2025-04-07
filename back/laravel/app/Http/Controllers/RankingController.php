@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 
 class RankingController extends Controller
 {
+
+    // Funciona para guardar el ranking
     public function store(Request $request)
     {
         $validated = $request->validate([

@@ -81,23 +81,24 @@ function reiniciarInfo() {
 let puntosSeguidos = 0;
 
 
-
+// Funcion para hacer las animaciones de desplazarse entre las bases
 
 function moverBase(num, aux) {
 
-
+  // Usamos el 500 para casos espeficios donde la animacion tenga que esperar un tiempo mas grande, ya que se mueven varias a la vez
   if (aux >= 500) {
     setTimeout(() => {
       moverBase(num);
     }, aux);
   } else {
-
+    // si no, la base se desplaza a su nueva posicion y elimina su anterior posicion
     bases[num] = false;
     bases[num - 1] = false;
     setTimeout(() => {
       bases[num] = true;
     }, 10);
 
+    // si num es 3, quiere decir que el jugador ha llegado a home, asique se elimina la ficha y se suma una carrera
     if (num == 3) {
       setTimeout(() => {
         bases[num] = false;
@@ -112,54 +113,41 @@ function moverBase(num, aux) {
 
 
 async function comprobarBase(num) {
-
-
-
-
+ // los casos son las bases que se desplaza el jugador, dependiendo la rapidez que respondió correctamente la pregunta
   switch (num) {
 
     case 1:
-
+      // si ya hay fichas en otras bases, las desplaza una posicion
       for (let index = 2; index >= 0; index--) {
         if (bases[index]) {
           moverBase(index + 1);
         }
 
       }
-
+      // se mueve una posicion de home a 1 base
       moverBase(0);
-
-
       break;
     case 2:
-
-
       // 3rd to home
+      // si hay alguien en la 2 base la desplaza automaticamente a home
       if (bases[2]) {
         moverBase(3, 500);
       }
-
+      // y si hay alguien en primera base la desplaza hacia 3 base
       for (let index = 1; index >= 0; index--) {
         if (bases[index]) {
           moverBase(index + 1);
           moverBase(index + 2, 500);
         }
       }
-
       // home to 2nd
+      //mueve la ficha directamente a la 2 base
       for (let index = 1; index >= 0; index--) {
         moverBase(index, index * 500);
       }
-
-
-
-
-
-
-
-      break;
+    break;
     case 3:
-
+      // cualquier ficha que este en alguna base se desplaza automaticamente a home
     for (let index = 2; index >= 0; index--) {
         if (bases[index]) {
           moverBase(index + 1);
@@ -171,6 +159,7 @@ async function comprobarBase(num) {
 
 
       // home to 3rd
+       //mueve la ficha directamente a la 3 base
       moverBase(0);
       moverBase(1, 500);
       moverBase(2, 1000);
@@ -181,7 +170,7 @@ async function comprobarBase(num) {
 
       break;
     case 4:
- 
+  // cualquier ficha que este en alguna base se desplaza automaticamente a home
     for (let index = 2; index >= 0; index--) {
         if (bases[index]) {
           moverBase(index + 1);
@@ -189,7 +178,7 @@ async function comprobarBase(num) {
           moverBase(index + 3, 500);
         }
       }
-      // home to home
+      // desplaza la ficha directamente a home
       for (let index = 0; index < 4; index++) {
         moverBase(index, index * 500);
 
@@ -604,7 +593,7 @@ function responder(num) {
 @keyframes bateo1 {
   0% {
     transform: translateY(0);
-    /* Empieza en la parte inferior */
+   
 
   }
 
@@ -627,7 +616,7 @@ function responder(num) {
 @keyframes bateo2 {
   0% {
     transform: translateY(0);
-    /* Empieza en la parte inferior */
+    
 
   }
 
@@ -641,7 +630,7 @@ function responder(num) {
   100% {
     transform: translateY(-100px) translateX(140px) scale(0.1) rotate(-180deg);
 
-    /* Sube 200px hacia arriba */
+    
 
   }
 }
@@ -649,7 +638,7 @@ function responder(num) {
 @keyframes bateo3 {
   0% {
     transform: translateY(0);
-    /* Empieza en la parte inferior */
+    
 
   }
 
@@ -663,7 +652,7 @@ function responder(num) {
   100% {
     transform: translateY(-100px) translateX(-140px) scale(0.1) rotate(-180deg);
 
-    /* Sube 200px hacia arriba */
+    
 
   }
 }
